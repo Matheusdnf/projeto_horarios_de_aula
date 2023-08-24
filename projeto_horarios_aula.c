@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 
 //
-// Assinatura das funÃ§Ãµes
+// Assinatura das funções
 void menu_principal(void);
 void menu_sobre(void);
 void menu_equipe(void);
@@ -14,6 +15,7 @@ void excluir_aluno(void);
 //
 // Programa principal
 int main(void) {
+    setlocale(LC_ALL,"Portuguese_Brazil");
     menu_principal();
     menu_sobre();
     menu_equipe();
@@ -25,25 +27,25 @@ int main(void) {
     return 0;
 }
 
-// FunÃ§Ãµes
+// Funções
 void menu_principal(void) {
     char op;
     system("clear||cls");
     printf("\n");
     printf("===============================================================================\n");
     printf("            Universidade Federal do Rio Grande do Norte (UFRN)                 \n");
-    printf("                 Centro de Ensino Superior do SeridÃ³                           \n");
-    printf("              Departamento de ComputaÃ§Ã£o e Tecnologia                          \n");
-    printf("                  Disciplina DCT1106 -- ProgramaÃ§Ã£o                            \n");
-    printf("                  Projeto controle de horÃ¡rios de aula                         \n");
+    printf("                 Centro de Ensino Superior do Seridó                           \n");
+    printf("              Departamento de Computação e Tecnologia                          \n");
+    printf("                  Disciplina DCT1106 -- Programação                            \n");
+    printf("                  Projeto controle de horários de aula                         \n");
     printf("              Desenvolvido por Matheus Diniz Fernandes                         \n");
     printf("===============================================================================\n");
     printf("|                                                                             |\n");
     printf("|            ************* Menu principal ***************                     |\n");
-    printf("|            1 - MÃ³dulo alunos                                               |\n");
-    printf("|            2 - MÃ³dulo Aulas                                                |\n");
-    printf("|            3 - MÃ³dulo professores                                            \n");
-    printf("|            Escolha a opÃ§Ã£o desejada: ");
+    printf("|            1 - Módulo alunos                                               |\n");
+    printf("|            2 - Módulo Aulas                                                |\n");
+    printf("|            3 - Módulo professores                                            \n");
+    printf("|            Escolha a opção desejada: ");
     scanf("%c", &op);
     getchar();
     printf("|                                                                             |\n");
@@ -59,11 +61,11 @@ void menu_sobre(void) {
     printf("\n");
     printf("=================================================================================\n");
     printf("|                                                                               |\n");
-    printf("|            ********* GestÃ£o de HorÃ¡rio de aula *********                      |\n");
+    printf("|            ********* Gestão de Horário de aula *********                      |\n");
     printf("|                                                                               |\n");
-    printf("|  Projeto realizado para a diciplina de programaÃ§Ã£o a qual buscar incoporar    |\n");
-    printf("|  os principais mÃ³dulos para uma gestÃ£o de horÃ¡rio de aula, sendo eles alunos, |\n");
-    printf("|  professores e horÃ¡rios de aula.                                              |\n");
+    printf("|  Projeto realizado para a diciplina de programação a qual buscar incoporar    |\n");
+    printf("|  os principais módulos para uma gestão de horário de aula, sendo eles alunos, |\n");
+    printf("|  professores e horários de aula.                                              |\n");
     printf("=================================================================================\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
@@ -76,7 +78,7 @@ void menu_equipe(void) {
     printf("\n");
     printf("===========================================================================\n");
     printf("|                                                                         |\n");
-    printf("|            ********* Sistema de GestÃ£o Escolar **********               |\n");
+    printf("|            ********* Sistema de Gestão Escolar **********               |\n");
     printf("|                                                                         |\n");
     printf("|            Este projeto foi desenvolvido por;                           |\n");
     printf("|                                                                         |\n");
@@ -102,11 +104,11 @@ void menu_aluno(void) {
     printf("|                                                                         |\n");
     printf("|            1 - Cadastrar aluno                                          |\n");
     printf("|            2 - Pesquisar aluno                                          |\n");
-    printf("|            3 - Atualizar informaÃ§Ãµes do aluno                           |\n");
+    printf("|            3 - Atualizar informações do aluno                           |\n");
     printf("|            4 - Excluir aluno                                            |\n");
     printf("|            0 - Voltar                                                   |\n");
     printf("|                                                                         |\n");
-    printf("|            Escolha a opÃ§Ã£o desejada: ");
+    printf("|            Escolha a opção desejada: ");
     scanf("%c", &op);
     getchar();
     printf("|                                                                         |\n");
@@ -125,10 +127,10 @@ void cadastrar_aluno(void) {
     printf("|                                                                         |\n");
     printf("|            *************** Cadastrar Aluno ***************              |\n");
     printf("|                                                                         |\n");
-    printf("|            CPF (apenas nÃºmeros):                                        |\n");
+    printf("|            CPF (apenas números):                                        |\n");
     printf("|            Nome completo:                                               |\n");
     printf("|            E-mail:                                                      |\n");
-    printf("|            Celular (apenas nÃºmeros):                                    |\n");
+    printf("|            Celular (apenas números):                                    |\n");
     printf("|                                                                         |\n");
     printf("===========================================================================\n");
     printf("\n");
@@ -144,7 +146,7 @@ void buscar_aluno(void) {
     printf("|                                                                         |\n");
     printf("|            *************** Pesquisar Aluno ***************              |\n");
     printf("|                                                                         |\n");
-    printf("|            Informe o CPF(apenas nÃºmeros):                               |\n");
+    printf("|            Informe o CPF(apenas números):                               |\n");
     printf("|                                                                         |\n");
     printf("===========================================================================\n");
     printf("\n");
@@ -161,7 +163,7 @@ void atualizar_aluno(void) {
     printf("|                                                                         |\n");
     printf("|            ************* Atualizar Aluno *****************              |\n");
     printf("|                                                                         |\n");
-    printf("|            Informe o CPF(apenas nÃºmeros):                              |\n");
+    printf("|            Informe o CPF(apenas números):                              |\n");
     printf("|                                                                         |\n");
     printf("===========================================================================\n");
     printf("\n");
@@ -177,7 +179,7 @@ void excluir_aluno(void) {
     printf("|                                                                         |\n");
     printf("|            *************** Excluir Aluno *****************              |\n");
     printf("|                                                                         |\n");
-    printf("|            Informe o CPF (apenas nÃºmeros):                              |\n");
+    printf("|            Informe o CPF (apenas números):                              |\n");
     printf("|                                                                         |\n");
     printf("===========================================================================\n");
     printf("\n");
