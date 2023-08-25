@@ -17,6 +17,11 @@ void cadastrar_horario(void);
 void buscar_horario(void);
 void atualizar_horario(void);
 void excluir_horario(void);
+void menu_professor(void);
+void cadastrar_professor(void);
+void buscar_professor(void);
+void atualizar_professor(void);
+void excluir_professor(void);
 
 //
 // Programa principal
@@ -35,6 +40,11 @@ int main(void) {
     buscar_horario();
     atualizar_horario();
     excluir_horario();
+    menu_professor();
+    cadastrar_professor();
+    buscar_professor();
+    atualizar_professor();
+    excluir_professor();
     return 0;
 }
 
@@ -53,8 +63,8 @@ void menu_principal(void) {
     printf("===============================================================================\n");
     printf("|                                                                             |\n");
     printf("|            ************* Menu principal ***************                     |\n");
-    printf("|            1 - Módulo alunos                                               |\n");
-    printf("|            2 - Módulo Aulas                                                |\n");
+    printf("|            1 - Módulo alunos                                                |\n");
+    printf("|            2 - Módulo Aulas                                                 |\n");
     printf("|            3 - Módulo professores                                            \n");
     printf("|            Escolha a opção desejada: ");
     scanf("%c", &op);
@@ -231,6 +241,7 @@ void cadastrar_horario(void) {
     printf("|            *************** Cadastrar Horário ***************            |\n");
     printf("|                                                                         |\n");
     printf("|            Digite os dias da semana:                                    |\n");
+    printf("|            Digite o Período do Dia:                                     |\n");
     printf("|            Digite o horário:                                            |\n");
     printf("|            Nome da diciplina:                                           |\n");
     printf("|                                                                         |\n");
@@ -263,7 +274,7 @@ void atualizar_horario(void) {
     printf("|                                                                         |\n");
     printf("|            ************* Atualizar horário *****************            |\n");
     printf("|                                                                         |\n");
-    printf("|            Informe a matetéria:                                         |\n");
+    printf("|            Informe a matéria:                                         |\n");
     printf("|                                                                         |\n");
     printf("===========================================================================\n");
     printf("\n");
@@ -280,6 +291,97 @@ void excluir_horario(void) {
     printf("|            *************** Excluir horário *****************            |\n");
     printf("|                                                                         |\n");
     printf("|            Informe a matéria:                                           |\n");
+    printf("|                                                                         |\n");
+    printf("===========================================================================\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
+
+void menu_professor(void) {
+    char op;
+    system("clear||cls");
+    printf("\n");
+    printf("===========================================================================\n");
+    printf("|                                                                         |\n");
+    printf("|            = = = = = = = = =  Menu Professor(a) = = = = = = = = =       |\n");
+    printf("|                                                                         |\n");
+    printf("|            1 - Cadastrar Professor(a)                                   |\n");
+    printf("|            2 - Pesquisar por Professor(a)                               |\n");
+    printf("|            3 - Atualizar Professor(a)                                   |\n");
+    printf("|            4 - Excluir Professor(a)                                     |\n");
+    printf("|            0 - Voltar                                                   |\n");
+    printf("|                                                                         |\n");
+    printf("|            Escolha a opção desejada: ");
+    scanf("%c", &op);
+    getchar();
+    printf("|                                                                         |\n");
+    printf("|                                                                         |\n");
+    printf("===========================================================================\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
+
+void cadastrar_professor(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("===========================================================================\n");
+    printf("|                                                                         |\n");
+    printf("|            *************** Cadastrar Aluno ***************              |\n");
+    printf("|                                                                         |\n");
+    printf("|            CPF (apenas números):                                        |\n");
+    printf("|            Nome completo:                                               |\n");
+    printf("|            E-mail:                                                      |\n");
+    printf("|            Celular (apenas números):                                    |\n");
+    printf("|            Matéria Lecionada:                                           |\n");
+    printf("|                                                                         |\n");
+    printf("===========================================================================\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
+
+void buscar_professor(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("===========================================================================\n");
+    printf("|                                                                         |\n");
+    printf("|            *************** Pesquisar Professor ***************          |\n");
+    printf("|                                                                         |\n");
+    printf("|            Digite o CPF(apenas números):                                |\n");
+    printf("|                                                                         |\n");
+    printf("===========================================================================\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
+
+
+void atualizar_professor(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("===========================================================================\n");
+    printf("|                                                                         |\n");
+    printf("|            ************* Atualizar Professor *****************            |\n");
+    printf("|                                                                         |\n");
+    printf("|            Digite o CPF (apenas números):                                         |\n");
+    printf("|                                                                         |\n");
+    printf("===========================================================================\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
+
+
+void excluir_professor(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("===========================================================================\n");
+    printf("|                                                                         |\n");
+    printf("|            *************** Excluir Professor *****************          |\n");
+    printf("|                                                                         |\n");
+    printf("|            Digite o CPF (apenas números):                               |\n");
     printf("|                                                                         |\n");
     printf("===========================================================================\n");
     printf("\n");
