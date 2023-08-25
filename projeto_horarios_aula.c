@@ -12,6 +12,12 @@ void cadastrar_aluno(void);
 void buscar_aluno(void);
 void atualizar_aluno(void);
 void excluir_aluno(void);
+void menu_horario(void);
+void cadastrar_horario(void);
+void buscar_horario(void);
+void atualizar_horario(void);
+void excluir_horario(void);
+
 //
 // Programa principal
 int main(void) {
@@ -24,6 +30,11 @@ int main(void) {
     buscar_aluno();
     atualizar_aluno();
     excluir_aluno();
+    menu_horario();
+    cadastrar_horario();
+    buscar_horario();
+    atualizar_horario();
+    excluir_horario();
     return 0;
 }
 
@@ -180,6 +191,95 @@ void excluir_aluno(void) {
     printf("|            *************** Excluir Aluno *****************              |\n");
     printf("|                                                                         |\n");
     printf("|            Informe o CPF (apenas números):                              |\n");
+    printf("|                                                                         |\n");
+    printf("===========================================================================\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
+
+void menu_horario(void) {
+    char op;
+    system("clear||cls");
+    printf("\n");
+    printf("===========================================================================\n");
+    printf("|                                                                         |\n");
+    printf("|            = = = = = = = = =  Menu Horários = = = = = = = = =           |\n");
+    printf("|                                                                         |\n");
+    printf("|            1 - Cadastrar Horários                                       |\n");
+    printf("|            2 - Pesquisar por Horários                                   |\n");
+    printf("|            3 - Atualizar Horário                                        |\n");
+    printf("|            4 - Excluir Horário                                          |\n");
+    printf("|            0 - Voltar                                                   |\n");
+    printf("|                                                                         |\n");
+    printf("|            Escolha a opção desejada: ");
+    scanf("%c", &op);
+    getchar();
+    printf("|                                                                         |\n");
+    printf("|                                                                         |\n");
+    printf("===========================================================================\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
+
+void cadastrar_horario(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("===========================================================================\n");
+    printf("|                                                                         |\n");
+    printf("|            *************** Cadastrar Horário ***************            |\n");
+    printf("|                                                                         |\n");
+    printf("|            Digite os dias da semana:                                    |\n");
+    printf("|            Digite o horário:                                            |\n");
+    printf("|            Nome da diciplina:                                           |\n");
+    printf("|                                                                         |\n");
+    printf("===========================================================================\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
+
+void buscar_horario(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("===========================================================================\n");
+    printf("|                                                                         |\n");
+    printf("|            *************** Pesquisar horario ***************            |\n");
+    printf("|                                                                         |\n");
+    printf("|            Digite a matéria:                                            |\n");
+    printf("|                                                                         |\n");
+    printf("===========================================================================\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
+
+
+void atualizar_horario(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("===========================================================================\n");
+    printf("|                                                                         |\n");
+    printf("|            ************* Atualizar horário *****************            |\n");
+    printf("|                                                                         |\n");
+    printf("|            Informe a matetéria:                                         |\n");
+    printf("|                                                                         |\n");
+    printf("===========================================================================\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
+
+
+void excluir_horario(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("===========================================================================\n");
+    printf("|                                                                         |\n");
+    printf("|            *************** Excluir horário *****************            |\n");
+    printf("|                                                                         |\n");
+    printf("|            Informe a matéria:                                           |\n");
     printf("|                                                                         |\n");
     printf("===========================================================================\n");
     printf("\n");
