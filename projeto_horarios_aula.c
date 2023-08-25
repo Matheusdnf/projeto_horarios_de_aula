@@ -61,6 +61,16 @@ void menu_principal(void) {
     printf("                  Projeto controle de horários de aula                         \n");
     printf("              Desenvolvido por Matheus Diniz Fernandes                         \n");
     printf("===============================================================================\n");
+    printf("                       ####     ####    ######                                 \n");
+    printf("                      ##  ##   ##  ##     ##                                   \n");
+    printf("                      ##       ##         ##                                   \n");
+    printf("                      ##        ####      ##                                   \n");
+    printf("                      ##           ##     ##                                   \n");
+    printf("                      ##  ##   ##  ##     ##                                   \n");
+    printf("                       ####     ####      ##                                 \n\n");
+    printf("                      COLÉGIO SABER É DIVERSÃO                               \n\n");
+    printf("              Sempre preocupado em ensinar da melhor forma possível!         \n\n");
+    printf("===============================================================================\n");
     printf("|                                                                             |\n");
     printf("|            ************* Menu principal ***************                     |\n");
     printf("|            1 - Módulo alunos                                                |\n");
@@ -328,7 +338,7 @@ void cadastrar_professor(void) {
     printf("\n");
     printf("===========================================================================\n");
     printf("|                                                                         |\n");
-    printf("|            *************** Cadastrar Aluno ***************              |\n");
+    printf("|            *************** Cadastrar Professor(a) ***************       |\n");
     printf("|                                                                         |\n");
     printf("|            CPF (apenas números):                                        |\n");
     printf("|            Nome completo:                                               |\n");
@@ -347,7 +357,7 @@ void buscar_professor(void) {
     printf("\n");
     printf("===========================================================================\n");
     printf("|                                                                         |\n");
-    printf("|            *************** Pesquisar Professor ***************          |\n");
+    printf("|            *************** Pesquisar Professor(a) ***************       |\n");
     printf("|                                                                         |\n");
     printf("|            Digite o CPF(apenas números):                                |\n");
     printf("|                                                                         |\n");
@@ -363,9 +373,9 @@ void atualizar_professor(void) {
     printf("\n");
     printf("===========================================================================\n");
     printf("|                                                                         |\n");
-    printf("|            ************* Atualizar Professor *****************            |\n");
+    printf("|            ************* Atualizar Professor(a) *****************       |\n");
     printf("|                                                                         |\n");
-    printf("|            Digite o CPF (apenas números):                                         |\n");
+    printf("|            Digite o CPF (apenas números):                               |\n");
     printf("|                                                                         |\n");
     printf("===========================================================================\n");
     printf("\n");
@@ -379,7 +389,7 @@ void excluir_professor(void) {
     printf("\n");
     printf("===========================================================================\n");
     printf("|                                                                         |\n");
-    printf("|            *************** Excluir Professor *****************          |\n");
+    printf("|            *************** Excluir Professor(a) *****************       |\n");
     printf("|                                                                         |\n");
     printf("|            Digite o CPF (apenas números):                               |\n");
     printf("|                                                                         |\n");
