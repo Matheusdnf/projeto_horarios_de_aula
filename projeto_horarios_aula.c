@@ -76,6 +76,7 @@ void menu_principal(void) {
     printf("|            1 - Módulo alunos                                                |\n");
     printf("|            2 - Módulo Aulas                                                 |\n");
     printf("|            3 - Módulo professores                                            \n");
+    printf("|            0 - Finalizar programa                                           |\n");
     printf("|            Escolha a opção desejada: ");
     scanf("%c", &op);
     getchar();
