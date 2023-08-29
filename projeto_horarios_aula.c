@@ -3,7 +3,7 @@
 #include <locale.h>
 
 //
-// Assinatura das fun��es
+// Assinatura das fun  es
 void menu_principal(void);
 void menu_sobre(void);
 void menu_equipe(void);
@@ -26,35 +26,48 @@ void atualizar_professor(void);
 void excluir_professor(void);
 void relatorio_professor(void);
 
-//
+//variáveis 
+char opc;
+int iniciar = 1;
 // Programa principal
 int main(void) {
     setlocale(LC_ALL,"Portuguese_Brazil");
-    menu_principal();
-    menu_sobre();
-    menu_equipe();
-    menu_aluno();
-    cadastrar_aluno();
-    buscar_aluno();
-    atualizar_aluno();
-    excluir_aluno();
-    relatorio_aluno();
-    menu_horario();
-    cadastrar_horario();
-    buscar_horario();
-    atualizar_horario();
-    excluir_horario();
-    relatorio_horario();
-    menu_professor();
-    cadastrar_professor();
-    buscar_professor();
-    atualizar_professor();
-    excluir_professor();
-    relatorio_professor();
+    while ( iniciar == 1){
+        menu_principal();
+        printf("\nDigite o que deseja fazer: "); scanf("%1s", &opc); getchar();
+        switch (opc) { 
+            case '1':
+                menu_aluno();
+                break;
+            case '2':
+                menu_horario();
+                break;
+            case '3':
+                menu_professor();
+                break;
+            case '4':
+                menu_equipe();
+                break;
+            case '5':
+                menu_sobre();
+                break;
+            case '0':
+                printf("\nPrograma Finalizado");
+                iniciar = 0;
+                break;
+            default:
+                printf("\nOpção Inválida!");
+                printf("\n");
+                system("pause");
+                break;
+        }
+    }
     return 0;
 }
 
 // Funções
+
+
 void menu_principal() {
     system("clear||cls");
     printf("\n");
@@ -91,12 +104,12 @@ void menu_sobre(void) {
     printf("                    Projeto controle de horários de aula                         \n");
     printf("                Desenvolvido por Matheus Diniz Fernandes                         \n");
     printf("=================================================================================\n");
-    printf("|                                                                               |\n");
-    printf("|            ********* Gestão de Horário de aula *********                      |\n");
-    printf("|                                                                               |\n");
-    printf("|  Projeto realizado para a diciplina de programação a qual buscar incoporar    |\n");
-    printf("|  os principais módulos para uma gestão de horário de aula, sendo eles alunos, |\n");
-    printf("|  professores e horários de aula.                                              |\n");
+    printf("                                                                                 \n");
+    printf("            ********* Gestão de Horário de aula *********                        \n");
+    printf("                                                                                 \n");
+    printf("  Projeto realizado para a diciplina de programação a qual buscar incoporar      \n");
+    printf("  os principais módulos para uma gestão de horário de aula, sendo eles alunos,   \n");
+    printf("  professores e horários de aula.                                                \n");
     printf("=================================================================================\n");
     system("pause");
 }
@@ -106,40 +119,63 @@ void menu_equipe(void) {
     system("clear||cls");
     printf("\n");
     printf("===========================================================================\n");
-    printf("|                                                                         |\n");
-    printf("|            ********* Sistema de Gestão Escolar **********               |\n");
-    printf("|                                                                         |\n");
-    printf("|            Este projeto foi desenvolvido por;                           |\n");
-    printf("|                                                                         |\n");
-    printf("|            Aluno:Matheus Diniz Fernandes                                |\n");
-    printf("|            E-mail:matheusdiniz870@gmail.com                             |\n");
-    printf("|            Redes sociais: @matheus_dnz                                  |\n");
-    printf("|            Git: Matheusdnf                                              |\n");
-    printf("|                                                                         |\n");
+    printf("                                                                         \n");
+    printf("            ********* Sistema de Gestão Escolar **********               \n");
+    printf("                                                                         \n");
+    printf("            Este projeto foi desenvolvido por;                           \n");
+    printf("                                                                         \n");
+    printf("            Aluno:Matheus Diniz Fernandes                                \n");
+    printf("            E-mail:matheusdiniz870@gmail.com                             \n");
+    printf("            Redes sociais: @matheus_dnz                                  \n");
+    printf("            Git: Matheusdnf                                              \n");
+    printf("                                                                         \n");
     printf("===========================================================================\n");
     system("pause");
 } 
 
 
-
 void menu_aluno(void) {
-    char op;
-    system("clear||cls");   
-    printf("\n");
-    printf("===========================================================\n");
-    printf("     ****************  Menu Aluno ******************       \n");
-    printf("          1 - Cadastrar aluno                              \n");
-    printf("          2 - Pesquisar aluno                              \n");
-    printf("          3 - Atualizar informações do aluno               \n");
-    printf("          4 - Excluir aluno                                \n");
-    printf("          5 - Relatório dos alunos                         \n");
-    printf("          0 - Voltar                                       \n");
-    printf("===========================================================\n");
-    printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    while (opc!=0){
+        system("clear||cls");   
+        printf("\n");
+        printf("===========================================================\n");
+        printf("     ****************  Menu Aluno ******************       \n");
+        printf("          1 - Cadastrar aluno                              \n");
+        printf("          2 - Pesquisar aluno                              \n");
+        printf("          3 - Atualizar informações do aluno               \n");
+        printf("          4 - Excluir aluno                                \n");
+        printf("          5 - Relatório dos alunos                         \n");
+        printf("          0 - Voltar                                       \n");
+        printf("===========================================================\n");
+        printf("\n");
+        printf("Escolha uma das opções:");
+        scanf("%s",&opc);
+        switch (opc){
+        case '1':
+            cadastrar_aluno();
+            break;
+        case '2':
+            buscar_aluno();
+            break;
+        case '3':
+            atualizar_aluno();
+            break;
+        case '4':
+            excluir_aluno();
+            break;
+        case '5':
+            relatorio_aluno();
+            break;
+        case '0':
+            opc=0;
+        default:
+            break;
+            printf("Opção Inválida!\n");
+            system("pause");
+            break;
+        }
+    }
 }
-
 
 void cadastrar_aluno(void) {
     system("clear||cls");   //aqui será onde irá cadastrar um aluno que estuda na escola
@@ -169,7 +205,6 @@ void buscar_aluno(void) {
     printf("\n");
     system("pause");
 }
-
 
 void atualizar_aluno(void) {
     system("clear||cls");
@@ -212,21 +247,46 @@ void relatorio_aluno(void){
 }
 
 void menu_horario(void) {
-    char op;
-    system("clear||cls");   
-    printf("\n");
-    printf("===========================================================\n");
-    printf("     ****************  Menu Horários ******************   \n");
-    printf("          1 - Cadastrar Horário                          \n");
-    printf("          2 - Pesquisar Horário                          \n");
-    printf("          3 - Atualizar Horário                          \n");
-    printf("          4 - Excluir Horário                            \n");
-    printf("          5 - Relatório dos Horários                     \n");
-    printf("          0 - Voltar                                     \n");
-    printf("===========================================================\n");
-    printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    while (opc!=0){
+        system("clear||cls");   
+        printf("\n");
+        printf("===========================================================\n");
+        printf("     ****************  Menu Horários ******************   \n");
+        printf("          1 - Cadastrar Horário                          \n");
+        printf("          2 - Pesquisar Horário                          \n");
+        printf("          3 - Atualizar Horário                          \n");
+        printf("          4 - Excluir Horário                            \n");
+        printf("          5 - Relatório dos Horários                     \n");
+        printf("          0 - Voltar                                     \n");
+        printf("===========================================================\n");
+        printf("\n");
+        printf("Escolha uma das opções:");
+        scanf("%s",&opc);
+        switch (opc){
+            case '1':
+                cadastrar_horario();
+                break;
+            case '2':
+                buscar_horario();
+                break;
+            case '3':
+                atualizar_horario();
+                break;
+            case '4':
+                excluir_horario();
+                break;
+            case '5':
+                relatorio_horario();
+                break;
+            case '0':
+                opc=0;
+            default:
+                break;
+                printf("Opção Inválida!\n");
+                system("pause");
+                break;
+        }
+    }
 }
 
 void cadastrar_horario(void) {
@@ -295,22 +355,48 @@ void relatorio_horario(void){
     system("pause");
 }
 
+
 void menu_professor(void) {
-    char op;
-    system("clear||cls");   
-    printf("\n");
-    printf("===========================================================\n");
-    printf("     ****************  Menu Professor ******************   \n");
-    printf("          1 - Cadastrar Professor                          \n");
-    printf("          2 - Pesquisar Professor                          \n");
-    printf("          3 - Atualizar informações do Professor           \n");
-    printf("          4 - Excluir Professor                            \n");
-    printf("          5 - Relatório dos Professores                    \n");
-    printf("          0 - Voltar                                       \n");
-    printf("===========================================================\n");
-    printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    while (opc!=0){
+        system("clear||cls");   
+        printf("\n");
+        printf("===========================================================\n");
+        printf("     ****************  Menu Professor ******************   \n");
+        printf("          1 - Cadastrar Professor                          \n");
+        printf("          2 - Pesquisar Professor                          \n");
+        printf("          3 - Atualizar informações do Professor           \n");
+        printf("          4 - Excluir Professor                            \n");
+        printf("          5 - Relatório dos Professores                    \n");
+        printf("          0 - Voltar                                       \n");
+        printf("===========================================================\n");
+        printf("\n");
+        printf("Escolha uma das opções:");
+        scanf("%s",&opc);
+        switch (opc){
+            case '1':
+                cadastrar_professor();
+                break;
+            case '2':
+                buscar_professor();
+                break;
+            case '3':
+                atualizar_professor();
+                break;
+            case '4':
+                excluir_professor();
+                break;
+            case '5':
+                relatorio_professor();
+                break;
+            case '0':
+                opc=0;
+            default:
+                break;
+                printf("Opção Inválida!\n");
+                system("pause");
+                break;
+        }
+    }
 }
 
 void cadastrar_professor(void) {
