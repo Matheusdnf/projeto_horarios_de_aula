@@ -3,7 +3,7 @@
 #include <locale.h>
 
 //
-// Assinatura das funÁıes
+// Assinatura das funÔøΩÔøΩes
 void menu_principal(void);
 void menu_sobre(void);
 void menu_equipe(void);
@@ -12,16 +12,19 @@ void cadastrar_aluno(void);
 void buscar_aluno(void);
 void atualizar_aluno(void);
 void excluir_aluno(void);
+void relatorio_aluno(void);
 void menu_horario(void);
 void cadastrar_horario(void);
 void buscar_horario(void);
 void atualizar_horario(void);
 void excluir_horario(void);
+void relatorio_horario(void);
 void menu_professor(void);
 void cadastrar_professor(void);
 void buscar_professor(void);
 void atualizar_professor(void);
 void excluir_professor(void);
+void relatorio_professor(void);
 
 //
 // Programa principal
@@ -35,56 +38,45 @@ int main(void) {
     buscar_aluno();
     atualizar_aluno();
     excluir_aluno();
+    relatorio_aluno();
     menu_horario();
     cadastrar_horario();
     buscar_horario();
     atualizar_horario();
     excluir_horario();
+    relatorio_horario();
     menu_professor();
     cadastrar_professor();
     buscar_professor();
     atualizar_professor();
     excluir_professor();
+    relatorio_professor();
     return 0;
 }
 
-// FunÁıes
-void menu_principal(void) {
-    char op;
+// Fun√ß√µes
+void menu_principal() {
     system("clear||cls");
     printf("\n");
-    printf("===============================================================================\n");
-    printf("            Universidade Federal do Rio Grande do Norte (UFRN)                 \n");
-    printf("                 Centro de Ensino Superior do SeridÛ                           \n");
-    printf("              Departamento de ComputaÁ„o e Tecnologia                          \n");
-    printf("                  Disciplina DCT1106 -- ProgramaÁ„o                            \n");
-    printf("                  Projeto controle de hor·rios de aula                         \n");
-    printf("              Desenvolvido por Matheus Diniz Fernandes                         \n");
-    printf("===============================================================================\n");
-    printf("                       ####     ####    ######                                 \n");
-    printf("                      ##  ##   ##  ##     ##                                   \n");
-    printf("                      ##       ##         ##                                   \n");
-    printf("                      ##        ####      ##                                   \n");
-    printf("                      ##           ##     ##                                   \n");
-    printf("                      ##  ##   ##  ##     ##                                   \n");
-    printf("                       ####     ####      ##                                 \n\n");
-    printf("                      COL…GIO SABER … DIVERS√O                               \n\n");
-    printf("              Sempre preocupado em ensinar da melhor forma possÌvel!         \n\n");
-    printf("===============================================================================\n");
-    printf("|                                                                             |\n");
-    printf("|            ************* Menu principal ***************                     |\n");
-    printf("|            1 - MÛdulo alunos                                                |\n");
-    printf("|            2 - MÛdulo Aulas                                                 |\n");
-    printf("|            3 - MÛdulo professores                                            \n");
-    printf("|            0 - Finalizar programa                                           |\n");
-    printf("|            Escolha a opÁ„o desejada: ");
-    scanf("%c", &op);
-    getchar();
-    printf("|                                                                             |\n");
-    printf("==============================================================================\n");
-    printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    printf("===================================================\n");
+    printf("             ####     ####    ######               \n");
+    printf("            ##  ##   ##  ##     ##                 \n");
+    printf("            ##       ##         ##                 \n");
+    printf("            ##        ####      ##                 \n");
+    printf("            ##           ##     ##                 \n");
+    printf("            ##  ##   ##  ##     ##                 \n");
+    printf("             ####     ####      ##                 \n\n");
+    printf("           COL√âGIO SABER √â DIVERS√ÉO               \n\n");
+    printf(" Preocupados em ensinar da melhor forma poss√≠vel! \n\n");
+    printf("===================================================\n");
+    printf("   ************* Menu principal ***************    \n");
+    printf("            1 - Gest√£o de alunos                   \n");
+    printf("            2 - Gest√£o de Hor√°rios                 \n");
+    printf("            3 - Gest√£o de professores              \n");
+    printf("            4 - Sobre a Equipe                      \n");
+    printf("            5 - Sobre o Projeto                    \n");
+    printf("            0 - Finalizar programa                 \n");
+    printf("                                                   \n");
 }
 
 
@@ -92,16 +84,21 @@ void menu_sobre(void) {
     system("clear||cls");
     printf("\n");
     printf("=================================================================================\n");
-    printf("|                                                                               |\n");
-    printf("|            ********* Gest„o de Hor·rio de aula *********                      |\n");
-    printf("|                                                                               |\n");
-    printf("|  Projeto realizado para a diciplina de programaÁ„o a qual buscar incoporar    |\n");
-    printf("|  os principais mÛdulos para uma gest„o de hor·rio de aula, sendo eles alunos, |\n");
-    printf("|  professores e hor·rios de aula.                                              |\n");
+    printf("              Universidade Federal do Rio Grande do Norte (UFRN)                 \n");
+    printf("                   Centro de Ensino Superior do Serid√≥                           \n");
+    printf("                Departamento de Computa√ß√£o e Tecnologia                          \n");
+    printf("                    Disciplina DCT1106 -- Programa√ß√£o                            \n");
+    printf("                    Projeto controle de hor√°rios de aula                         \n");
+    printf("                Desenvolvido por Matheus Diniz Fernandes                         \n");
     printf("=================================================================================\n");
-    printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    printf("|                                                                               |\n");
+    printf("|            ********* Gest√£o de Hor√°rio de aula *********                      |\n");
+    printf("|                                                                               |\n");
+    printf("|  Projeto realizado para a diciplina de programa√ß√£o a qual buscar incoporar    |\n");
+    printf("|  os principais m√≥dulos para uma gest√£o de hor√°rio de aula, sendo eles alunos, |\n");
+    printf("|  professores e hor√°rios de aula.                                              |\n");
+    printf("=================================================================================\n");
+    system("pause");
 }
 
 
@@ -110,7 +107,7 @@ void menu_equipe(void) {
     printf("\n");
     printf("===========================================================================\n");
     printf("|                                                                         |\n");
-    printf("|            ********* Sistema de Gest„o Escolar **********               |\n");
+    printf("|            ********* Sistema de Gest√£o Escolar **********               |\n");
     printf("|                                                                         |\n");
     printf("|            Este projeto foi desenvolvido por;                           |\n");
     printf("|                                                                         |\n");
@@ -120,32 +117,24 @@ void menu_equipe(void) {
     printf("|            Git: Matheusdnf                                              |\n");
     printf("|                                                                         |\n");
     printf("===========================================================================\n");
-    printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    system("pause");
 } 
+
 
 
 void menu_aluno(void) {
     char op;
-    system("clear||cls");
+    system("clear||cls");   
     printf("\n");
-    printf("===========================================================================\n");
-    printf("|                                                                         |\n");
-    printf("|            = = = = = = = = =  Menu Aluno = = = = = = = = =              |\n");
-    printf("|                                                                         |\n");
-    printf("|            1 - Cadastrar aluno                                          |\n");
-    printf("|            2 - Pesquisar aluno                                          |\n");
-    printf("|            3 - Atualizar informaÁıes do aluno                           |\n");
-    printf("|            4 - Excluir aluno                                            |\n");
-    printf("|            0 - Voltar                                                   |\n");
-    printf("|                                                                         |\n");
-    printf("|            Escolha a opÁ„o desejada: ");
-    scanf("%c", &op);
-    getchar();
-    printf("|                                                                         |\n");
-    printf("|                                                                         |\n");
-    printf("===========================================================================\n");
+    printf("===========================================================\n");
+    printf("     ****************  Menu Aluno ******************       \n");
+    printf("          1 - Cadastrar aluno                              \n");
+    printf("          2 - Pesquisar aluno                              \n");
+    printf("          3 - Atualizar informa√ß√µes do aluno               \n");
+    printf("          4 - Excluir aluno                                \n");
+    printf("          5 - Relat√≥rio dos alunos                         \n");
+    printf("          0 - Voltar                                       \n");
+    printf("===========================================================\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
@@ -153,92 +142,88 @@ void menu_aluno(void) {
 
 
 void cadastrar_aluno(void) {
-    system("clear||cls");
+    system("clear||cls");   //aqui ser√° onde ir√° cadastrar um aluno que estuda na escola
     printf("\n");
-    printf("===========================================================================\n");
-    printf("|                                                                         |\n");
-    printf("|            *************** Cadastrar Aluno ***************              |\n");
-    printf("|                                                                         |\n");
-    printf("|            CPF (apenas n˙meros):                                        |\n");
-    printf("|            Nome completo:                                               |\n");
-    printf("|            E-mail:                                                      |\n");
-    printf("|            Celular (apenas n˙meros):                                    |\n");
-    printf("|                                                                         |\n");
-    printf("===========================================================================\n");
+    printf("========================================================\n");
+    printf("    *************** Cadastrar Aluno *************     \n\n");
+    printf("         CPF (apenas n√∫meros):                          \n");
+    printf("         Nome completo:                                 \n");
+    printf("         E-mail:                                        \n");
+    printf("         Celular (apenas n√∫meros):                      \n");
+    printf("                                                        \n");
+    printf("========================================================\n");
     printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    system("pause");
 }
 
 
 void buscar_aluno(void) {
     system("clear||cls");
+    printf("\n");   //quando o usu√°rio informar o cpf do aluno ir√° mostrar os dados atrelados a aquelas pessoa,planejo implementar um menu que de outras op√ß√µes de procura
+    printf("========================================================\n");
+    printf("    *************** Pesquisar Aluno *************     \n\n");
+    printf("                                                        \n");
+    printf("            Informe o CPF(apenas n√∫meros):              \n");
+    printf("                                                        \n");
+    printf("========================================================\n");
     printf("\n");
-    printf("===========================================================================\n");
-    printf("|                                                                         |\n");
-    printf("|            *************** Pesquisar Aluno ***************              |\n");
-    printf("|                                                                         |\n");
-    printf("|            Informe o CPF(apenas n˙meros):                               |\n");
-    printf("|                                                                         |\n");
-    printf("===========================================================================\n");
-    printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    system("pause");
 }
 
 
 void atualizar_aluno(void) {
     system("clear||cls");
     printf("\n");
-
-    printf("===========================================================================\n");
-    printf("|                                                                         |\n");
-    printf("|            ************* Atualizar Aluno *****************              |\n");
-    printf("|                                                                         |\n");
-    printf("|            Informe o CPF(apenas n˙meros):                              |\n");
-    printf("|                                                                         |\n");
-    printf("===========================================================================\n");
+    printf("========================================================\n");
+    printf("    *************** Atualizar Aluno *************     \n\n");
+    printf("                                                        \n");
+    printf("            Informe o CPF(apenas n√∫meros):              \n");
+    printf("                                                        \n");
+    printf("========================================================\n");
     printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    system("pause");
 }
 
 
 void excluir_aluno(void) {
     system("clear||cls");
     printf("\n");
-    printf("===========================================================================\n");
-    printf("|                                                                         |\n");
-    printf("|            *************** Excluir Aluno *****************              |\n");
-    printf("|                                                                         |\n");
-    printf("|            Informe o CPF (apenas n˙meros):                              |\n");
-    printf("|                                                                         |\n");
-    printf("===========================================================================\n");
+    printf("========================================================\n");
+    printf("    *************** Excluir Aluno *************       \n\n");
+    printf("                                                        \n");
+    printf("            Informe o CPF(apenas n√∫meros):              \n");
+    printf("                                                        \n");
+    printf("========================================================\n");
     printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    system("pause");
+}
+
+void relatorio_aluno(void){
+    system("clear||cls");
+    printf("\n");
+    printf("========================================================\n");
+    printf("    *************** Relat√≥rio Aluno *************       \n\n");
+    printf("                                                        \n");
+    printf("       (informar todos os alunos cadastrado)            \n");
+    printf("                                                        \n");
+    printf("========================================================\n");
+    printf("\n");
+    system("pause");
 }
 
 void menu_horario(void) {
     char op;
-    system("clear||cls");
+    system("clear||cls");   
     printf("\n");
-    printf("===========================================================================\n");
-    printf("|                                                                         |\n");
-    printf("|            = = = = = = = = =  Menu Hor·rios = = = = = = = = =           |\n");
-    printf("|                                                                         |\n");
-    printf("|            1 - Cadastrar Hor·rios                                       |\n");
-    printf("|            2 - Pesquisar por Hor·rios                                   |\n");
-    printf("|            3 - Atualizar Hor·rio                                        |\n");
-    printf("|            4 - Excluir Hor·rio                                          |\n");
-    printf("|            0 - Voltar                                                   |\n");
-    printf("|                                                                         |\n");
-    printf("|            Escolha a opÁ„o desejada: ");
-    scanf("%c", &op);
-    getchar();
-    printf("|                                                                         |\n");
-    printf("|                                                                         |\n");
-    printf("===========================================================================\n");
+    printf("===========================================================\n");
+    printf("     ****************  Menu Hor√°rios ******************   \n");
+    printf("          1 - Cadastrar Hor√°rio                          \n");
+    printf("          2 - Pesquisar Hor√°rio                          \n");
+    printf("          3 - Atualizar Hor√°rio                          \n");
+    printf("          4 - Excluir Hor√°rio                            \n");
+    printf("          5 - Relat√≥rio dos Hor√°rios                     \n");
+    printf("          0 - Voltar                                     \n");
+    printf("===========================================================\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
@@ -246,89 +231,83 @@ void menu_horario(void) {
 
 void cadastrar_horario(void) {
     system("clear||cls");
-    printf("\n");
-    printf("===========================================================================\n");
-    printf("|                                                                         |\n");
-    printf("|            *************** Cadastrar Hor·rio ***************            |\n");
-    printf("|                                                                         |\n");
-    printf("|            Digite os dias da semana:                                    |\n");
-    printf("|            Digite o PerÌodo do Dia:                                     |\n");
-    printf("|            Digite o hor·rio:                                            |\n");
-    printf("|            Nome da diciplina:                                           |\n");
-    printf("|                                                                         |\n");
-    printf("===========================================================================\n");
-    printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    printf("========================================================\n");
+    printf(" **************** Cadastrar Hor√°rio ******************  \n\n");
+    printf("     Digite os dias da semana:                          \n");
+    printf("     Digite o Per√≠odo do Dia:                           \n");
+    printf("     Digite o hor√°rio:                                  \n");
+    printf("     Nome da diciplina:                                 \n\n");
+    printf("========================================================\n");
+    system("pause");
 }
 
 void buscar_horario(void) {
     system("clear||cls");
     printf("\n");
-    printf("===========================================================================\n");
-    printf("|                                                                         |\n");
-    printf("|            *************** Pesquisar horario ***************            |\n");
-    printf("|                                                                         |\n");
-    printf("|            Digite a matÈria:                                            |\n");
-    printf("|                                                                         |\n");
-    printf("===========================================================================\n");
+    printf("========================================================\n");
+    printf("    *************** Pesquisar Hor√°rio *************   \n\n");
+    printf("                                                        \n");
+    printf("          Informe a mat√©ria:                            \n");
+    printf("                                                        \n");
+    printf("========================================================\n");
     printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    system("pause");
 }
 
 
 void atualizar_horario(void) {
     system("clear||cls");
     printf("\n");
-    printf("===========================================================================\n");
-    printf("|                                                                         |\n");
-    printf("|            ************* Atualizar hor·rio *****************            |\n");
-    printf("|                                                                         |\n");
-    printf("|            Informe a matÈria:                                         |\n");
-    printf("|                                                                         |\n");
-    printf("===========================================================================\n");
+    printf("========================================================\n");
+    printf("    *************** Atualizar Hor√°rio *************   \n\n");
+    printf("                                                        \n");
+    printf("          Informe a mat√©ria:                            \n");
+    printf("                                                        \n");
+    printf("========================================================\n");
     printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    system("pause");
 }
 
 
 void excluir_horario(void) {
     system("clear||cls");
     printf("\n");
-    printf("===========================================================================\n");
-    printf("|                                                                         |\n");
-    printf("|            *************** Excluir hor·rio *****************            |\n");
-    printf("|                                                                         |\n");
-    printf("|            Informe a matÈria:                                           |\n");
-    printf("|                                                                         |\n");
-    printf("===========================================================================\n");
+    printf("========================================================\n");
+    printf("    *************** Excluir Hor√°rio *************     \n\n");
+    printf("                                                        \n");
+    printf("          Informe a mat√©ria:                            \n");
+    printf("                                                        \n");
+    printf("========================================================\n");
     printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    system("pause");
+}
+
+void relatorio_horario(void){
+    system("clear||cls");
+    printf("\n");
+    printf("========================================================\n");
+    printf("   *************** Relat√≥rio dos Hor√°rios ************* \n\n");
+    printf("                                                        \n");
+    printf("       (informar todos os Professores cadastrado)       \n");
+    printf("                                                        \n");
+    printf("========================================================\n");
+    printf("\n");
+    system("pause");
 }
 
 void menu_professor(void) {
     char op;
-    system("clear||cls");
+    system("clear||cls");   
     printf("\n");
-    printf("===========================================================================\n");
-    printf("|                                                                         |\n");
-    printf("|            = = = = = = = = =  Menu Professor(a) = = = = = = = = =       |\n");
-    printf("|                                                                         |\n");
-    printf("|            1 - Cadastrar Professor(a)                                   |\n");
-    printf("|            2 - Pesquisar por Professor(a)                               |\n");
-    printf("|            3 - Atualizar Professor(a)                                   |\n");
-    printf("|            4 - Excluir Professor(a)                                     |\n");
-    printf("|            0 - Voltar                                                   |\n");
-    printf("|                                                                         |\n");
-    printf("|            Escolha a opÁ„o desejada: ");
-    scanf("%c", &op);
-    getchar();
-    printf("|                                                                         |\n");
-    printf("|                                                                         |\n");
-    printf("===========================================================================\n");
+    printf("===========================================================\n");
+    printf("     ****************  Menu Professor ******************   \n");
+    printf("          1 - Cadastrar Professor                          \n");
+    printf("          2 - Pesquisar Professor                          \n");
+    printf("          3 - Atualizar informa√ß√µes do Professor           \n");
+    printf("          4 - Excluir Professor                            \n");
+    printf("          5 - Relat√≥rio dos Professores                    \n");
+    printf("          0 - Voltar                                       \n");
+    printf("===========================================================\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
@@ -337,65 +316,68 @@ void menu_professor(void) {
 void cadastrar_professor(void) {
     system("clear||cls");
     printf("\n");
-    printf("===========================================================================\n");
-    printf("|                                                                         |\n");
-    printf("|            *************** Cadastrar Professor(a) ***************       |\n");
-    printf("|                                                                         |\n");
-    printf("|            CPF (apenas n˙meros):                                        |\n");
-    printf("|            Nome completo:                                               |\n");
-    printf("|            E-mail:                                                      |\n");
-    printf("|            Celular (apenas n˙meros):                                    |\n");
-    printf("|            MatÈria Lecionada:                                           |\n");
-    printf("|                                                                         |\n");
-    printf("===========================================================================\n");
+    printf("========================================================\n\n");
+    printf("   *************** Cadastrar Professor ***************  \n\n");
+    printf("         CPF (apenas n√∫meros):                            \n");
+    printf("         Nome completo:                                   \n");
+    printf("         E-mail:                                          \n");
+    printf("         Celular (apenas n√∫meros):                        \n");
+    printf("         Mat√©ria Lecionada:                              \n\n");
+    printf("=========================================================\n");
     printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    system("pause");
 }
 
 void buscar_professor(void) {
     system("clear||cls");
     printf("\n");
-    printf("===========================================================================\n");
-    printf("|                                                                         |\n");
-    printf("|            *************** Pesquisar Professor(a) ***************       |\n");
-    printf("|                                                                         |\n");
-    printf("|            Digite o CPF(apenas n˙meros):                                |\n");
-    printf("|                                                                         |\n");
-    printf("===========================================================================\n");
+    printf("========================================================\n");
+    printf("    *************** Buscar Professor *************    \n\n");
+    printf("                                                        \n");
+    printf("            Informe o CPF(apenas n√∫meros):              \n");
+    printf("                                                        \n");
+    printf("========================================================\n");
     printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    system("pause");
 }
 
 
 void atualizar_professor(void) {
     system("clear||cls");
     printf("\n");
-    printf("===========================================================================\n");
-    printf("|                                                                         |\n");
-    printf("|            ************* Atualizar Professor(a) *****************       |\n");
-    printf("|                                                                         |\n");
-    printf("|            Digite o CPF (apenas n˙meros):                               |\n");
-    printf("|                                                                         |\n");
-    printf("===========================================================================\n");
+    printf("========================================================\n");
+    printf("    *************** Atualizar Professor *************   \n\n");
+    printf("                                                        \n");
+    printf("            Informe o CPF(apenas n√∫meros):              \n");
+    printf("                                                        \n");
+    printf("========================================================\n");
     printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    system("pause");
 }
 
 
 void excluir_professor(void) {
     system("clear||cls");
     printf("\n");
-    printf("===========================================================================\n");
-    printf("|                                                                         |\n");
-    printf("|            *************** Excluir Professor(a) *****************       |\n");
-    printf("|                                                                         |\n");
-    printf("|            Digite o CPF (apenas n˙meros):                               |\n");
-    printf("|                                                                         |\n");
-    printf("===========================================================================\n");
+    printf("========================================================\n");
+    printf("    *************** Excluir Professor *************     \n\n");
+    printf("                                                        \n");
+    printf("            Informe o CPF(apenas n√∫meros):              \n");
+    printf("                                                        \n");
+    printf("========================================================\n");
     printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    system("pause");
+}
+
+void relatorio_professor(void){
+    system("clear||cls");
+    printf("\n");
+    printf("========================================================\n");
+    printf("   *************** Relat√≥rio Professor *************  \n\n");
+    printf("                                                        \n");
+    printf("       (informar todos os Professores cadastrado)       \n");
+    printf("                                                        \n");
+    printf("========================================================\n");
+    printf("\n");
+    system("pause");
 }
