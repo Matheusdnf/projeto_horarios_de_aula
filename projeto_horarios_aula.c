@@ -58,7 +58,7 @@ int main(void) {
             default:
                 printf("\nOpção Inválida!");
                 printf("\n");
-                system("pause");
+                getchar(); printf("Digite enter para continuar...");getchar(); 
                 break;
         }
     }
@@ -111,7 +111,7 @@ void menu_sobre(void) {
     printf("  os principais módulos para uma gestão de horário de aula, sendo eles alunos,   \n");
     printf("  professores e horários de aula.                                                \n");
     printf("=================================================================================\n");
-    system("pause");
+    getchar(); printf("Digite enter para continuar...");getchar(); 
 }
 
 
@@ -130,7 +130,7 @@ void menu_equipe(void) {
     printf("            Git: Matheusdnf                                              \n");
     printf("                                                                         \n");
     printf("===========================================================================\n");
-    system("pause");
+    getchar(); printf("Digite enter para continuar...");getchar(); 
 } 
 
 
@@ -171,7 +171,7 @@ void menu_aluno(void) {
         default:
             break;
             printf("Opção Inválida!\n");
-            system("pause");
+            getchar(); printf("Digite enter para continuar...");getchar();          
             break;
         }
     }
@@ -189,7 +189,7 @@ void cadastrar_aluno(void) {
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    system("pause");
+    getchar(); printf("Digite enter para continuar...");getchar(); //para aparecer o menu e ele não sair rapidamente
 }
 
 
@@ -203,7 +203,8 @@ void buscar_aluno(void) {
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    system("pause");
+    getchar(); printf("Digite enter para continuar...");getchar(); 
+
 }
 
 void atualizar_aluno(void) {
@@ -216,7 +217,7 @@ void atualizar_aluno(void) {
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    system("pause");
+    getchar(); printf("Digite enter para continuar...");getchar(); 
 }
 
 
@@ -230,7 +231,7 @@ void excluir_aluno(void) {
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    system("pause");
+    getchar(); printf("Digite enter para continuar...");getchar(); 
 }
 
 void relatorio_aluno(void){
@@ -243,7 +244,7 @@ void relatorio_aluno(void){
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    system("pause");
+    getchar(); printf("Digite enter para continuar...");getchar(); 
 }
 
 void menu_horario(void) {
@@ -283,7 +284,7 @@ void menu_horario(void) {
             default:
                 break;
                 printf("Opção Inválida!\n");
-                system("pause");
+                getchar(); printf("Digite enter para continuar...");getchar(); 
                 break;
         }
     }
@@ -298,7 +299,7 @@ void cadastrar_horario(void) {
     printf("     Digite o horário:                                  \n");
     printf("     Nome da diciplina:                                 \n\n");
     printf("========================================================\n");
-    system("pause");
+    getchar(); printf("Digite enter para continuar...");getchar(); 
 }
 
 void buscar_horario(void) {
@@ -311,7 +312,7 @@ void buscar_horario(void) {
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    system("pause");
+    getchar(); printf("Digite enter para continuar...");getchar(); 
 }
 
 
@@ -325,7 +326,7 @@ void atualizar_horario(void) {
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    system("pause");
+    getchar(); printf("Digite enter para continuar...");getchar(); 
 }
 
 
@@ -339,7 +340,7 @@ void excluir_horario(void) {
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    system("pause");
+    getchar(); printf("Digite enter para continuar...");getchar(); 
 }
 
 void relatorio_horario(void){
@@ -352,7 +353,7 @@ void relatorio_horario(void){
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    system("pause");
+    getchar(); printf("Digite enter para continuar...");getchar(); 
 }
 
 
@@ -393,7 +394,7 @@ void menu_professor(void) {
             default:
                 break;
                 printf("Opção Inválida!\n");
-                system("pause");
+                getchar(); printf("Digite enter para continuar...");getchar(); 
                 break;
         }
     }
@@ -411,7 +412,7 @@ void cadastrar_professor(void) {
     printf("         Matéria Lecionada:                              \n\n");
     printf("=========================================================\n");
     printf("\n");
-    system("pause");
+    getchar(); printf("Digite enter para continuar...");getchar(); 
 }
 
 void buscar_professor(void) {
@@ -424,7 +425,7 @@ void buscar_professor(void) {
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    system("pause");
+    getchar(); printf("Digite enter para continuar...");getchar(); 
 }
 
 
@@ -438,7 +439,7 @@ void atualizar_professor(void) {
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    system("pause");
+    getchar(); printf("Digite enter para continuar...");getchar(); 
 }
 
 
@@ -452,7 +453,7 @@ void excluir_professor(void) {
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    system("pause");
+    getchar(); printf("Digite enter para continuar...");getchar(); 
 }
 
 void relatorio_professor(void){
@@ -465,5 +466,5 @@ void relatorio_professor(void){
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    system("pause");
+    getchar(); printf("Digite enter para continuar...");getchar(); 
 }
