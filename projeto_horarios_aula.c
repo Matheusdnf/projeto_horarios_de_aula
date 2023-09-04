@@ -1,37 +1,42 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
 
 //
-// Assinatura das fun  es
+// Assinatura das funções
 void menu_principal(void);
 void menu_sobre(void);
 void menu_equipe(void);
+
+//módulo aluno
 void menu_aluno(void);
 void cadastrar_aluno(void);
 void buscar_aluno(void);
 void atualizar_aluno(void);
 void excluir_aluno(void);
 void relatorio_aluno(void);
+//módulo horário de aula
 void menu_horario(void);
 void cadastrar_horario(void);
 void buscar_horario(void);
 void atualizar_horario(void);
 void excluir_horario(void);
 void relatorio_horario(void);
+//módulo professores
 void menu_professor(void);
 void cadastrar_professor(void);
 void buscar_professor(void);
 void atualizar_professor(void);
 void excluir_professor(void);
 void relatorio_professor(void);
+//menus auxiliares
+void esc_periodo(void);
+void esc_semana(void);
 
 //variáveis 
 char opc;
 int iniciar = 1;
 // Programa principal
 int main(void) {
-    setlocale(LC_ALL,"Portuguese_Brazil");
     while ( iniciar == 1){
         menu_principal();
         printf("\nDigite o que deseja fazer: "); scanf("%1s", &opc); getchar();
@@ -180,6 +185,7 @@ void menu_aluno(void) {
 void cadastrar_aluno(void) {
     system("clear||cls");   //aqui será onde irá cadastrar um aluno que estuda na escola
     printf("\n");
+    
     printf("========================================================\n");
     printf("    *************** Cadastrar Aluno *************     \n\n");
     printf("         CPF (apenas números):                          \n");
@@ -294,8 +300,8 @@ void cadastrar_horario(void) {
     system("clear||cls");
     printf("========================================================\n");
     printf(" **************** Cadastrar Horário ******************  \n\n");
-    printf("     Digite os dias da semana:                          \n");
-    printf("     Digite o Período do Dia:                           \n");
+    esc_semana();
+    esc_periodo();
     printf("     Digite o horário:                                  \n");
     printf("     Nome da diciplina:                                 \n\n");
     printf("========================================================\n");
@@ -467,4 +473,20 @@ void relatorio_professor(void){
     printf("========================================================\n");
     printf("\n");
     getchar(); printf("Digite enter para continuar...");getchar(); 
+}
+
+void esc_semana(void){   //escolha do dia da semana
+    printf("     2-Segunda\n");
+    printf("     3-Terça\n");
+    printf("     4-Quarta\n");
+    printf("     5-Quinta\n");
+    printf("     6-Sexta\n");
+    printf("     Digite o dia da semana: (aperte enter para continuar...)");getchar();getchar();// o usuário podera escolher os dias os quais serão as aulas
+}
+void esc_periodo(void){   //escolha do período do dia
+    printf("\n");
+    printf("     M-Manhã\n");
+    printf("     T-Tarde\n");
+    printf("     N-Noite\n");
+    printf("     Digite o Período do dia: (aperte enter para continuar...)");getchar();getchar();// o usuário podera escolher os dias os quais serão as aulas
 }
