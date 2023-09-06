@@ -34,10 +34,9 @@ void esc_semana(void);
 
 //variáveis 
 char opc;
-int iniciar = 1;
 // Programa principal
 int main(void) {
-    while ( iniciar == 1){
+    do{
         menu_principal();
         printf("\nDigite o que deseja fazer: "); scanf("%1s", &opc); getchar();
         switch (opc) { 
@@ -58,7 +57,7 @@ int main(void) {
                 break;
             case '0':
                 printf("\nPrograma Finalizado");
-                iniciar = 0;
+                opc='0';
                 break;
             default:
                 printf("\nOpção Inválida!");
@@ -66,7 +65,7 @@ int main(void) {
                 getchar(); printf("Digite enter para continuar...");getchar(); 
                 break;
         }
-    }
+    }while (opc!='0');
     return 0;
 }
 
@@ -173,8 +172,8 @@ void menu_aluno(void) {
             break;
         case '0':
             opc=0;
-        default:
             break;
+        default:
             printf("Opção Inválida!\n");
             getchar(); printf("Digite enter para continuar...");getchar();          
             break;
@@ -287,8 +286,8 @@ void menu_horario(void) {
                 break;
             case '0':
                 opc=0;
-            default:
                 break;
+            default:
                 printf("Opção Inválida!\n");
                 getchar(); printf("Digite enter para continuar...");getchar(); 
                 break;
@@ -397,8 +396,8 @@ void menu_professor(void) {
                 break;
             case '0':
                 opc=0;
-            default:
                 break;
+            default:
                 printf("Opção Inválida!\n");
                 getchar(); printf("Digite enter para continuar...");getchar(); 
                 break;
