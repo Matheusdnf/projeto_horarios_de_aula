@@ -49,7 +49,7 @@ void menu_aluno(void) {
 
 
 void cadastrar_aluno(void) {
-    system("clear||cls");   //aqui será onde irá cadastrar um aluno que estuda na escola
+    system("clear||cls");   //aqui ser� onde ir� cadastrar um aluno que estuda na escola
     printf("\n");
     
     printf("========================================================\n");
@@ -61,7 +61,7 @@ void cadastrar_aluno(void) {
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    getchar(); printf("Digite enter para continuar...");getchar(); //para aparecer o menu e ele não sair rapidamente
+    getchar(); printf("Digite enter para continuar...");getchar(); //para aparecer o menu e ele n�o sair rapidamente
 }
 
 void buscar_aluno(void) {
