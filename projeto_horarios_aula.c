@@ -5,11 +5,11 @@
 #include "professor.h"
 #include "global.h"  //incluede para deixar opc global 
 
-// Assinatura das funÁıes
+// Assinatura das fun√ß√µes
 void menu_principal(void);
 void menu_sobre(void);
 void menu_equipe(void);
-//vari·vel global
+//vari√°vel global
 char opc;
 // Programa principal
 int main(void) {
@@ -37,7 +37,7 @@ int main(void) {
                 opc='0';
                 break;
             default:
-                printf("\nOpÁ„o Inv·lida!");
+                printf("\nOp√ß√£o Inv√°lida!");
                 printf("Digite enter para continuar...");getchar(); 
                 break;
         }
@@ -45,7 +45,7 @@ int main(void) {
     return 0;
 }
 
-// FunÁıes
+// Fun√ß√µes
 
 
 void menu_principal() {
@@ -59,13 +59,13 @@ void menu_principal() {
     printf("            ##           ##     ##                 \n");
     printf("            ##  ##   ##  ##     ##                 \n");
     printf("             ####     ####      ##                 \n\n");
-    printf("           COL…GIO SABER … DIVERS√O               \n\n");
-    printf(" Preocupados em ensinar da melhor forma possÌvel! \n\n");
+    printf("           COL√âGIO SABER √â DIVERS√ÉO               \n\n");
+    printf(" Preocupados em ensinar da melhor forma poss√≠vel! \n\n");
     printf("===================================================\n");
     printf("   ************* Menu principal ***************    \n");
-    printf("            1 - Gest„o de alunos                   \n");
-    printf("            2 - Gest„o de Hor·rios                 \n");
-    printf("            3 - Gest„o de professores              \n");
+    printf("            1 - Gest√£o de alunos                   \n");
+    printf("            2 - Gest√£o de Hor√°rios                 \n");
+    printf("            3 - Gest√£o de professores              \n");
     printf("            4 - Sobre a Equipe                      \n");
     printf("            5 - Sobre o Projeto                    \n");
     printf("            0 - Finalizar programa                 \n");
@@ -78,18 +78,18 @@ void menu_sobre(void) {
     printf("\n");
     printf("=================================================================================\n");
     printf("              Universidade Federal do Rio Grande do Norte (UFRN)                 \n");
-    printf("                   Centro de Ensino Superior do SeridÛ                           \n");
-    printf("                Departamento de ComputaÁ„o e Tecnologia                          \n");
-    printf("                    Disciplina DCT1106 -- ProgramaÁ„o                            \n");
-    printf("                    Projeto controle de hor·rios de aula                         \n");
+    printf("                   Centro de Ensino Superior do Serid√≥                           \n");
+    printf("                Departamento de Computa√ß√£o e Tecnologia                          \n");
+    printf("                    Disciplina DCT1106 -- Programa√ß√£o                            \n");
+    printf("                    Projeto controle de hor√°rios de aula                         \n");
     printf("                Desenvolvido por Matheus Diniz Fernandes                         \n");
     printf("=================================================================================\n");
     printf("                                                                                 \n");
-    printf("            ********* Gest„o de Hor·rio de aula *********                        \n");
+    printf("            ********* Gest√£o de Hor√°rio de aula *********                        \n");
     printf("                                                                                 \n");
-    printf("  Projeto realizado para a diciplina de programaÁ„o a qual buscar incoporar      \n");
-    printf("  os principais mÛdulos para uma gest„o de hor·rio de aula, sendo eles alunos,   \n");
-    printf("  professores e hor·rios de aula.                                                \n");
+    printf("  Projeto realizado para a diciplina de programa√ß√£o a qual buscar incoporar      \n");
+    printf("  os principais m√≥dulos para uma gest√£o de hor√°rio de aula, sendo eles alunos,   \n");
+    printf("  professores e hor√°rios de aula.                                                \n");
     printf("=================================================================================\n");
     getchar(); printf("Digite enter para continuar...");getchar(); 
 }
@@ -100,7 +100,7 @@ void menu_equipe(void) {
     printf("\n");
     printf("===========================================================================\n");
     printf("                                                                         \n");
-    printf("            ********* Sistema de Gest„o Escolar **********               \n");
+    printf("            ********* Sistema de Gest√£o Escolar **********               \n");
     printf("                                                                         \n");
     printf("            Este projeto foi desenvolvido por;                           \n");
     printf("                                                                         \n");
