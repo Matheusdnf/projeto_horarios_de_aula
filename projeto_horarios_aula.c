@@ -10,6 +10,7 @@ void menu_principal(void);
 void menu_sobre(void);
 void menu_equipe(void);
 //variável global
+
 char opc;
 // Programa principal
 int main(void) {
