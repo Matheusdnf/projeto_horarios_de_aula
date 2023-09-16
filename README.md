@@ -2,4 +2,4 @@
 sistema de gestão de horários de aula 
 
 
-gcc *.c -o projeto -Wal
+gcc *.c -o projeto -Wall
