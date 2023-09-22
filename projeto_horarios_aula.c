@@ -52,23 +52,23 @@ int main(void) {
 void menu_principal() {
     system("clear||cls");
     printf("\n");
-    printf("===================================================\n");
-    printf("             ####     ####    ######               \n");
-    printf("            ##  ##   ##  ##     ##                 \n");
-    printf("            ##       ##         ##                 \n");
-    printf("            ##        ####      ##                 \n");
-    printf("            ##           ##     ##                 \n");
-    printf("            ##  ##   ##  ##     ##                 \n");
-    printf("             ####     ####      ##                 \n\n");
+    printf("\033[34m             ####\033[0m     \033[31m####\033[0m    \033[37m######\033[0m               \n"); //feito com a ajuda do chat gpt
+    printf("\033[34m            ##  ##\033[0m   \033[31m##  ##\033[0m     \033[37m##\033[0m                 \n");
+    printf("\033[34m            ##\033[0m       \033[31m##\033[0m         \033[37m##\033[0m                 \n");
+    printf("\033[34m            ##\033[0m        \033[31m####\033[0m      \033[37m##\033[0m                 \n");
+    printf("\033[34m            ##\033[0m           \033[31m##\033[0m     \033[37m##\033[0m                 \n");
+    printf("\033[34m            ##  ##\033[0m   \033[31m##  ##\033[0m     \033[37m##\033[0m                 \n");
+    printf("\033[34m             ####\033[0m     \033[31m####\033[0m      \033[37m##\033[0m                 \n\n");
     printf("           COLÉGIO SABER É DIVERSÃO               \n\n");
     printf(" Preocupados em ensinar da melhor forma possível! \n\n");
     printf("===================================================\n");
     printf("   ************* Menu principal ***************    \n");
     printf("            1 - Gestão de alunos                   \n");
-    printf("            2 - Gestão de Horários                 \n");
-    printf("            3 - Gestão de professores              \n");
-    printf("            4 - Sobre a Equipe                      \n");
-    printf("            5 - Sobre o Projeto                    \n");
+    printf("            2 - Gestão de professores              \n");
+    printf("            3 - Gestão de Horários                 \n");
+    printf("            4 - Gestão de Diciplinas              \n");
+    printf("            5 - Sobre a Equipe                      \n");
+    printf("            6 - Sobre o Projeto                    \n");
     printf("            0 - Finalizar programa                 \n");
     printf("                                                   \n");
 }
@@ -113,4 +113,3 @@ void menu_equipe(void) {
     printf("===========================================================================\n");
     getchar(); printf("Digite enter para continuar...");getchar(); 
 } 
-
