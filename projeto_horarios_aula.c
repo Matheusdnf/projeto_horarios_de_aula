@@ -4,14 +4,16 @@
 #include "horario.h"
 #include "professor.h"
 #include "global.h"  //incluede para deixar opc global 
+#include "diciplina.h"
 
 // Assinatura das funções
 void menu_principal(void);
 void menu_sobre(void);
 void menu_equipe(void);
-//variável global
 
+//variável global
 char opc;
+
 // Programa principal
 int main(void) {
     do{
@@ -22,19 +24,22 @@ int main(void) {
                 menu_aluno();
                 break;
             case '2':
-                menu_horario();
-                break;
-            case '3':
                 menu_professor();
                 break;
+            case '3':
+                menu_horario();
+                break;
             case '4':
-                menu_equipe();
+                menu_diciplina();
                 break;
             case '5':
+                menu_equipe();
+                break;
+            case '6':
                 menu_sobre();
                 break;
             case '0':
-                printf("\nPrograma Finalizado");
+                printf("\nPrograma Finalizado\n");
                 opc='0';
                 break;
             default:
@@ -45,8 +50,6 @@ int main(void) {
     }while (opc!='0');
     return 0;
 }
-
-// Funções
 
 
 void menu_principal() {
@@ -113,3 +116,4 @@ void menu_equipe(void) {
     printf("===========================================================================\n");
     getchar(); printf("Digite enter para continuar...");getchar(); 
 } 
+
