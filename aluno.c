@@ -84,7 +84,8 @@ void atualizar_aluno(void) {
     printf("========================================================\n");
     printf("    *************** Atualizar Aluno *************     \n\n");
     printf("                                                        \n");
-    printf("            Informe o CPF(apenas números):              \n");
+    printf("            o que deseja atualizar?                     \n");
+    printf("             Telefone(0) - Email(1)                     \n");
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");

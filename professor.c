@@ -83,7 +83,8 @@ void atualizar_professor(void) {
     printf("========================================================\n");
     printf("    *************** Atualizar Professor *************   \n\n");
     printf("                                                        \n");
-    printf("            Informe o CPF(apenas números):              \n");
+    printf("             O que deseja atualizar?                    \n");
+    printf("             Telefone(0) - Email(1)                     \n");
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
