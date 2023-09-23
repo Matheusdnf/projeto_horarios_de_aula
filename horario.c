@@ -51,10 +51,9 @@ void cadastrar_horario(void) {
     system("clear||cls");
     printf("========================================================\n");
     printf(" **************** Cadastrar Horário ******************  \n\n");
-    esc_semana();
-    esc_periodo();
-    printf("     Digite o horário:                                  \n");
-    printf("     Nome da diciplina:                                 \n\n");
+    printf("                                                        \n");
+    printf("      Informe o código do horário:                      \n");
+    printf("                                                        \n\n");
     printf("========================================================\n");
     getchar(); printf("Digite enter para continuar...");getchar(); 
 }
@@ -65,7 +64,7 @@ void buscar_horario(void) {
     printf("========================================================\n");
     printf("    *************** Pesquisar Horário *************   \n\n");
     printf("                                                        \n");
-    printf("          Informe a matéria:                            \n");
+    printf("          Informe o horário:                            \n");
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
@@ -79,7 +78,7 @@ void atualizar_horario(void) {
     printf("========================================================\n");
     printf("    *************** Atualizar Horário *************   \n\n");
     printf("                                                        \n");
-    printf("          Informe a matéria:                            \n");
+    printf("          Informe o horário:                            \n");
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
@@ -93,7 +92,7 @@ void excluir_horario(void) {
     printf("========================================================\n");
     printf("    *************** Excluir Horário *************     \n\n");
     printf("                                                        \n");
-    printf("          Informe a matéria:                            \n");
+    printf("          Informe o horário:                            \n");
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
@@ -106,25 +105,10 @@ void relatorio_horario(void){
     printf("========================================================\n");
     printf("   *************** Relatório dos Horários ************* \n\n");
     printf("                                                        \n");
-    printf("       (informar todos os Professores cadastrado)       \n");
+    printf("       (informar todos os horários cadastrado)          \n");
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
     getchar(); printf("Digite enter para continuar...");getchar(); 
 }
 
-void esc_semana(void){   //escolha do dia da semana
-    printf("     2-Segunda\n");
-    printf("     3-Terça\n");
-    printf("     4-Quarta\n");
-    printf("     5-Quinta\n");
-    printf("     6-Sexta\n");
-    printf("     Digite o dia da semana: (aperte enter para continuar...)");getchar();getchar();// o usuário podera escolher os dias os quais serão as aulas
-}
-void esc_periodo(void){   //escolha do período do dia
-    printf("\n");
-    printf("     M-Manhã\n");
-    printf("     T-Tarde\n");
-    printf("     N-Noite\n");
-    printf("     Digite o Período do dia: (aperte enter para continuar...)");getchar();getchar();// o usuário podera escolher os dias os quais serão as aulas
-}
