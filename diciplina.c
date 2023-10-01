@@ -114,3 +114,21 @@ void relatorio_diciplina(void){
     printf("\n");
     getchar(); printf("Digite enter para continuar...");getchar(); 
 }
+
+
+void diciplinas(void) {
+    printf("/n");
+    printf("P-Português\n");
+    printf("I-Inglês\n");
+    printf("E-Espanhol\n");
+    printf("A-Artes\n");
+    printf("H-História\n");
+    printf("G-Geografia\n");
+    printf("L-Literatura\n");
+    printf("É-Filosofia\n");
+    printf("S-Sociologia\n");
+    printf("M-Matemática\n");
+    printf("B-Biologia\n");
+    printf("Q-Química\n");
+    printf("F-Física\n");
+}
