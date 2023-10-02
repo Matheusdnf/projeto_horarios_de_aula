@@ -204,7 +204,6 @@ int valida_diciplina(char *diciplina) {
     {"P","I","E","É","A",
     "H","G","L","F",
     "S","M","B","Q","F"};
-    // Remove o caractere de nova linha, se presente
     for (int i=0 ; i<14;i++){
         //compara se ambos os caracteres digitados estão presente no que foi digitado
         if (strcmp(diciplina, materia[i]) == 0) {  
@@ -232,6 +231,7 @@ void ler_diciplina(char *diciplina) {
         diciplinas();
         printf("\n");
         printf("Digite a disciplina (somente maiúsculas):");
+        limpar_buffer();
         fgets(diciplina, 3 , stdin);
         limpar_buffer();
         t = valida_diciplina(diciplina);
