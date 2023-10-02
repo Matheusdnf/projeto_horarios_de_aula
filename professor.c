@@ -1,5 +1,7 @@
 #include "global.h" //incluede para deixar opc global 
 #include "professor.h"
+#include "valida.h"
+#include "diciplina.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -50,14 +52,18 @@ void menu_professor(void) {
 
 void cadastrar_professor(void) {
     system("clear||cls");
+    char telefone[15];
+    char nome[100];
+    char cpf[15];
+    char diciplina[3];
     printf("\n");
     printf("========================================================\n\n");
     printf("   *************** Cadastrar Professor ***************  \n\n");
-    printf("         CPF (apenas números):                            \n");
-    printf("         Nome completo:                                   \n");
+    ler_cpf(cpf);
+    ler_nome(nome);
     printf("         E-mail:                                          \n");
-    printf("         Celular (apenas números):                        \n");
-    printf("         Matéria Lecionada:                              \n\n");
+    ler_telefone(telefone);
+    ler_diciplina(diciplina);
     printf("=========================================================\n");
     printf("\n");
     getchar(); printf("Digite enter para continuar...");getchar(); 
