@@ -11,6 +11,10 @@ void removerCaracteresNaoNumericos(char cpf[]);
 int validarCPF(char cpf[]);
 void ler_cpf(char cpf[]);
 //funções referente a validação de email
+void ler_email(char email[]);
+int validate_email(char email[]);
+char* str_to_lower(char* str);
+int has_space(char* str);
 //limpar o buffer de entrada para quando for utilizado o scanf
 void limpar_buffer();
 //funções para validar as diciplinas
