@@ -352,7 +352,7 @@ int validate_email(char email[]) {
     }
     return 0;
 }
-
+//auxiliares
 int has_space(char* str) {
     //função pega de marlison silva @MarlisonSilva
     int i = 0;
@@ -367,7 +367,7 @@ int has_space(char* str) {
     
    return false;
 }
-
+//auxiliares
 char* str_to_lower(char* str){
     //função pega de marlison silva @MarlisonSilva
     char *aux = str;
