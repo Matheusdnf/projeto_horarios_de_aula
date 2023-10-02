@@ -1,5 +1,6 @@
 #include "global.h" //incluede para deixar opc global 
 #include "diciplina.h"
+#include "valida.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -49,12 +50,16 @@ void menu_diciplina(void) {
 
 void cadastrar_diciplina(void) {
     system("clear||cls");   
+    char nome[100];
+    char diciplina[3];
     printf("\n");
     printf("========================================================\n");
     printf("    *************** Cadastrar Diciplina *************   \n\n");
     printf("                                                        \n");
-    printf("         Digite qual ou quais diciplinas:                \n");
-    printf("         Informe o nome do professor:                   \n");
+    printf("Pode ser 1 ou 2 diciplinas\n"); 
+    ler_diciplina(diciplina);
+    printf("Digite o nome do professor\n");
+    ler_nome(nome);
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
@@ -117,7 +122,7 @@ void relatorio_diciplina(void){
 
 
 void diciplinas(void) {
-    printf("/n");
+    printf("\n");
     printf("P-Português\n");
     printf("I-Inglês\n");
     printf("E-Espanhol\n");
