@@ -52,16 +52,13 @@ void menu_professor(void) {
 
 void cadastrar_professor(void) {
     system("clear||cls");
-    char telefone[15];
-    char nome[100];
-    char cpf[15];
-    char diciplina[3];
+    char telefone[15],nome[100],cpf[15],diciplina[3],email[225];
     printf("\n");
     printf("========================================================\n\n");
     printf("   *************** Cadastrar Professor ***************  \n\n");
     ler_cpf(cpf);
     ler_nome(nome);
-    printf("         E-mail:                                          \n");
+    ler_email(email);
     ler_telefone(telefone);
     ler_diciplina(diciplina);
     printf("=========================================================\n");
