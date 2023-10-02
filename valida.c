@@ -3,14 +3,16 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include "valida.h"
+#include "diciplina.h"
 
 bool v = true;
 bool f = false;
 
 void ler_telefone(char *telefone) {
     int t;
+    v=true;
     while (v) {
-        printf("Digite seu telefone:");
+        printf("Digite seu telefone com DDD (apenas números):");
         fgets(telefone, 15, stdin);
         t = valida_telefone(telefone);
         if (t == 1) {
@@ -74,8 +76,10 @@ bool eh_letra_acentuada(char c) {   //recebe uma letra por vez
     return isalpha(c) || c == ' ';
 }
 
+
 void ler_nome(char *nome) {
     int n;
+    v=true;
     while (v) {
         printf("Digite seu nome:");
         fgets(nome, 100, stdin);
@@ -176,9 +180,11 @@ int validarCPF(char cpf[]) {
 
 void ler_cpf(char cpf[]) {
     int c;
+    v=true;
     while (v) {
-        printf("Digite o CPF: ");
+        printf("Digite o seu CPF: ");
         scanf("%s", cpf);
+        limpar_buffer();
         c = validarCPF(cpf);
         if (c == 1) {
             printf("válido\n");
@@ -188,3 +194,73 @@ void ler_cpf(char cpf[]) {
         }
     }
 }
+
+
+
+int valida_diciplina(char *diciplina) {
+    int tam = strlen(diciplina);
+    char *materia[]=
+    {"P","I","E","É","A",
+    "H","G","L","F",
+    "S","M","B","Q","F"};
+    // Remove o caractere de nova linha, se presente
+    for (int i=0 ; i<14;i++){
+        if (strcmp(diciplina, materia[i]) == 0) {
+            return 0;
+        }
+    }
+    if( tam!=2 && tam!=3){
+        return 0;
+    }
+
+    for (int i = 0; i < tam; i++) {
+        if (!isalpha(diciplina[i]) && !isspace(diciplina[i])) {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+void ler_diciplina(char *diciplina) {
+    int t;
+    v=true;
+    while (v) {
+        diciplinas();
+        printf("Digite a disciplina (somente maiúsculas):");
+        fgets(diciplina, 3 , stdin);
+        limpar_buffer();
+        t = valida_diciplina(diciplina);
+        if (t == 1) {
+            printf("válido\n");
+            v = f; // Saia do loop quando a disciplina for válida
+        } else if (t == 0) {
+            printf("inválido\n");
+        }
+    }
+}
+
+//feito com a ajuda do chat gpt
+void limpar_buffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {
+        // Lê e descarta cada caractere até encontrar uma nova linha ('\n') ou o fim do arquivo (EOF)
+    }
+}
+
+
+//void ler_email(char *email[]) {
+//    int e;
+//    v=true;
+//    while (v) {
+//        printf("Digite seu Email:");
+//        fgets(email, 255, stdin);
+//        e = validate_email(email);
+//        if (e == 1) {
+//            printf("Email válido!\n");
+//           v=f;
+//        } else if (e == 0) {
+//            printf("Email inválido!\n");
+//        }
+//    }
+//}
