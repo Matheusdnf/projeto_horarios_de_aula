@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <stdlib.h>
 #include "valida.h"
 #include "diciplina.h"
 
@@ -253,18 +254,130 @@ void limpar_buffer() {
 }
 
 
-//void ler_email(char *email[]) {
-//    int e;
-//    v=true;
-//    while (v) {
-//        printf("Digite seu Email:");
-//        fgets(email, 255, stdin);
-//        e = validate_email(email);
-//        if (e == 1) {
-//            printf("Email válido!\n");
-//           v=f;
-//        } else if (e == 0) {
-//            printf("Email inválido!\n");
-//        }
-//    }
-//}
+void ler_email(char email[]) {
+    int e;
+    v=true;
+    while (v) {
+        printf("Digite seu Email:");
+        scanf("%[-._@A-Za-z0-9]", email);
+        limpar_buffer();
+        e = validate_email(email);
+        if (e == 1) {
+            printf("Email válido!\n");
+           v=f;
+        } else if (e == 0) {
+            printf("Email inválido!\n");
+        }
+    }
+}
+
+int validate_email(char email[]) {
+    //função pega de marlison silva @MarlisonSilva
+    //modifiquei o retorno
+    email = str_to_lower(email);
+    char aux [255];
+    if (strlen(email) >= 7 && !has_space(email)) {
+        aux[0] = '\0';
+        // prefixo
+        int pos = 0;
+        do {
+            aux[pos] = email[pos];
+            pos++;
+        } while ((email[pos] != '\0') && (email[pos] != '@'));
+        aux[pos] = '\0';
+
+        if (strlen(aux) >= 1 && strlen(aux) <= 64){
+            // primeira letra não é alfa-numérica e a última é um ponto
+            if(!isalnum(aux[0]) || aux[strlen(aux) - 1] == '.') {
+                return 0;
+            }
+        } else {
+            return 0;
+        }
+        
+        // caso não haja mais 2 caracteres após o @
+        if (strlen(email) < (pos + 2)) {
+            return 0;
+        }
+
+        // domínio
+        pos = pos + 1;
+        int i = 0;
+        aux[0] = '\0';
+
+        do {
+            aux[i] = email[pos];
+            pos++;
+            i++;
+        } while ((email[pos] != '\0') && (email[pos] != '.'));
+        aux[i] = '\0';
+
+        // domínio de tamanho incorreto
+        if (strlen(aux) >= 2 && strlen(aux) <= 253){
+            // primeira e última letra não é alfa-numérica
+            if(!isalnum(aux[0]) || !isalnum(aux[strlen(aux) - 1])) {
+                return 0;
+            }
+        } else {
+            return 0;
+        }
+
+        // caso não haja mais 2 caracteres após o .
+        if (strlen(email) < (pos + 2)) {
+            return 0;
+        }
+        pos = pos + 1;
+        i = 0;
+        aux[0] = '\0';
+        do {
+            aux[i] = email[pos];
+            pos++;
+            i++;
+        } while (email[pos] != '\0');
+        aux[i] = '\0';
+        
+        // tamanho do top level domain incorreto
+        if (strlen(aux) >= 2 && strlen(aux) <= 253){
+            // primeira e última letra não é alfa-numérica
+            if(!isalnum(aux[0]) || !isalnum(aux[strlen(aux) - 1])) {
+                return 0;
+            }
+            
+        } else {
+            return 0;
+        }
+        
+        return 1;
+
+    }
+    return 0;
+}
+
+int has_space(char* str) {
+    //função pega de marlison silva @MarlisonSilva
+    int i = 0;
+    do
+    {
+        if (isspace(str[i]))
+        {
+            return true;
+        }
+        i++;
+    } while (str[i] != '\0');
+    
+   return false;
+}
+
+char* str_to_lower(char* str){
+    //função pega de marlison silva @MarlisonSilva
+    char *aux = str;
+    int i = 0;
+    do
+    {
+        aux[i] = tolower(str[i]);
+        i++;
+    } while (aux[i] != '\0');
+    return aux;
+}
+
+
