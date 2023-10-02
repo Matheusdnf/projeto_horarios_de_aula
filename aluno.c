@@ -1,6 +1,8 @@
 #include "global.h" //incluede para deixar opc global 
 #include "aluno.h"
+#include "valida.h"
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
 //variáveis 
 
@@ -49,15 +51,17 @@ void menu_aluno(void) {
 
 
 void cadastrar_aluno(void) {
-    system("clear||cls");   //aqui será onde irá cadastrar um aluno que estuda na escola
+    system("clear||cls");   
+    char telefone[15];
+    char nome[100];
+    char cpf[15];
     printf("\n");
-    
     printf("========================================================\n");
     printf("    *************** Cadastrar Aluno *************     \n\n");
-    printf("         CPF (apenas números):                          \n");
-    printf("         Nome completo:                                 \n");
-    printf("         E-mail:                                        \n");
-    printf("         Celular (apenas números):                      \n");
+    ler_cpf(cpf);
+    ler_nome(nome);
+    printf("         E-mail:                                          \n");
+    ler_telefone(telefone);
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
