@@ -81,7 +81,7 @@ void ler_nome(char *nome) {
     int n;
     v=true;
     while (v) {
-        printf("Digite seu nome:");
+        printf("Digite o nome:");
         fgets(nome, 100, stdin);
         n = valida_nome(nome);
         if (n == 1) {
@@ -199,20 +199,23 @@ void ler_cpf(char cpf[]) {
 
 int valida_diciplina(char *diciplina) {
     int tam = strlen(diciplina);
-    char *materia[]=
+    //string que contem todas as iniciais referentes as diciplinas
+    char *materia[]=   
     {"P","I","E","É","A",
     "H","G","L","F",
     "S","M","B","Q","F"};
     // Remove o caractere de nova linha, se presente
     for (int i=0 ; i<14;i++){
-        if (strcmp(diciplina, materia[i]) == 0) {
+        //compara se ambos os caracteres digitados estão presente no que foi digitado
+        if (strcmp(diciplina, materia[i]) == 0) {  
             return 0;
         }
     }
+    //Só é permitidos 1 ou 2 matérias por vez
     if( tam!=2 && tam!=3){
         return 0;
     }
-
+    //verificar a questão dos espaços e a ocorrência de números
     for (int i = 0; i < tam; i++) {
         if (!isalpha(diciplina[i]) && !isspace(diciplina[i])) {
             return 0;
@@ -227,6 +230,7 @@ void ler_diciplina(char *diciplina) {
     v=true;
     while (v) {
         diciplinas();
+        printf("\n");
         printf("Digite a disciplina (somente maiúsculas):");
         fgets(diciplina, 3 , stdin);
         limpar_buffer();
