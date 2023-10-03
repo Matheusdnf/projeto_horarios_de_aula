@@ -1,5 +1,6 @@
 #include "global.h"    //incluede para deixar opc global 
 #include "horario.h"
+#include "valida.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -49,10 +50,15 @@ void menu_horario(void) {
 
 void cadastrar_horario(void) {
     system("clear||cls");
+    char periodo[7]; //1,2,3 horários
+    char dia[7]; //segunda,terça...
+    char tempo[3]; //dia,tarde,noite
     printf("========================================================\n");
     printf(" **************** Cadastrar Horário ******************  \n\n");
     printf("                                                        \n");
-    printf("      Informe o código do horário:                      \n");
+    ler_periodo(periodo); 
+    ler_tempo(tempo);
+    ler_dia(dia);
     printf("                                                        \n\n");
     printf("========================================================\n");
     getchar(); printf("Digite enter para continuar...");getchar(); 
