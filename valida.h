@@ -21,3 +21,10 @@ void limpar_buffer();
 int valida_diciplina(char *diciplina);
 void ler_diciplina(char *diciplina);
 void diciplinas(void);
+//validação dos horários
+void ler_periodo(char* periodo); 
+void ler_tempo(char* tempo);
+void ler_dia(char* dia);
+int valida_periodo(char* periodo); 
+int valida_tempo(char* tempo);
+int valida_dia(char* dia);
