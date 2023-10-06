@@ -4,14 +4,13 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include "valida.h"
-#include "diciplina.h"
 
-bool v = true;
-bool f = false;
+
+
 
 void ler_telefone(char *telefone) {
     int t;
-    v=true;
+    bool v=true,f=false;
     while (v) {
         printf("Digite seu telefone com DDD (apenas números):");
         fgets(telefone, 15, stdin);
@@ -80,7 +79,7 @@ bool eh_letra_acentuada(char c) {   //recebe uma letra por vez
 
 void ler_nome(char *nome) {
     int n;
-    v=true;
+    bool v=true,f=false;
     while (v) {
         printf("Digite o nome:");
         fgets(nome, 100, stdin);
@@ -181,7 +180,7 @@ int validarCPF(char cpf[]) {
 
 void ler_cpf(char cpf[]) {
     int c;
-    v=true;
+    bool v=true,f=false;
     while (v) {
         printf("Digite o seu CPF: ");
         scanf("%s", cpf);
@@ -191,55 +190,6 @@ void ler_cpf(char cpf[]) {
             printf("válido\n");
             v=f;
         } else if (c == 0) {
-            printf("inválido\n");
-        }
-    }
-}
-
-
-
-int valida_diciplina(char *diciplina) {
-    int tam = strlen(diciplina);
-    //string que contem todas as iniciais referentes as diciplinas
-    char *materia[]=   
-    {"P","I","E","É","A",
-    "H","G","L","F",
-    "S","M","B","Q","F"};
-    for (int i=0 ; i<14;i++){
-        //compara se ambos os caracteres digitados estão presente no que foi digitado
-        if (strcmp(diciplina, materia[i]) == 0) {  
-            return 0;
-        }
-    }
-    //Só é permitidos 1 ou 2 matérias por vez
-    if( tam!=2 && tam!=3){
-        return 0;
-    }
-    //verificar a questão dos espaços e a ocorrência de números
-    for (int i = 0; i < tam; i++) {
-        if (!isalpha(diciplina[i]) && !isspace(diciplina[i])) {
-            return 0;
-        }
-    }
-
-    return 1;
-}
-
-void ler_diciplina(char *diciplina) {
-    int t;
-    v=true;
-    while (v) {
-        diciplinas();
-        printf("\n");
-        printf("Digite a disciplina (somente maiúsculas):");
-        limpar_buffer();
-        fgets(diciplina, 3 , stdin);
-        limpar_buffer();
-        t = valida_diciplina(diciplina);
-        if (t == 1) {
-            printf("válido\n");
-            v = f; // Saia do loop quando a disciplina for válida
-        } else if (t == 0) {
             printf("inválido\n");
         }
     }
@@ -256,7 +206,7 @@ void limpar_buffer() {
 
 void ler_email(char email[]) {
     int e;
-    v=true;
+    bool v=true,f=false;
     while (v) {
         printf("Digite seu Email:");
         scanf("%[-._@A-Za-z0-9]", email);
@@ -378,103 +328,4 @@ char* str_to_lower(char* str){
         i++;
     } while (aux[i] != '\0');
     return aux;
-}
-
-
-void ler_periodo(char* periodo){ 
-    int n; 
-    v=true;
-    while (v){ 
-        printf("Digite em que horários serão [1,2...6] horário\n");
-        printf("Digite o periodo (só números):"); 
-        scanf("%s",periodo);
-        limpar_buffer();
-        n=valida_periodo(periodo);
-        if (n==1){ 
-            printf("válido\n"); 
-            v=f;
-        }else if (n==0){ 
-            printf("inválido\n"); 
-        } 
-    } 
-}
-void ler_tempo(char* tempo){ 
-    int t; 
-    v=true;
-    while (v){ 
-        printf("Escolha se será manhã,tarde ou noite\n");
-        printf("Digite o tempo (M,T,N):"); 
-        scanf("%s",tempo);
-        limpar_buffer();
-        t=valida_tempo(tempo);
-        if (t==1){ 
-            printf("válido\n");
-            v=f; 
-        }else if (t==0){ 
-            printf("inválido\n"); 
-            
-        } 
-    } 
-}    
- 
-
-void ler_dia(char* dia){ 
-    int d; 
-    v=true;
-    while (v){ 
-        printf("Escolha se será: \n2-Segunda \n3-Terça \nAté 6-Sexta\n");
-        printf("Digite o dia:"); 
-        scanf("%s",dia);
-        limpar_buffer();
-        d=valida_dia(dia);
-        if (d==1){ 
-            printf("válido\n");
-            v=f; 
-        }else if (d==0){ 
-            printf("inválido\n"); 
-            
-        } 
-    } 
-}    
- 
-
-int valida_periodo(char* periodo) {
-    int tam = strlen(periodo);
-    if (!(tam >= 1 && tam <= 6)) {
-        return 0;
-    }
-    for (int i = 0; i < tam; i++) {
-        //feito com a ajuda do gpt
-        if (periodo[i] < '1' || periodo[i] > '6') {
-            return 0;
-        }
-    }
-    return 1;
-}
-
-int valida_tempo(char* tempo) {
-    int tam = strlen(tempo);
-    char *t[]={"M","T","N"};
-    if (tam!=1){
-        return 0;
-    }
-    for (int i=0 ; i<3;i++){
-        if (strcmp(tempo, t[i]) == 0) {
-            return 1;
-        }
-    }
-    return 0;
-}
-
-int valida_dia(char* dia) {
-    int tam = strlen(dia);
-    if (!(tam >= 1 && tam <= 5)) {
-        return 0;
-    }
-    for (int i = 0; i < 5; i++) {
-        if (dia[i] < '2' || dia[i] > '6') {
-            return 1;
-        }
-    }
-    return 0;
 }
