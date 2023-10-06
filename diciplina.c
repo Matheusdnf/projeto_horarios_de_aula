@@ -3,6 +3,10 @@
 #include "valida.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include <ctype.h>
+
 
 void menu_diciplina(void) {
     while (opc!=0){
@@ -136,4 +140,52 @@ void diciplinas(void) {
     printf("B-Biologia\n");
     printf("Q-Química\n");
     printf("F-Física\n");
+}
+
+//funções para a validação da diciplina
+void ler_diciplina(char *diciplina) {
+    int t;
+    bool v=true,f=false;
+    while (v) {
+        diciplinas();
+        printf("\n");
+        printf("Digite a disciplina (somente maiúsculas):");
+        limpar_buffer();
+        fgets(diciplina, 3 , stdin);
+        limpar_buffer();
+        t = valida_diciplina(diciplina);
+        if (t == 1) {
+            printf("válido\n");
+            v = f; // Saia do loop quando a disciplina for válida
+        } else if (t == 0) {
+            printf("inválido\n");
+        }
+    }
+}
+
+int valida_diciplina(char *diciplina) {
+    int tam = strlen(diciplina);
+    //string que contem todas as iniciais referentes as diciplinas
+    char *materia[]=   
+    {"P","I","E","É","A",
+    "H","G","L","F",
+    "S","M","B","Q","F"};
+    for (int i=0 ; i<14;i++){
+        //compara se ambos os caracteres digitados estão presente no que foi digitado
+        if (strcmp(diciplina, materia[i]) == 0) {  
+            return 0;
+        }
+    }
+    //Só é permitidos 1 ou 2 matérias por vez
+    if( tam!=2 && tam!=3){
+        return 0;
+    }
+    //verificar a questão dos espaços e a ocorrência de números
+    for (int i = 0; i < tam; i++) {
+        if (!isalpha(diciplina[i]) && !isspace(diciplina[i])) {
+            return 0;
+        }
+    }
+
+    return 1;
 }
