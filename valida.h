@@ -17,14 +17,4 @@ char* str_to_lower(char* str);
 int has_space(char* str);
 //limpar o buffer de entrada para quando for utilizado o scanf
 void limpar_buffer();
-//funções para validar as diciplinas
-int valida_diciplina(char *diciplina);
-void ler_diciplina(char *diciplina);
-void diciplinas(void);
-//validação dos horários
-void ler_periodo(char* periodo); 
-void ler_tempo(char* tempo);
-void ler_dia(char* dia);
-int valida_periodo(char* periodo); 
-int valida_tempo(char* tempo);
-int valida_dia(char* dia);
+
