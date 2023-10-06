@@ -60,7 +60,6 @@ void cadastrar_professor(void) {
     ler_nome(nome);
     ler_email(email);
     ler_telefone(telefone);
-    ler_diciplina(diciplina);
     printf("=========================================================\n");
     printf("\n");
     getchar(); printf("Digite enter para continuar...");getchar(); 
