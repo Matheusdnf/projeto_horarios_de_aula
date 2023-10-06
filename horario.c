@@ -1,9 +1,9 @@
 #include "global.h"    //incluede para deixar opc global 
 #include "horario.h"
-#include "valida.h"
+#include "valida.h"    //arquivos com as assinaturas das validações
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 
 void menu_horario(void) {
     while (opc!=0){
@@ -118,3 +118,102 @@ void relatorio_horario(void){
     getchar(); printf("Digite enter para continuar...");getchar(); 
 }
 
+
+//funções referente a validação dos horários
+void ler_periodo(char* periodo){ 
+    int n; 
+    bool v=true,f=false;
+    while (v){ 
+        printf("Digite em que horários serão [1,2...6] horário\n");
+        printf("Digite o periodo (só números):"); 
+        scanf("%s",periodo);
+        limpar_buffer();
+        n=valida_periodo(periodo);
+        if (n==1){ 
+            printf("válido\n"); 
+            v=f;
+        }else if (n==0){ 
+            printf("inválido\n"); 
+        } 
+    } 
+}
+void ler_tempo(char* tempo){ 
+    int t; 
+    bool v=true,f=false;
+    while (v){ 
+        printf("Escolha se será manhã,tarde ou noite\n");
+        printf("Digite o tempo (M,T,N):"); 
+        scanf("%s",tempo);
+        limpar_buffer();
+        t=valida_tempo(tempo);
+        if (t==1){ 
+            printf("válido\n");
+            v=f; 
+        }else if (t==0){ 
+            printf("inválido\n"); 
+            
+        } 
+    } 
+}    
+ 
+
+void ler_dia(char* dia){ 
+    int d; 
+    bool v=true,f=false;
+    while (v){ 
+        printf("Escolha se será: \n2-Segunda \n3-Terça \nAté 6-Sexta\n");
+        printf("Digite o dia:"); 
+        scanf("%s",dia);
+        limpar_buffer();
+        d=valida_dia(dia);
+        if (d==1){ 
+            printf("válido\n");
+            v=f; 
+        }else if (d==0){ 
+            printf("inválido\n"); 
+            
+        } 
+    } 
+}    
+ 
+
+int valida_periodo(char* periodo) {
+    int tam = strlen(periodo);
+    if (!(tam >= 1 && tam <= 6)) {
+        return 0;
+    }
+    for (int i = 0; i < tam; i++) {
+        //feito com a ajuda do gpt
+        if (periodo[i] < '1' || periodo[i] > '6') {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int valida_tempo(char* tempo) {
+    int tam = strlen(tempo);
+    char *t[]={"M","T","N"};
+    if (tam!=1){
+        return 0;
+    }
+    for (int i=0 ; i<3;i++){
+        if (strcmp(tempo, t[i]) == 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int valida_dia(char* dia) {
+    int tam = strlen(dia);
+    if (!(tam >= 1 && tam <= 5)) {
+        return 0;
+    }
+    for (int i = 0; i < 5; i++) {
+        if (dia[i] < '2' || dia[i] > '6') {
+            return 1;
+        }
+    }
+    return 0;
+}
