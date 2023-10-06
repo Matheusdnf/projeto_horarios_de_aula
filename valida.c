@@ -5,10 +5,8 @@
 #include <stdlib.h>
 #include "valida.h"
 
-
-
-
 void ler_telefone(char *telefone) {
+    //função reutilizável para realizar a leitura do telefone
     int t;
     bool v=true,f=false;
     while (v) {
@@ -78,6 +76,7 @@ bool eh_letra_acentuada(char c) {   //recebe uma letra por vez
 
 
 void ler_nome(char *nome) {
+    //função reutilizável para realizar a leitura do nome
     int n;
     bool v=true,f=false;
     while (v) {
@@ -179,6 +178,7 @@ int validarCPF(char cpf[]) {
 }
 
 void ler_cpf(char cpf[]) {
+    //função reutilizável para realizar a leitura do cpf
     int c;
     bool v=true,f=false;
     while (v) {
@@ -205,6 +205,7 @@ void limpar_buffer() {
 
 
 void ler_email(char email[]) {
+    //função reutilizável para realizar a leitura do email
     int e;
     bool v=true,f=false;
     while (v) {
