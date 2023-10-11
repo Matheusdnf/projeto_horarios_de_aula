@@ -65,9 +65,10 @@ void cadastrar_diciplina(void) {
     printf("Digite o nome do professor\n");
     ler_nome(nome);
     printf("                                                        \n");
+    printf("Dados cadastrados!\n");
     printf("========================================================\n");
     printf("\n");
-    getchar(); printf("Digite enter para continuar...");getchar(); //para aparecer o menu e ele não sair rapidamente
+    printf("Digite enter para continuar...");getchar(); //para aparecer o menu e ele não sair rapidamente
 }
 
 void buscar_diciplina(void) {

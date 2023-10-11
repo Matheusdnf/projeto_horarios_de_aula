@@ -61,9 +61,10 @@ void cadastrar_aluno(void) {
     ler_email(email);
     ler_telefone(telefone);
     printf("                                                        \n");
+    printf("Dados cadastrados!\n");
     printf("========================================================\n");
     printf("\n");
-    getchar(); printf("Digite enter para continuar...");getchar(); //para aparecer o menu e ele não sair rapidamente
+    printf("Digite enter para continuar...");getchar(); //para aparecer o menu e ele não sair rapidamente
 }
 
 void buscar_aluno(void) {

@@ -18,7 +18,7 @@ char opc;
 int main(void) {
     do{
         menu_principal();
-        printf("\nDigite o que deseja fazer: "); scanf("%1s", &opc); getchar();
+        printf("\nDigite o que deseja fazer: "); scanf("%c", &opc); getchar();
         switch (opc) { 
             case '1':
                 menu_aluno();
@@ -95,7 +95,7 @@ void menu_sobre(void) {
     printf("  os principais módulos para uma gestão de horário de aula, sendo eles alunos,   \n");
     printf("  professores e horários de aula.                                                \n");
     printf("=================================================================================\n");
-    getchar(); printf("Digite enter para continuar...");getchar(); 
+    printf("Digite enter para continuar...");getchar(); 
 }
 
 
@@ -114,6 +114,6 @@ void menu_equipe(void) {
     printf("            Git: Matheusdnf                                              \n");
     printf("                                                                         \n");
     printf("===========================================================================\n");
-    getchar(); printf("Digite enter para continuar...");getchar(); 
+    printf("Digite enter para continuar...");getchar(); 
 } 
 
