@@ -39,11 +39,11 @@ int main(void) {
                 menu_sobre();
                 break;
             case '0':
-                printf("\nPrograma Finalizado\n");
+                printf("\nPrograma Finalizado!\n");
                 opc='0';
                 break;
             default:
-                printf("\nOpção Inválida!");
+                printf("\nOpção Inválida!\n");
                 printf("Digite enter para continuar...");getchar(); 
                 break;
         }
@@ -62,7 +62,7 @@ void menu_principal() {
     printf("\033[34m            ##\033[0m           \033[31m##\033[0m     \033[37m##\033[0m                 \n");
     printf("\033[34m            ##  ##\033[0m   \033[31m##  ##\033[0m     \033[37m##\033[0m                 \n");
     printf("\033[34m             ####\033[0m     \033[31m####\033[0m      \033[37m##\033[0m                 \n\n");
-    printf("           COLÉGIO SABER É DIVERSÃO               \n\n");
+    printf("           COLÉGIO SABER E TALENTO                \n\n");
     printf(" Preocupados em ensinar da melhor forma possível! \n\n");
     printf("===================================================\n");
     printf("   ************* Menu principal ***************    \n");
