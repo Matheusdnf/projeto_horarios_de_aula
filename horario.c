@@ -218,13 +218,25 @@ int valida_tempo(char* tempo) {
 
 int valida_dia(char* dia) {
     int tam = strlen(dia);
+    int cont=0;
     if (!(tam >= 1 && tam <= 5)) {
         return 0;
     }
-    for (int i = 0; i < 5; i++) {
+    //fazer com que o usuário só digite números entre 2 e 6
+    for (int i = 0; i < tam; i++) {
+        //feito com a ajuda do gpt
         if (dia[i] < '2' || dia[i] > '6') {
-            return 1;
+            return 0;
+        }
+    //evitar que o usuário digitei dois dias repetidos
+    for (int i=0 ; i<tam;i++){
+        if(dia[i]==dia[i+1]){
+            cont++;
+        }
+        if (cont>=1){
+            return 0;
         }
     }
-    return 0;
+    }
+    return 1;
 }
