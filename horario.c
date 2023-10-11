@@ -191,7 +191,7 @@ int valida_periodo(char* periodo) {
         }
     //impedir que o usuário digite números repetidos
     for (int i=0 ; i<tam;i++){
-        if(periodo[i]=periodo[i+1]){
+        if(periodo[i]==periodo[i+1]){
             cont++;
         }
         if (cont>=1){
