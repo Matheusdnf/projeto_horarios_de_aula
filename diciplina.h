@@ -1,3 +1,8 @@
+//struct diciplina
+typedef struct diciplina {
+    char nome[100]; //referente ao nome do professor
+    char diciplina[3];
+} Diciplina;
 //funções do módulo diciplina
 void menu_diciplina(void);
 void cadastrar_diciplina(void);

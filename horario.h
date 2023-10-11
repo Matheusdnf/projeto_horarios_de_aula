@@ -1,3 +1,10 @@
+//struct horário
+typedef struct horario {
+    char periodo[7];
+    char dia[7];
+    char tempo[3];
+    char diciplina[3];
+} Horario;
 //módulo horário de aula
 void menu_horario(void);
 void cadastrar_horario(void);

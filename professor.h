@@ -1,3 +1,10 @@
+//struct professor
+typedef struct professor {
+    char telefone[15];
+    char nome[100];
+    char cpf[15];
+    char email[225];
+} Professor;
 //módulo professores
 void menu_professor(void);
 void cadastrar_professor(void);
