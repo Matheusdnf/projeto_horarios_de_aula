@@ -179,14 +179,25 @@ void ler_dia(char* dia){
 
 int valida_periodo(char* periodo) {
     int tam = strlen(periodo);
+    int cont=0;
     if (!(tam >= 1 && tam <= 6)) {
         return 0;
     }
+    //evitar que o usuário digite dias que não estejam entre 1 e 6
     for (int i = 0; i < tam; i++) {
         //feito com a ajuda do gpt
         if (periodo[i] < '1' || periodo[i] > '6') {
             return 0;
         }
+    //impedir que o usuário digite números repetidos
+    for (int i=0 ; i<tam;i++){
+        if(periodo[i]=periodo[i+1]){
+            cont++;
+        }
+        if (cont>=1){
+            return 0;
+        }
+    }
     }
     return 1;
 }
