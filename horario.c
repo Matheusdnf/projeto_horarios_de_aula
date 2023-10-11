@@ -205,9 +205,11 @@ int valida_periodo(char* periodo) {
 int valida_tempo(char* tempo) {
     int tam = strlen(tempo);
     char *t[]={"M","T","N"};
+    //impedir que o usário digite mais do que um caracter
     if (tam!=1){
         return 0;
     }
+    // que o caracter digitado seja um dos presentes da lista
     for (int i=0 ; i<3;i++){
         if (strcmp(tempo, t[i]) == 0) {
             return 1;
