@@ -18,7 +18,7 @@ char opc;
 int main(void) {
     do{
         menu_principal();
-        printf("\nDigite o que deseja fazer: "); scanf("%c", &opc); getchar();
+        printf("\nDigite o que deseja fazer: "); scanf("%1s", &opc); getchar();
         switch (opc) { 
             case '1':
                 menu_aluno();
