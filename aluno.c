@@ -4,11 +4,14 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-//variáveis 
+
+//Apelido Struct Global
+Aluno* std;    //Estudante  
+
 
 void menu_aluno(void) {
     while (opc!=0){
-        system("clear||cls");   
+        system("clear||cls");  
         printf("\n");
         printf("===========================================================\n");
         printf("     ****************  Menu Aluno ******************       \n");
@@ -24,7 +27,7 @@ void menu_aluno(void) {
         scanf("%s",&opc);
         switch (opc){
             case '1':
-                cadastrar_aluno();
+                std = cadastrar_aluno();
                 break;
             case '2':
                 buscar_aluno();
@@ -50,21 +53,24 @@ void menu_aluno(void) {
 }
 
 
-void cadastrar_aluno(void) {
-    system("clear||cls");   
-    char telefone[15],nome[100],cpf[15],email[225];
+Aluno* cadastrar_aluno(void) {
+    system("clear||cls"); 
+    std=(Aluno*)malloc(sizeof(Aluno));
     printf("\n");
     printf("========================================================\n");
     printf("    *************** Cadastrar Aluno *************     \n\n");
-    ler_cpf(cpf);
-    ler_nome(nome);
-    ler_email(email);
-    ler_telefone(telefone);
+    ler_cpf(std->cpf);
+    ler_nome(std->nome);
+    ler_email(std->email);
+    ler_telefone(std->telefone);
+    std->status='M';
     printf("                                                        \n");
     printf("Dados cadastrados!\n");
     printf("========================================================\n");
     printf("\n");
     printf("Digite enter para continuar...");getchar(); //para aparecer o menu e ele não sair rapidamente
+    return std;
+
 }
 
 void buscar_aluno(void) {
@@ -121,3 +127,5 @@ void relatorio_aluno(void){
     printf("\n");
     getchar(); printf("Digite enter para continuar...");getchar(); 
 }
+
+

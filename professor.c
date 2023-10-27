@@ -5,7 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//variáveis 
+//Apelido struct Global
+Professor* prof; //Professor
+
 
 void menu_professor(void) {
     while (opc!=0){
@@ -25,7 +27,7 @@ void menu_professor(void) {
         scanf("%s",&opc);
         switch (opc){
             case '1':
-                cadastrar_professor();
+                prof=cadastrar_professor();
                 break;
             case '2':
                 buscar_professor();
@@ -50,21 +52,23 @@ void menu_professor(void) {
     }
 }
 
-void cadastrar_professor(void) {
+Professor* cadastrar_professor(void) {
     system("clear||cls");
-    char telefone[15],nome[100],cpf[15],email[225];
+    prof=(Professor*)malloc(sizeof(Professor));
     printf("\n");
     printf("========================================================\n\n");
     printf("   *************** Cadastrar Professor ***************  \n\n");
-    ler_cpf(cpf);
-    ler_nome(nome);
-    ler_email(email);
-    ler_telefone(telefone);
+    ler_cpf(prof->cpf);
+    ler_nome(prof->nome);
+    ler_email(prof->email);
+    ler_telefone(prof->telefone);
+    prof->status='A';
     printf("                                                        \n");
     printf("Dados cadastrados!\n");
     printf("========================================================\n");
     printf("\n");
     printf("Digite enter para continuar...");getchar(); //para aparecer o menu e ele não sair rapidamente
+    return prof;
 }
 
 void buscar_professor(void) {
