@@ -123,6 +123,7 @@ void relatorio_aluno(void){
     printf("    *************** Relatório Aluno *************       \n\n");
     printf("                                                        \n");
     printf("       (informar todos os alunos cadastrado)            \n");
+    listaaluno();
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
@@ -141,3 +142,39 @@ void gravaraluno(Aluno* std){
     fclose(fa);
 }
 
+void exibir_alunos(Aluno* std){
+    char estado[16];
+    if ((std==NULL) || (std->status=='I')){
+        printf("\nEste Aluno não existe no sistema!\n");
+    }else{
+        printf(" ********Dados Do Aluno********");
+        printf("\n\tNome:%s",std->nome);
+        printf("\tCPF:%s\n",std->cpf);
+        printf("\tEmail:%s\n",std->email);
+        printf("\tTelefone:%s\n",std->telefone);
+        if(std->status=='M'){
+            strcpy(estado,"Matriculado");
+        }else if(std->status=='N'){
+            strcpy(estado,"Não Encontrado");
+        }else{
+            strcpy(estado,"Fechado");
+        }
+    }
+}
+
+void listaaluno(void){
+    FILE* fa;
+    std=(Aluno*)malloc(sizeof(Aluno));
+    fa=fopen("Alunos.dat","rb");
+    if (fa==NULL){
+        printf("Erro na recuperação dos dados!\n");
+        exit(1);
+    }
+    while(fread(std,sizeof(Aluno),1,fa)){
+        if (std->status!='I'){
+            exibir_alunos(std);
+        }
+    }
+    fclose(fa);
+    free(std);
+}
