@@ -2,8 +2,8 @@
 #include "aluno.h"
 #include "valida.h"
 #include <stdio.h>
-#include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 
 //Apelido Struct Global
 Aluno* std;    //Estudante  
@@ -28,6 +28,7 @@ void menu_aluno(void) {
         switch (opc){
             case '1':
                 std = cadastrar_aluno();
+                gravaraluno(std);
                 break;
             case '2':
                 buscar_aluno();
@@ -128,4 +129,15 @@ void relatorio_aluno(void){
     getchar(); printf("Digite enter para continuar...");getchar(); 
 }
 
+
+void gravaraluno(Aluno* std){
+    FILE* fa;  //File aluno
+    fa=fopen("Alunos.dat","ab");
+    if (fa==NULL){
+        printf("Erro na recuperação dos dados do Aluno!\n");
+        exit(1);
+    }
+    fwrite(std,sizeof(Aluno),1,fa);
+    fclose(fa);
+}
 
