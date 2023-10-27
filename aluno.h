@@ -13,3 +13,7 @@ void buscar_aluno(void);
 void atualizar_aluno(void);
 void excluir_aluno(void);
 void relatorio_aluno(void);
+//gravação em arquivo
+void gravaraluno(Aluno* std);    //gravação do aluno
+void listaaluno(void);
+void exibir_alunos(Aluno* std);
