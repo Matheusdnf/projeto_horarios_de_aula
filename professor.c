@@ -4,6 +4,7 @@
 #include "diciplina.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 //Apelido struct Global
 Professor* prof; //Professor
@@ -28,6 +29,7 @@ void menu_professor(void) {
         switch (opc){
             case '1':
                 prof=cadastrar_professor();
+                gravarprofessor(prof);
                 break;
             case '2':
                 buscar_professor();
@@ -126,3 +128,33 @@ void relatorio_professor(void){
     getchar(); printf("Digite enter para continuar...");getchar(); 
 }
 
+void gravarprofessor(Professor* prof){
+    FILE* fp;  //File Professor
+    fp=fopen("Professor.dat","ab");
+    if (fp==NULL){
+        printf("Erro na recuperação dos dados do Aluno!\n");
+        exit(1);
+    }
+    fwrite(prof,sizeof(Professor),1,fp);
+    fclose(fp);
+}
+
+void exibir_professores(Professor* prof){
+    char estado[16];
+    if ((prof==NULL) || (prof->status=='I')){
+        printf("\nEste Professor não existe no sistema!\n");
+    }else{
+        printf(" ********Dados Do Professor********");
+        printf("\n\tNome:%s",prof->nome);
+        printf("\tCPF:%s\n",prof->cpf);
+        printf("\tEmail:%s\n",prof->email);
+        printf("\tTelefone:%s\n",prof->telefone);
+        if(prof->status=='A'){
+            strcpy(estado,"Professor Ativo");
+        }else if(prof->status=='N'){
+            strcpy(estado,"Não Encontrado");
+        }else{
+            strcpy(estado,"Fechado");
+        }
+    }
+}
