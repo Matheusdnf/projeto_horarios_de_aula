@@ -13,3 +13,5 @@ void buscar_professor(void);
 void atualizar_professor(void);
 void excluir_professor(void);
 void relatorio_professor(void);
+void gravarprofessor(Professor* prof);
+void exibir_professores(Professor* prof);
