@@ -121,7 +121,8 @@ void relatorio_professor(void){
     printf("========================================================\n");
     printf("   *************** Relatório Professor *************  \n\n");
     printf("                                                        \n");
-    printf("       (informar todos os Professores cadastrado)       \n");
+    printf("       (Todos os Professores cadastrado)                \n");
+    listarprofessor();
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
@@ -157,4 +158,21 @@ void exibir_professores(Professor* prof){
             strcpy(estado,"Fechado");
         }
     }
+}
+
+void listarprofessor(void){
+    FILE* fp;
+    prof=(Professor*)malloc(sizeof(Professor));
+    fp=fopen("Professor.dat","rb");
+    if (fp==NULL){
+        printf("Erro na recuperação dos dados!\n");
+        exit(1);
+    }
+    while(fread(prof,sizeof(Professor),1,fp)){
+        if (prof->status!='I'){
+            exibir_professores(prof);
+        }
+    }
+    fclose(fp);
+    free(prof);
 }
