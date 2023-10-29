@@ -15,3 +15,4 @@ void excluir_professor(void);
 void relatorio_professor(void);
 void gravarprofessor(Professor* prof);
 void exibir_professores(Professor* prof);
+void listarprofessor(void);
