@@ -330,3 +330,13 @@ char* str_to_lower(char* str){
     } while (aux[i] != '\0');
     return aux;
 }
+
+//passar todas as letras para ficaram maiusculas 
+void letra_maiuscula(char* algo) {
+    //pega o tamanho para saber até onde tera que rodar
+    int tam = strlen(algo);
+    for (int i = 0; i < tam; i++) {
+        algo[i] = toupper(algo[i]);
+    }
+}
+// não esquecer  scanf(" %[^\n]", palavra);
