@@ -124,6 +124,7 @@ void relatorio_horario(void){
     printf("                                                        \n");
     printf("       (informar todos os horários cadastrado)          \n");
     printf("                                                        \n");
+    lista_h();
     printf("========================================================\n");
     printf("\n");
     getchar(); printf("Digite enter para continuar...");getchar(); 
@@ -290,3 +291,50 @@ int criar_id_h(void) {
 } 
  
 
+void gravar_h(Horario* h){
+    FILE* fh;  //File Horário
+    fh=fopen("Horario.dat","ab");
+    if (fh==NULL){
+        printf("Erro na recuperação dos dados do Horário!\n");
+        exit(1);
+    }
+    fwrite(h,sizeof(Horario),1,fh);
+    fclose(fh);
+}
+
+void exibir_h(Horario* h){
+    char estado[16];
+    if ((h==NULL) || (h->status=='I')){
+        printf("\nEste Horário não foi cadastrado no sistema!\n");
+    }else{
+        printf("********Dados do Horário ********");
+        printf("\n\tPeriodo:%s\n",h->periodo);
+        printf("\tDia:%s\n",h->dia);
+        printf("\tTempo:%s\n",h->tempo);
+        printf("\tDiciplina:%s\n",h->diciplina);
+        printf("\tid:%d\n",h->id);
+        if(h->status=='A'){
+            strcpy(estado,"Horário Ativo");
+        }else if(h->status=='N'){
+            strcpy(estado,"Não Encontrado");
+        }else{
+            strcpy(estado,"Fechado");
+        }
+    }
+}
+
+void lista_h(void){
+    FILE* fh;
+    h=(Horario*)malloc(sizeof(Horario));
+    fh=fopen("Horario.dat","rb");
+    if (fh==NULL){
+        printf("Erro na recuperação dos dados!\n");
+    }
+    while(fread(h,sizeof(Horario),1,fh)){
+        if (h->status!='I'){
+            exibir_h(h);
+        }
+    }
+    fclose(fh);
+    free(h);
+}
