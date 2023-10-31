@@ -253,3 +253,40 @@ int valida_dia(char* dia) {
     }
     return 1;
 }
+//Criar Id de forma nativa 
+//Feito com a ajuda do Chat Gpt e com Consultas no site StackOverflow 
+//Adapatado por Maria Eloisa e Matheus Diniz 
+int criar_id_h(void) { 
+  //Abrir o arquivo 
+  FILE *arquivo = fopen("Horario.dat", "rb"); 
+  if (arquivo == NULL){
+    //caso o arquivo não exista começe com 1
+    return 1;
+  // Percorre o arquivo inteiro  
+  fseek(arquivo, 0, SEEK_END);  
+  //Para verificiar o tamanho do arquivo 
+  if ((long)ftell(arquivo)==0){
+    //caso o arquivo esteja vázio
+    fclose(arquivo);
+    return 1;
+  }
+  } else { 
+    // Posicione o ponteiro no início do último registro 
+    //Ver a última estrutura Adicionada 
+
+    //long adicionada para evitar problemas de conversão pelo sizeof, para um valor negativo, causando um estouro no fseek
+    fseek(arquivo, -((long)sizeof(Horario)), SEEK_END); 
+    // Agora você pode ler o último registro usando fread 
+     
+    Horario ultstruct; 
+    fread(&ultstruct, sizeof(Horario), 1, arquivo); 
+   
+    // Obtenha o ID do último registro e incremente 
+    int id = ultstruct.id + 1; 
+ 
+    fclose(arquivo); // Feche o arquivo aqui 
+    return id; 
+  } 
+} 
+ 
+
