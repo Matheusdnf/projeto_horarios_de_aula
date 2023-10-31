@@ -230,3 +230,48 @@ int criar_id_d(void) {
     return id; 
   } 
 } 
+
+void gravardiciplina(Diciplina* dic){
+    FILE* fd;  //File Diciplina
+    fd=fopen("Diciplina.dat","ab");
+    if (fd==NULL){
+        printf("Erro na recuperação dos dados da Diciplinas!\n");
+    }
+    fwrite(dic,sizeof(Diciplina),1,fd);
+    fclose(fd);
+}
+
+void exibir_diciplinas(Diciplina* dic){
+    char estado[16];
+    if ((dic==NULL) || (dic->status=='I')){
+        printf("\nEsta Diciplinas não foi cadastrada no sistema!\n");
+    }else{
+        printf(" ********Informações da diciplina********");
+        printf("\n\tNome do Professor:%s",dic->nome);
+        printf("\tNome da diciplina:%s\n",dic->diciplina);
+        printf("\tId da diciplina:%d\n",dic->id);
+        if(dic->status=='A'){
+            strcpy(estado,"Diciplina Ativa");
+        }else if(dic->status=='N'){
+            strcpy(estado,"Não Encontrado");
+        }else{
+            strcpy(estado,"Fechado");
+        }
+    }
+}
+
+void listardiciplina(void){
+    FILE* fd;
+    dic=(Diciplina*)malloc(sizeof(Diciplina));
+    fd=fopen("Diciplina.dat","rb");
+    if (fd==NULL){
+        printf("Erro na recuperação dos dados!\n");
+    }
+    while(fread(dic,sizeof(Diciplina),1,fd)){
+        if (dic->status!='I'){
+            exibir_diciplinas(dic);
+        }
+    }
+    fclose(fd);
+    free(dic);
+}
