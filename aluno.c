@@ -5,9 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-//Apelido Struct Global
+//Apelido Struct 
 Aluno* std;    //Estudante  
-
 
 void menu_aluno(void) {
     while (opc!=0){
@@ -53,20 +52,19 @@ void menu_aluno(void) {
     }
 }
 
-
 Aluno* cadastrar_aluno(void) {
     system("clear||cls"); 
     std=(Aluno*)malloc(sizeof(Aluno));
     printf("\n");
     printf("========================================================\n");
-    printf("    *************** Cadastrar Aluno *************     \n\n");
+    printf("    ************* Cadastrar Aluno *************     \n\n");
     ler_cpf(std->cpf);
     ler_nome(std->nome);
     ler_email(std->email);
     ler_telefone(std->telefone);
     std->status='M';
     printf("                                                        \n");
-    printf("Dados cadastrados!\n");
+    printf("Dados do Aluno cadastrados!\n");
     printf("========================================================\n");
     printf("\n");
     printf("Digite enter para continuar...");getchar(); //para aparecer o menu e ele não sair rapidamente
@@ -147,7 +145,7 @@ void exibir_alunos(Aluno* std){
     if ((std==NULL) || (std->status=='I')){
         printf("\nEste Aluno não existe no sistema!\n");
     }else{
-        printf(" ********Dados Do Aluno********");
+        printf("********Dados Do Aluno********");
         printf("\n\tNome:%s",std->nome);
         printf("\tCPF:%s\n",std->cpf);
         printf("\tEmail:%s\n",std->email);
@@ -168,7 +166,6 @@ void listaaluno(void){
     fa=fopen("Alunos.dat","rb");
     if (fa==NULL){
         printf("Erro na recuperação dos dados!\n");
-        exit(1);
     }
     while(fread(std,sizeof(Aluno),1,fa)){
         if (std->status!='I'){

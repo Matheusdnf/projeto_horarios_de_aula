@@ -66,7 +66,7 @@ Professor* cadastrar_professor(void) {
     ler_telefone(prof->telefone);
     prof->status='A';
     printf("                                                        \n");
-    printf("Dados cadastrados!\n");
+    printf("Dados do Professor cadastrados!\n");
     printf("========================================================\n");
     printf("\n");
     printf("Digite enter para continuar...");getchar(); //para aparecer o menu e ele não sair rapidamente
@@ -134,7 +134,6 @@ void gravarprofessor(Professor* prof){
     fp=fopen("Professor.dat","ab");
     if (fp==NULL){
         printf("Erro na recuperação dos dados do Aluno!\n");
-        exit(1);
     }
     fwrite(prof,sizeof(Professor),1,fp);
     fclose(fp);
@@ -166,7 +165,6 @@ void listarprofessor(void){
     fp=fopen("Professor.dat","rb");
     if (fp==NULL){
         printf("Erro na recuperação dos dados!\n");
-        exit(1);
     }
     while(fread(prof,sizeof(Professor),1,fp)){
         if (prof->status!='I'){
