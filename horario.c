@@ -6,6 +6,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+//Apelido Struct 
+Horario* h; //horario
+
+
 void menu_horario(void) {
     while (opc!=0){
         system("clear||cls");   
@@ -24,7 +28,8 @@ void menu_horario(void) {
         scanf("%s",&opc);
         switch (opc){
             case '1':
-                cadastrar_horario();
+                h=cadastrar_horario();
+                gravar_h(h);
                 break;
             case '2':
                 buscar_horario();
@@ -49,24 +54,25 @@ void menu_horario(void) {
     }
 }
 
-void cadastrar_horario(void) {
+Horario* cadastrar_horario(void) {
     system("clear||cls");
-    char periodo[7]; //1,2,3 horários
-    char dia[7]; //segunda,terça...
-    char tempo[3]; //dia,tarde,noite
-    char diciplina[3];
+    h=(Horario*)malloc(sizeof(Horario));
     printf("========================================================\n");
     printf(" **************** Cadastrar Horário ******************  \n\n");
     printf("                                                        \n");
-    ler_periodo(periodo); 
-    ler_tempo(tempo);
-    ler_dia(dia);
-    ler_diciplina(diciplina);
+    ler_periodo(h->periodo); 
+    ler_tempo(h->tempo);
+    ler_dia(h->dia);
+    diciplinas();
+    ler_diciplina(h->diciplina);
+    h->id=criar_id_h();
+    h->status='A';
     printf("                                                        \n");
     printf("Dados cadastrados!\n");
     printf("========================================================\n");
     printf("\n");
     printf("Digite enter para continuar...");getchar(); //para aparecer o menu e ele não sair rapidamente
+    return h;
 }
 
 void buscar_horario(void) {
