@@ -7,13 +7,15 @@
 #include <stdbool.h>
 #include <ctype.h>
 
+//Apelido struct Global
+Diciplina* dic; //diciplina
 
 void menu_diciplina(void) {
     while (opc!=0){
         system("clear||cls");   
         printf("\n");
         printf("===========================================================\n");
-        printf("     ****************  Menu Aluno ******************       \n");
+        printf("     ****************  Menu Diciplina ******************       \n");
         printf("          1 - Cadastrar Diciplina                          \n");
         printf("          2 - Pesquisar Diciplina                          \n");
         printf("          3 - Atualizar informações da Diciplina           \n");
@@ -26,7 +28,8 @@ void menu_diciplina(void) {
         scanf("%s",&opc);
         switch (opc){
             case '1':
-                cadastrar_diciplina();
+                dic=cadastrar_diciplina();
+                gravardiciplina(dic);
                 break;
             case '2':
                 buscar_diciplina();
@@ -52,23 +55,26 @@ void menu_diciplina(void) {
 }
 
 
-void cadastrar_diciplina(void) {
+Diciplina* cadastrar_diciplina(void) {
     system("clear||cls");   
-    char nome[100];
-    char diciplina[3];
+    dic=(Diciplina*)malloc(sizeof(Diciplina));
     printf("\n");
     printf("========================================================\n");
     printf("    *************** Cadastrar Diciplina *************   \n\n");
     printf("                                                        \n");
     printf("Pode ser 1 ou 2 diciplinas\n"); 
-    ler_diciplina(diciplina);
+    diciplinas();
+    ler_diciplina(dic->diciplina);
     printf("Digite o nome do professor\n");
-    ler_nome(nome);
+    ler_nome(dic->nome);
+    dic->id=criar_id_d();
+    dic->status='A';
     printf("                                                        \n");
     printf("Dados cadastrados!\n");
     printf("========================================================\n");
     printf("\n");
     printf("Digite enter para continuar...");getchar(); //para aparecer o menu e ele não sair rapidamente
+    return dic;
 }
 
 void buscar_diciplina(void) {
@@ -135,12 +141,12 @@ void diciplinas(void) {
     printf("H-História\n");
     printf("G-Geografia\n");
     printf("L-Literatura\n");
-    printf("É-Filosofia\n");
+    printf("L-Filosofia\n");
     printf("S-Sociologia\n");
     printf("M-Matemática\n");
     printf("B-Biologia\n");
     printf("Q-Química\n");
-    printf("F-Física\n");
+    printf("F-Física\n\n");
 }
 
 //funções para a validação da diciplina
@@ -148,12 +154,10 @@ void ler_diciplina(char *diciplina) {
     int t;
     bool v=true,f=false;
     while (v) {
-        diciplinas();
-        printf("\n");
+        fflush(stdin);
         printf("Digite a disciplina (somente maiúsculas):");
-        limpar_buffer();
         fgets(diciplina, 3 , stdin);
-        limpar_buffer();
+        fflush(stdin);
         t = valida_diciplina(diciplina);
         if (t == 1) {
             printf("válido\n");
@@ -166,20 +170,20 @@ void ler_diciplina(char *diciplina) {
 
 int valida_diciplina(char *diciplina) {
     int tam = strlen(diciplina);
-    //string que contem todas as iniciais referentes as diciplinas
-    char *materia[]=   
-    {"P","I","E","É","A",
-    "H","G","L","F",
-    "S","M","B","Q","F"};
-    for (int i=0 ; i<14;i++){
-        //compara se ambos os caracteres digitados estão presente no que foi digitado
-        if (strcmp(diciplina, materia[i]) == 0) {  
-            return 0;
-        }
-    }
     //Só é permitidos 1 ou 2 matérias por vez
-    if( tam!=2 && tam!=3){
+    //string que contem todas as iniciais referentes as diciplinas
+    if (tam != 2){
         return 0;
+    }
+    char *materia[]={
+    "P","I","E","A","H",
+    "G","L","O","S",
+    "M","B","Q","F",};
+    for (int i=0 ; i<13;i++){
+        //compara se ambos os caracteres digitados estão presente no que foi digitado
+        if (strncmp(diciplina, materia[i], 2) == 0 || strncmp(diciplina, materia[i], 1) == 0) {  
+            return 1;
+        }
     }
     //verificar a questão dos espaços e a ocorrência de números
     for (int i = 0; i < tam; i++) {
@@ -187,6 +191,5 @@ int valida_diciplina(char *diciplina) {
             return 0;
         }
     }
-
     return 1;
 }
