@@ -121,7 +121,7 @@ void relatorio_professor(void){
     printf("========================================================\n");
     printf("   *************** Relatório Professor *************  \n\n");
     printf("                                                        \n");
-    printf("       (Todos os Professores cadastrado)                \n");
+    printf("(Todos os Professores cadastrado)                       \n");
     listarprofessor();
     printf("                                                        \n");
     printf("========================================================\n");
@@ -164,7 +164,7 @@ void listarprofessor(void){
     prof=(Professor*)malloc(sizeof(Professor));
     fp=fopen("Professor.dat","rb");
     if (fp==NULL){
-        printf("Erro na recuperação dos dados!\n");
+        printf("\nNenhum professor cadastrado!");
     }
     while(fread(prof,sizeof(Professor),1,fp)){
         if (prof->status!='I'){

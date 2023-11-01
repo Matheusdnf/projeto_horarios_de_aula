@@ -124,7 +124,7 @@ void relatorio_diciplina(void){
     printf("========================================================\n");
     printf(" *************** Relatório Das Diciplinas ************* \n\n");
     printf("                                                        \n");
-    printf("       (informar todos as diciplinas cadastrado)        \n");
+    printf("(informar todas as diciplinas cadastrado)               \n");
     printf("                                                        \n");
     listardiciplina();
     printf("========================================================\n");
@@ -265,7 +265,7 @@ void listardiciplina(void){
     dic=(Diciplina*)malloc(sizeof(Diciplina));
     fd=fopen("Diciplina.dat","rb");
     if (fd==NULL){
-        printf("Erro na recuperação dos dados!\n");
+        printf("Nenhuma diciplina cadastrada!\n");
     }
     while(fread(dic,sizeof(Diciplina),1,fd)){
         if (dic->status!='I'){

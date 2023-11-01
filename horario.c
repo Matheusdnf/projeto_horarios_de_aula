@@ -122,7 +122,7 @@ void relatorio_horario(void){
     printf("========================================================\n");
     printf("   *************** Relatório dos Horários ************* \n\n");
     printf("                                                        \n");
-    printf("       (informar todos os horários cadastrado)          \n");
+    printf("(informar todos os horários cadastrado)                 \n");
     printf("                                                        \n");
     lista_h();
     printf("========================================================\n");
@@ -328,7 +328,7 @@ void lista_h(void){
     h=(Horario*)malloc(sizeof(Horario));
     fh=fopen("Horario.dat","rb");
     if (fh==NULL){
-        printf("Erro na recuperação dos dados!\n");
+        printf("Nenhum horário cadastrado\n!");
     }
     while(fread(h,sizeof(Horario),1,fh)){
         if (h->status!='I'){
