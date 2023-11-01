@@ -14,10 +14,10 @@ void ler_telefone(char *telefone) {
         fgets(telefone, 15, stdin);
         t = valida_telefone(telefone);
         if (t == 1) {
-            printf("Telefone válido\n");
             v = f;  // Saia do loop quando o telefone for válido
         } else if (t == 0) {
             printf("Telefone inválido\n");
+            printf("Certifiquisse de que tenha colocado DDD ou só números");
         }
     }
 }
@@ -84,10 +84,10 @@ void ler_nome(char *nome) {
         fgets(nome, 100, stdin);
         n = valida_nome(nome);
         if (n == 1) {
-            printf("válido\n");
             v=f;
         } else if (n == 0) {
-            printf("inválido\n");
+            printf("Nome inválido\n");
+            printf("Certifiquisse se não colocou letras ou espaços a mais!");
         }
     }
 }
@@ -187,10 +187,9 @@ void ler_cpf(char cpf[]) {
         limpar_buffer();
         c = validarCPF(cpf);
         if (c == 1) {
-            printf("válido\n");
             v=f;
         } else if (c == 0) {
-            printf("inválido\n");
+            printf("CPF inválido!\n");
         }
     }
 }
@@ -214,7 +213,6 @@ void ler_email(char email[]) {
         limpar_buffer();
         e = validate_email(email);
         if (e == 1) {
-            printf("Email válido!\n");
            v=f;
         } else if (e == 0) {
             printf("Email inválido!\n");
