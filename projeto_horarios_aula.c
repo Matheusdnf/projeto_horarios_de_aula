@@ -10,6 +10,7 @@
 void menu_principal(void);
 void menu_sobre(void);
 void menu_equipe(void);
+void relatorio_tudo(void);
 
 //variável global
 char opc;
@@ -33,9 +34,12 @@ int main(void) {
                 menu_diciplina();
                 break;
             case '5':
-                menu_equipe();
+                relatorio_tudo();
                 break;
             case '6':
+                menu_equipe();
+                break;
+            case '7':
                 menu_sobre();
                 break;
             case '0':
@@ -51,6 +55,34 @@ int main(void) {
     return 0;
 }
 
+//fazer um switch case para mostrar os tipos de dados armazenados
+void relatorio_tudo(void){
+    while(opc!=0){
+        tela_relatorio();
+        printf("\nQual relatório deseja ver: "); scanf("%s", &opc);
+        switch (opc) { 
+            case '1':
+                relatorio_aluno();
+                break;
+            case '2':
+                relatorio_professor();
+                break;
+            case '3':
+                relatorio_horario();
+                break;
+            case '4':
+                relatorio_diciplina();
+                break;
+            case '0':
+                opc=0;
+                break;
+            default:
+                printf("\nOpção Inválida!\n");
+                getchar();printf("Digite enter para continuar...");getchar(); 
+                break;
+        }
+    }
+}
 
 void menu_principal() {
     system("clear||cls");
@@ -70,10 +102,11 @@ void menu_principal() {
     printf("            2 - Gestão de professores              \n");
     printf("            3 - Gestão de Horários                 \n");
     printf("            4 - Gestão de Diciplinas              \n");
-    printf("            5 - Sobre a Equipe                      \n");
-    printf("            6 - Sobre o Projeto                    \n");
-    printf("            0 - Finalizar programa                 \n");
-    printf("                                                   \n");
+    printf("            5 - Menu Relatório                    \n");
+    printf("            6 - Sobre a Equipe                    \n");
+    printf("            7 - Sobre o Projeto                   \n");
+    printf("            0 - Finalizar programa                \n");
+    printf("                                                  \n");
 }
 
 
@@ -98,7 +131,17 @@ void menu_sobre(void) {
     printf("Digite enter para continuar...");getchar(); 
 }
 
-
+void tela_relatorio(void){
+    system("clear||cls");
+    printf("===================================================\n");
+    printf("   ************* Menu Relatório ***************    \n");
+    printf("            1 - Relatório de alunos                   \n");
+    printf("            2 - Relatório de professores              \n");
+    printf("            3 - Relatório de Horários                 \n");
+    printf("            4 - Relatório de Diciplinas               \n");
+    printf("            0 - Voltar                                \n");
+    printf("===================================================\n");
+}
 void menu_equipe(void) {
     system("clear||cls");
     printf("\n");
