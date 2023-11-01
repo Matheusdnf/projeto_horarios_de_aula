@@ -55,34 +55,6 @@ int main(void) {
     return 0;
 }
 
-//fazer um switch case para mostrar os tipos de dados armazenados
-void relatorio_tudo(void){
-    while(opc!=0){
-        tela_relatorio();
-        printf("\nQual relatório deseja ver: "); scanf("%s", &opc);
-        switch (opc) { 
-            case '1':
-                relatorio_aluno();
-                break;
-            case '2':
-                relatorio_professor();
-                break;
-            case '3':
-                relatorio_horario();
-                break;
-            case '4':
-                relatorio_diciplina();
-                break;
-            case '0':
-                opc=0;
-                break;
-            default:
-                printf("\nOpção Inválida!\n");
-                getchar();printf("Digite enter para continuar...");getchar(); 
-                break;
-        }
-    }
-}
 
 void menu_principal() {
     system("clear||cls");
@@ -142,6 +114,7 @@ void tela_relatorio(void){
     printf("            0 - Voltar                                \n");
     printf("===================================================\n");
 }
+
 void menu_equipe(void) {
     system("clear||cls");
     printf("\n");
@@ -160,3 +133,31 @@ void menu_equipe(void) {
     printf("Digite enter para continuar...");getchar(); 
 } 
 
+//fazer um switch case para mostrar os tipos de dados armazenados
+void relatorio_tudo(void){
+    while(opc!=0){
+        tela_relatorio();
+        printf("\nQual relatório deseja ver: "); scanf("%s", &opc);
+        switch (opc) { 
+            case '1':
+                relatorio_aluno();
+                break;
+            case '2':
+                relatorio_professor();
+                break;
+            case '3':
+                relatorio_horario();
+                break;
+            case '4':
+                relatorio_diciplina();
+                break;
+            case '0':
+                opc=0;
+                break;
+            default:
+                printf("\nOpção Inválida!\n");
+                getchar();printf("Digite enter para continuar...");getchar(); 
+                break;
+        }
+    }
+}
