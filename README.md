@@ -9,3 +9,6 @@ DCT1106 - Programação - Flavius Gorgônio.\
 Desenvolvido por @matheusdnf
 
 <!--gcc *.c -o projeto -Wall-->
+
+<!--//break (nome da função)
+next-próxima linha-->
