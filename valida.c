@@ -17,7 +17,7 @@ void ler_telefone(char *telefone) {
             v = f;  // Saia do loop quando o telefone for válido
         } else if (t == 0) {
             printf("Telefone inválido\n");
-            printf("Certifiquisse de que tenha colocado DDD ou só números");
+            printf("Certifiquisse de que tenha colocado DDD ou só números\n");
         }
     }
 }
@@ -87,7 +87,7 @@ void ler_nome(char *nome) {
             v=f;
         } else if (n == 0) {
             printf("Nome inválido\n");
-            printf("Certifiquisse se não colocou letras ou espaços a mais!");
+            printf("Certifiquisse se não colocou letras ou espaços a mais!\n");
         }
     }
 }
@@ -142,7 +142,7 @@ int validarCPF(char cpf[]) {
 
     if (strlen(cpf) != 11)
         return 0;
-    else if ((strcmp(cpf, "00000000000") == 0) || (strcmp(cpf, "11111111111") == 0) ||
+    else if ( 
              (strcmp(cpf, "22222222222") == 0) || (strcmp(cpf, "33333333333") == 0) ||
              (strcmp(cpf, "44444444444") == 0) || (strcmp(cpf, "55555555555") == 0) ||
              (strcmp(cpf, "66666666666") == 0) || (strcmp(cpf, "77777777777") == 0) ||
