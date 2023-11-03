@@ -181,6 +181,7 @@ void listar_todos_aluno(void){
     free(std);
 }
 
+//feito com a ajuda de marlison silva
 void procura_aluno(char cpf[]) {
     FILE* fa;
     Aluno* std;
@@ -198,6 +199,8 @@ void procura_aluno(char cpf[]) {
     fclose(fa);
     free(std);
 }
+
+//feito com a ajuda de marlison silva chat gpt e adapatada por matheus diniz
 
 void remover_aluno(char cpf[]) {
     FILE* fa;
