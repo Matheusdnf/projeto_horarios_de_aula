@@ -7,12 +7,10 @@
 #include <stdbool.h>
 #include <ctype.h>
 
-//Apelido struct Global
-Diciplina* dic; //diciplina
-
 void menu_diciplina(void) {
     while (opc!=0){
         system("clear||cls");   
+        Diciplina* dic;
         printf("\n");
         printf("===========================================================\n");
         printf("     ****************  Menu Diciplina ******************       \n");
@@ -57,6 +55,7 @@ void menu_diciplina(void) {
 
 Diciplina* cadastrar_diciplina(void) {
     system("clear||cls");   
+    Diciplina* dic;
     dic=(Diciplina*)malloc(sizeof(Diciplina));
     printf("\n");
     printf("========================================================\n");
@@ -79,11 +78,14 @@ Diciplina* cadastrar_diciplina(void) {
 
 void buscar_diciplina(void) {
     system("clear||cls");
+    int id=0;
     printf("\n");  
     printf("========================================================\n");
-    printf("    *************** Pesquisar Aluno *************     \n\n");
+    printf("    *************** Pesquisar Diciplina *************     \n\n");
     printf("                                                        \n");
-    printf("            Informe a diciplina:                        \n");
+    printf("Informe o id da diciplina:");
+    scanf("%d",&id);
+    procura_diciplina(id);
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
@@ -107,10 +109,13 @@ void atualizar_diciplina(void) {
 void excluir_diciplina(void) {
     system("clear||cls");
     printf("\n");
+    int id=0;
     printf("========================================================\n");
     printf("    *************** Excluir Diciplina *************     \n\n");
     printf("                                                        \n");
-    printf("            Informe a diciplina:                        \n");
+    printf("Informe o id da diciplina:");
+    scanf("%d",&id);
+    remover_diciplina(id);
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
@@ -126,7 +131,7 @@ void relatorio_diciplina(void){
     printf("                                                        \n");
     printf("(informar todas as diciplinas cadastrado)               \n");
     printf("                                                        \n");
-    listardiciplina();
+    listar_todas_diciplina();
     printf("========================================================\n");
     printf("\n");
     getchar(); printf("Digite enter para continuar...");getchar(); 
@@ -246,22 +251,23 @@ void exibir_diciplinas(Diciplina* dic){
     if ((dic==NULL) || (dic->status=='I')){
         printf("\nEsta Diciplinas não foi cadastrada no sistema!\n");
     }else{
+        printf("\n");
         printf(" ********Informações da diciplina********");
-        printf("\n\tNome do Professor:%s",dic->nome);
-        printf("\tNome da diciplina:%s\n",dic->diciplina);
-        printf("\tId da diciplina:%d\n",dic->id);
+        printf("\nNome do Professor:%s",dic->nome);
+        printf("Nome da diciplina:%s\n",dic->diciplina);
+        printf("Id da diciplina:%d\n",dic->id);
+        printf("\n");
         if(dic->status=='A'){
             strcpy(estado,"Diciplina Ativa");
-        }else if(dic->status=='N'){
-            strcpy(estado,"Não Encontrado");
-        }else{
-            strcpy(estado,"Fechado");
+        }else if(dic->status=='I'){
+            strcpy(estado,"Fechada");
         }
     }
 }
 
-void listardiciplina(void){
+void listar_todas_diciplina(void){
     FILE* fd;
+    Diciplina* dic;
     dic=(Diciplina*)malloc(sizeof(Diciplina));
     fd=fopen("Diciplina.dat","rb");
     if (fd==NULL){
@@ -274,4 +280,50 @@ void listardiciplina(void){
     }
     fclose(fd);
     free(dic);
+}
+
+//feito com a ajuda de marlison silva chat 
+
+void procura_diciplina(int id) {
+    FILE* fd;
+    Diciplina* dic;
+    dic=(Diciplina*)malloc(sizeof(Diciplina));
+    fd=fopen("Diciplina.dat","rb");
+    if (dic == NULL) {
+    printf("\t Diciplina não encontrada!\n");
+        return;
+    }
+    while(fread(dic, sizeof(Diciplina), 1, fd)) {
+        if ((dic->id == id) && (dic->status)) {
+            exibir_diciplinas(dic);
+        }
+    }
+    fclose(fd);
+    free(dic);
+}
+
+//feito com a ajuda de marlison silva chat gpt e adapatada por matheus diniz
+void remover_diciplina(int id) {
+    FILE* fd;
+    Diciplina dic;
+    int encontra = 0;
+    fd = fopen("Diciplina.dat", "r+b");
+    if (fd == NULL) {
+        printf("Erro na abertura do arquivo!\n");
+        return;
+    }
+    while (fread(&dic, sizeof(Diciplina), 1, fd)) {
+        if ((dic.id == id) && dic.status == 'A') {
+            encontra = 1;
+            dic.status = 'I';
+            fseek(fd, -1 * (long)sizeof(Diciplina), SEEK_CUR);
+            fwrite(&dic, sizeof(Diciplina), 1, fd);
+            printf("\nDiciplina excluída!\n");
+            break; // Encerre o loop após a exclusão
+        }
+    }
+    if (!encontra) {
+        printf("\nDiciplina não encontrada!\n");
+    }
+    fclose(fd);
 }
