@@ -23,6 +23,10 @@ int valida_tempo(char* tempo);
 int valida_dia(char* dia);
 //criação de id
 int criar_id_h(void);
+//gravar em arquivo
 void gravar_h(Horario* h);
+//função crud
 void exibir_h(Horario* h);
-void lista_h(void);
+void lista_todos_h(void);
+void procura_horario(int id);
+void remover_horario(int id);

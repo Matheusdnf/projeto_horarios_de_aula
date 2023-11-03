@@ -14,8 +14,8 @@ void atualizar_aluno(void);
 void excluir_aluno(void); 
 void relatorio_aluno(void);
 //gravação em arquivo
-void gravaraluno(Aluno* std);    //gravação do aluno
-
+void gravaraluno(Aluno* std);    
+//funções do crud
 void procura_aluno(char cpf[]);
 void listar_todos_aluno(void);
 void exibicao_alunos(Aluno* std);

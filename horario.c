@@ -6,13 +6,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-//Apelido Struct 
-Horario* h; //horario
-
 
 void menu_horario(void) {
     while (opc!=0){
         system("clear||cls");   
+        Horario* h;
         printf("\n");
         printf("===========================================================\n");
         printf("     ****************  Menu Horários ******************   \n");
@@ -56,6 +54,7 @@ void menu_horario(void) {
 
 Horario* cadastrar_horario(void) {
     system("clear||cls");
+    Horario* h;
     h=(Horario*)malloc(sizeof(Horario));
     printf("========================================================\n");
     printf(" **************** Cadastrar Horário ******************  \n\n");
@@ -77,15 +76,18 @@ Horario* cadastrar_horario(void) {
 
 void buscar_horario(void) {
     system("clear||cls");
+    int id=0;
     printf("\n");
     printf("========================================================\n");
     printf("    *************** Pesquisar Horário *************   \n\n");
     printf("                                                        \n");
-    printf("          Informe o horário:                            \n");
+    printf("Informe o id do horário:");
+    scanf("%d",&id);
+    printf("\n");
+    procura_horario(id);
     printf("                                                        \n");
     printf("========================================================\n");
-    printf("\n");
-    getchar(); printf("Digite enter para continuar...");getchar(); 
+    printf("Digite enter para continuar...");getchar();
 }
 
 
@@ -95,7 +97,7 @@ void atualizar_horario(void) {
     printf("========================================================\n");
     printf("    *************** Atualizar Horário *************   \n\n");
     printf("                                                        \n");
-    printf("          Informe o horário:                            \n");
+    printf("Informe o id do horário:\n");
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
@@ -105,26 +107,29 @@ void atualizar_horario(void) {
 
 void excluir_horario(void) {
     system("clear||cls");
+    int id=0;
     printf("\n");
     printf("========================================================\n");
     printf("    *************** Excluir Horário *************     \n\n");
     printf("                                                        \n");
-    printf("          Informe o horário:                            \n");
+    printf("Informe o id do horário:");
+    scanf("%d",&id);
+    getchar();
+    remover_horario(id);
     printf("                                                        \n");
     printf("========================================================\n");
-    printf("\n");
-    getchar(); printf("Digite enter para continuar...");getchar(); 
+    printf("Digite enter para continuar...");getchar(); 
 }
 
 void relatorio_horario(void){
     system("clear||cls");
     printf("\n");
     printf("========================================================\n");
-    printf("   *************** Relatório dos Horários ************* \n\n");
+    printf(" *************** Relatório dos Horários ************* \n\n");
     printf("                                                        \n");
-    printf("(informar todos os horários cadastrado)                 \n");
+    printf("(informar todos os horários cadastrado)\n");
     printf("                                                        \n");
-    lista_h();
+    lista_todos_h();
     printf("========================================================\n");
     printf("\n");
     getchar(); printf("Digite enter para continuar...");getchar(); 
@@ -308,11 +313,12 @@ void exibir_h(Horario* h){
         printf("\nEste Horário não foi cadastrado no sistema!\n");
     }else{
         printf("********Dados do Horário ********");
-        printf("\n\tPeriodo:%s\n",h->periodo);
-        printf("\tDia:%s\n",h->dia);
-        printf("\tTempo:%s\n",h->tempo);
-        printf("\tDiciplina:%s\n",h->diciplina);
-        printf("\tid:%d\n",h->id);
+        printf("\nPeriodo:%s\n",h->periodo);
+        printf("Dia:%s\n",h->dia);
+        printf("Tempo:%s\n",h->tempo);
+        printf("Diciplina:%s\n",h->diciplina);
+        printf("id:%d\n",h->id);
+        printf("\n");
         if(h->status=='A'){
             strcpy(estado,"Horário Ativo");
         }else if(h->status=='N'){
@@ -323,12 +329,13 @@ void exibir_h(Horario* h){
     }
 }
 
-void lista_h(void){
+void lista_todos_h(void){
     FILE* fh;
+    Horario* h;
     h=(Horario*)malloc(sizeof(Horario));
     fh=fopen("Horario.dat","rb");
     if (fh==NULL){
-        printf("Nenhum horário cadastrado\n!");
+        printf("Nenhum horário cadastrado!\n");
     }
     while(fread(h,sizeof(Horario),1,fh)){
         if (h->status!='I'){
@@ -338,3 +345,50 @@ void lista_h(void){
     fclose(fh);
     free(h);
 }
+
+//feito com a ajuda de marlison silva chat 
+
+void procura_horario(int id) {
+    FILE* fh;
+    Horario* h;
+    h=(Horario*)malloc(sizeof(Horario));
+    fh=fopen("Horario.dat","rb");
+    if (h == NULL) {
+    printf("\t Horário não encontrado!\n");
+        return;
+    }
+    while(fread(h, sizeof(Horario), 1, fh)) {
+        if ((h->id == id) && (h->status)) {
+            exibir_h(h);
+        }
+    }
+    fclose(fh);
+    free(h);
+}
+
+//feito com a ajuda de marlison silva chat gpt e adapatada por matheus diniz
+void remover_horario(int id) {
+    FILE* fh;
+    Horario h;
+    int encontra = 0;
+    fh = fopen("Horario.dat", "r+b");
+    if (fh == NULL) {
+        printf("Erro na abertura do arquivo!\n");
+        return;
+    }
+    while (fread(&h, sizeof(Horario), 1, fh)) {
+        if ((h.id == id) && h.status == 'A') {
+            encontra = 1;
+            h.status = 'I';
+            fseek(fh, -1 * (long)sizeof(Horario), SEEK_CUR);
+            fwrite(&h, sizeof(Horario), 1, fh);
+            printf("\nHorario excluído!\n");
+            break; // Encerre o loop após a exclusão
+        }
+    }
+    if (!encontra) {
+        printf("\nHorario não encontrado!\n");
+    }
+    fclose(fh);
+}
+//fazer uma exibição de horários 

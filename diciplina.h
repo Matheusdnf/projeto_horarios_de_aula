@@ -1,9 +1,9 @@
 //struct diciplina
 typedef struct diciplina {
-    short int id;
+    int id;
     char nome[100]; //referente ao nome do professor
     char diciplina[3];
-    char status;           //A-Ativo I-Inexistente N-Não encontrado
+    char status;           //A-Ativo I-Inexistente 
     //char status;
 } Diciplina;
 //funções do módulo diciplina
@@ -21,5 +21,8 @@ void diciplinas(void);
 int criar_id_d(void);
 //gravação e exibição de dados
 void gravardiciplina(Diciplina* dic);
+//funções do crud
 void exibir_diciplinas(Diciplina* dic);
-void listardiciplina(void);
+void listar_todas_diciplina(void);
+void procura_diciplina(int id);
+void remover_diciplina(int id);
