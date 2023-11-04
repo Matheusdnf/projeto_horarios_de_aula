@@ -369,19 +369,20 @@ void procura_horario(int id) {
 //feito com a ajuda de marlison silva chat gpt e adapatada por matheus diniz
 void remover_horario(int id) {
     FILE* fh;
-    Horario h;
+    Horario *h;
+    h=(Horario*)malloc(sizeof(Horario));
     int encontra = 0;
     fh = fopen("Horario.dat", "r+b");
     if (fh == NULL) {
         printf("Erro na abertura do arquivo!\n");
         return;
     }
-    while (fread(&h, sizeof(Horario), 1, fh)) {
-        if ((h.id == id) && h.status == 'A') {
+    while (fread(h, sizeof(Horario), 1, fh)) {
+        if ((h->id == id) && h->status == 'A') {
             encontra = 1;
-            h.status = 'I';
+            h->status = 'I';
             fseek(fh, -1 * (long)sizeof(Horario), SEEK_CUR);
-            fwrite(&h, sizeof(Horario), 1, fh);
+            fwrite(h, sizeof(Horario), 1, fh);
             printf("\nHorario excluído!\n");
             break; // Encerre o loop após a exclusão
         }

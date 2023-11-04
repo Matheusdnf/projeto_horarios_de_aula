@@ -204,19 +204,20 @@ void procura_aluno(char cpf[]) {
 
 void remover_aluno(char cpf[]) {
     FILE* fa;
-    Aluno std;
+    Aluno *std;
     int encontra = 0;
+    std = (Aluno*) malloc(sizeof(Aluno));
     fa = fopen("Alunos.dat", "r+b");
     if (fa == NULL) {
         printf("Erro na abertura do arquivo!\n");
         return;
     }
-    while (fread(&std, sizeof(Aluno), 1, fa)) {
-        if (strcmp(std.cpf, cpf) == 0 && std.status == 'M') {
+    while (fread(std, sizeof(Aluno), 1, fa)) {
+        if ((strcmp(std->cpf, cpf) == 0) && (std->status == 'M')) {
             encontra = 1;
-            std.status = 'I';
+            std->status = 'I';
             fseek(fa, -1 * (long)sizeof(Aluno), SEEK_CUR);
-            fwrite(&std, sizeof(Aluno), 1, fa);
+            fwrite(std, sizeof(Aluno), 1, fa);
             printf("\nAluno excluído!\n");
             break; // Encerre o loop após a exclusão
         }

@@ -305,19 +305,20 @@ void procura_diciplina(int id) {
 //feito com a ajuda de marlison silva chat gpt e adapatada por matheus diniz
 void remover_diciplina(int id) {
     FILE* fd;
-    Diciplina dic;
+    Diciplina *dic;
+    dic=(Diciplina*)malloc(sizeof(Diciplina));
     int encontra = 0;
     fd = fopen("Diciplina.dat", "r+b");
     if (fd == NULL) {
         printf("Erro na abertura do arquivo!\n");
         return;
     }
-    while (fread(&dic, sizeof(Diciplina), 1, fd)) {
-        if ((dic.id == id) && dic.status == 'A') {
+    while (fread(dic, sizeof(Diciplina), 1, fd)) {
+        if ((dic->id == id) && dic->status == 'A') {
             encontra = 1;
-            dic.status = 'I';
+            dic->status = 'I';
             fseek(fd, -1 * (long)sizeof(Diciplina), SEEK_CUR);
-            fwrite(&dic, sizeof(Diciplina), 1, fd);
+            fwrite(dic, sizeof(Diciplina), 1, fd);
             printf("\nDiciplina excluída!\n");
             break; // Encerre o loop após a exclusão
         }

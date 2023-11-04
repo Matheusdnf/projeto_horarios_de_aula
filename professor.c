@@ -199,19 +199,20 @@ void procura_professor(char cpf[]) {
 
 void remover_Professor(char cpf[]) {
     FILE* fp;
-    Professor prof;
+    Professor *prof;
     int encontra = 0;
+    prof = (Professor*) malloc(sizeof(Professor));
     fp = fopen("Professor.dat", "r+b");
     if (fp == NULL) {
         printf("Erro na abertura do arquivo!\n");
         return;
     }
-    while (fread(&prof, sizeof(Professor), 1, fp)) {
-        if (strcmp(prof.cpf, cpf) == 0 && prof.status == 'A') {
+    while (fread(prof, sizeof(Professor), 1, fp)) {
+        if ((strcmp(prof->cpf, cpf) == 0) && (prof->status == 'A')) {
             encontra = 1;
-            prof.status = 'I';
+            prof->status = 'I';
             fseek(fp, -1 * (long)sizeof(Professor), SEEK_CUR);
-            fwrite(&prof, sizeof(Professor), 1, fp);
+            fwrite(prof, sizeof(Professor), 1, fp);
             printf("\nProfessor excluído!\n");
             break; // Encerre o loop após a exclusão
         }
