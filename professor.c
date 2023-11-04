@@ -88,16 +88,20 @@ void buscar_professor(void) {
 
 void atualizar_professor(void) {
     system("clear||cls");
+    char cpf[15];
     printf("\n");
     printf("========================================================\n");
-    printf("    *************** Atualizar Professor *************   \n\n");
+    printf("   *************** Atualizar Professor *************   \n\n");
     printf("                                                        \n");
-    printf("             O que deseja atualizar?                    \n");
-    printf("             Telefone(0) - Email(1)                     \n");
+    printf("      Informe o cpf do Professor que será atualizado        \n");
+    printf("                                                        \n");
+    ler_cpf(cpf);
+    printf("                                                        \n");
+    att_professor(cpf);
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    getchar(); printf("Digite enter para continuar...");getchar(); 
+    printf("Digite enter para continuar...");getchar(); 
 }
 
 
@@ -124,7 +128,6 @@ void relatorio_professor(void){
     printf("                                                        \n");
     printf("(Todos os Professores cadastrado)                       \n");
     listar_todos_professor();
-    printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
     getchar(); printf("Digite enter para continuar...");getchar(); 
@@ -221,4 +224,67 @@ void remover_Professor(char cpf[]) {
         printf("\nProfessor não encontrado!\n");
     }
     fclose(fp);
+}
+
+void att_professor(char cpf[]){
+    FILE* fp;
+    Professor *prof;
+    int encontra=0;
+    int esc;
+    prof=(Professor*)malloc(sizeof(Professor));
+    fp=fopen("Professor.dat","r+b");
+    if (prof == NULL) {
+    printf("\tNão foi possível abrir o arquivo!\n");
+        return;
+    }
+    while (fread(prof, sizeof(Professor), 1, fp)) {
+        if ((strcmp(prof->cpf, cpf) == 0) && (prof->status == 'A')) {
+        encontra=1;  
+            while (esc!=0){
+            system("clear||cls");
+            printf("========================================================\n");
+            printf("   *************** Atualizar Professor ***************      \n");
+            printf("                                                        \n");
+            printf("               o que deseja atualizar?                  \n");
+            printf("          Telefone[\033[31m1\033[0m] - Email[\033[31m2\033[0m] - Voltar[\033[31m0\033[0m]\n");
+            printf("                                                        \n");
+            printf("Dados cadastrados no sistema:\n");
+            printf("\nNome do Professor:%s",prof->nome);
+            printf("CPF Do Professor:%s\n",prof->cpf);
+            printf("Email:%s\n",prof->email);
+            printf("Telefone:%s\n",prof->telefone);
+            printf("========================================================\n");
+            printf("\n");
+            printf("Qual opção deseja atualizar:");
+            scanf("%d",&esc);
+            fflush(stdin);
+            switch (esc) { 
+                case 1:
+                    ler_telefone(prof->telefone);
+                    printf("Alteração realizada!\n");
+                    printf("Digite enter para continuar...");getchar();
+                    break;
+                case 2:
+                    ler_email(prof->email);
+                    printf("Alteração realizada!\n");
+                    printf("Digite enter para continuar...");getchar();
+                    break;
+                case 0:
+                    esc=0;
+                    break;
+                default:
+                    printf("\nOpção Inválida!\n");
+                    printf("Digite enter para continuar...");getchar(); 
+                    break;
+            }
+                fseek(fp, -1 * (long)sizeof(Professor), SEEK_CUR);
+                fwrite(prof, sizeof(Professor), 1, fp);       
+            }break;
+        }
+        }
+        if (!encontra) {
+            printf("Professor não encontrado!\n");
+    } 
+    fclose(fp);
+    free(prof);
 }
