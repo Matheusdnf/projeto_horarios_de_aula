@@ -90,16 +90,20 @@ void buscar_aluno(void) {
 
 void atualizar_aluno(void) {
     system("clear||cls");
+    char cpf[15];
     printf("\n");
     printf("========================================================\n");
     printf("    *************** Atualizar Aluno *************     \n\n");
     printf("                                                        \n");
-    printf("            o que deseja atualizar?                     \n");
-    printf("             Telefone(0) - Email(1)                     \n");
+    printf("      Informe o cpf do aluno que será atualizado        \n");
+    printf("                                                        \n");
+    ler_cpf(cpf);
+    printf("                                                        \n");
+    att_aluno(cpf);
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    getchar(); printf("Digite enter para continuar...");getchar(); 
+    printf("Digite enter para continuar...");getchar(); 
 }
 
 void excluir_aluno() {
@@ -126,7 +130,6 @@ void relatorio_aluno(void){
     printf("                                                        \n");
     printf("(informar todos os alunos cadastrado)                   \n");
     listar_todos_aluno();
-    printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
     getchar(); printf("Digite enter para continuar...");getchar(); 
@@ -155,7 +158,6 @@ void exibicao_alunos(Aluno* std){
         printf("CPF:%s\n",std->cpf);
         printf("Email:%s\n",std->email);
         printf("Telefone:%s\n",std->telefone);
-        printf("status:%d",std->status);
         if(std->status=='M'){
             strcpy(estado,"Matriculado");
         }else if(std->status=='I'){
@@ -228,39 +230,63 @@ void remover_aluno(char cpf[]) {
     fclose(fa);
 }
 
-// void att_aluno(char cpf[]){
-//     FILE* fa;
-//     Aluno* std;
-//     int encontra=0;
-//     std=(Aluno*)malloc(sizeof(Aluno));
-//     fa=fopen("Alunos.dat","rb");
-//     if (std == NULL) {
-//     printf("\tAluno não encontrado!\n");
-//         return;
-//     }
-//     while (fread(&std, sizeof(Aluno), 1, fa)) {
-//         if (strcmp(std->cpf, cpf) == 0 && std->status == 'M') {
-//             encontra = 1;
-//         printf("========================================================\n");
-//         printf("    *************** Atualizar Aluno *************     \n\n");
-//         printf("                                                        \n");
-//         printf("            o que deseja atualizar?                     \n");
-//         printf("         Telefone(1) - Email(2) - Voltar(0)             \n");
-//         printf("                                                        \n");
-//         scanf("%d",opc);
-//         getchar();
-//         switch (opc) { 
-//             case '1':
-//                 relatorio_aluno();
-//                 break;
-//             case '2':
-//                 relatorio_professor();
-//                 break;
-//             case '0':
-//                 opc=0;
-//                 break;
-//             default:
-//                 printf("\nOpção Inválida!\n");
-//                 getchar();printf("Digite enter para continuar...");getchar(); 
-//                 break;
-        
+void att_aluno(char cpf[]){
+    FILE* fa;
+    Aluno *std;
+    int encontra=0;
+    int esc;
+    std=(Aluno*)malloc(sizeof(Aluno));
+    fa=fopen("Alunos.dat","r+b");
+    if (std == NULL) {
+    printf("\tNão foi possível abrir o arquivo!\n");
+        return;
+    }
+    while (fread(std, sizeof(Aluno), 1, fa)) {
+        if ((strcmp(std->cpf, cpf) == 0) && (std->status == 'M')) {
+        encontra=1;  
+            while (esc!=0){
+            system("clear||cls");
+            printf("========================================================\n");
+            printf("   *************** Atualizar Aluno ***************      \n");
+            printf("                                                        \n");
+            printf("               o que deseja atualizar?                  \n");
+            printf("          Telefone[\033[31m1\033[0m] - Email[\033[31m2\033[0m] - Voltar[\033[31m0\033[0m]\n");
+            printf("                                                        \n");
+            printf("Dados cadastrados no sistema:\n");
+            printf("\nNome do aluno:%s",std->nome);
+            printf("CPF Do Aluno:%s\n",std->cpf);
+            printf("Email:%s\n",std->email);
+            printf("Telefone:%s\n",std->telefone);
+            printf("========================================================\n");
+            printf("\n");
+            printf("Qual opção deseja atualizar:");
+            scanf("%d",&esc);
+            fflush(stdin);
+            switch (esc) { 
+                case 1:
+                    ler_telefone(std->telefone);
+                    printf("Alteração realizada!\n");
+                    break;
+                case 2:
+                    ler_email(std->email);
+                    printf("Alteração realizada!\n");
+                    break;
+                case 0:
+                    esc=0;
+                    break;
+                default:
+                    printf("\nOpção Inválida!\n");
+                    printf("Digite enter para continuar...");getchar(); 
+                    break;
+            }
+                fseek(fa, -1 * (long)sizeof(Aluno), SEEK_CUR);
+                fwrite(std, sizeof(Aluno), 1, fa);       
+            }break;
+        }
+        }
+        if (!encontra) {
+            printf("Aluno não encontrado!\n");
+    } 
+    fclose(fa);
+    free(std);
+}
