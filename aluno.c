@@ -53,11 +53,21 @@ void menu_aluno(void) {
 Aluno* cadastrar_aluno(void) {
     system("clear||cls"); 
     Aluno* std;
+    bool v=true,f=false;
+    char c;
     std=(Aluno*)malloc(sizeof(Aluno));
     printf("\n");
     printf("========================================================\n");
     printf("    ************* Cadastrar Aluno *************     \n\n");
-    ler_cpf(std->cpf);
+    while(v){
+        ler_cpf(std->cpf);
+        c=verifica_existe(std->cpf);
+        if (c == '1') {
+                v = f;  
+            } else {
+                printf("Aluno já cadastrado com esse cpf\n");
+            }
+        }
     ler_nome(std->nome);
     ler_email(std->email);
     ler_telefone(std->telefone);
@@ -148,6 +158,21 @@ void gravaraluno(Aluno* std){
     free(std);
 }
 
+char verifica_existe(char cpf[]){
+    FILE* fa;
+    Aluno* std;
+    std=(Aluno*)malloc(sizeof(Aluno));
+    fa=fopen("Alunos.dat","rb");
+    while(fread(std, sizeof(Aluno), 1, fa)) {
+        if ((strcmp(std->cpf, cpf) == 0)) {
+            return '0';
+        }
+    }        
+    fclose(fa);
+    free(std);
+    return '1';
+}
+
 void exibicao_alunos(Aluno* std){
     char estado[17];
     if ((std==NULL) || (std->status=='I')){
@@ -193,8 +218,11 @@ void procura_aluno(char cpf[]) {
     printf("\tAluno não encontrado!\n");
         return;
     }
+    if (fa==NULL){
+        printf("\nNenhum aluno cadastrado!\n");
+    }
     while(fread(std, sizeof(Aluno), 1, fa)) {
-        if ((strcmp(std->cpf, cpf) == 0) && (std->status)) {
+        if ((strcmp(std->cpf, cpf) == 0) && (std->status=='M')) {
             exibicao_alunos(std);
         }
     }
@@ -241,6 +269,9 @@ void att_aluno(char cpf[]){
     printf("\tNão foi possível abrir o arquivo!\n");
         return;
     }
+    if (fa==NULL){
+        printf("\nNenhum aluno cadastrado!\n");
+    }
     while (fread(std, sizeof(Aluno), 1, fa)) {
         if ((strcmp(std->cpf, cpf) == 0) && (std->status == 'M')) {
         encontra=1;  
@@ -265,11 +296,13 @@ void att_aluno(char cpf[]){
             switch (esc) { 
                 case 1:
                     ler_telefone(std->telefone);
-                    printf("Alteração realizada!\n");
+                    printf("\nAlteração realizada!\n");
+                    printf("\nDigite enter para continuar...");getchar();
                     break;
                 case 2:
                     ler_email(std->email);
-                    printf("Alteração realizada!\n");
+                    printf("\nAlteração realizada!\n");
+                    printf("\nDigite enter para continuar...");getchar();
                     break;
                 case 0:
                     esc=0;
