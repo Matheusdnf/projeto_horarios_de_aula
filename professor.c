@@ -54,11 +54,21 @@ void menu_professor(void) {
 Professor* cadastrar_professor(void) {
     system("clear||cls");
     Professor* prof;
+    bool v=true,f=false;
+    char c;
     prof=(Professor*)malloc(sizeof(Professor));
     printf("\n");
     printf("========================================================\n\n");
     printf("   *************** Cadastrar Professor ***************  \n\n");
-    ler_cpf(prof->cpf);
+    while(v){
+        ler_cpf(prof->cpf);
+        c=verifica_existe_prof(prof->cpf);
+        if (c == 1) {
+                v = f;  
+            } else {
+                printf("Professor já cadastrado com esse cpf\n");
+            }
+        }
     ler_nome(prof->nome);
     ler_email(prof->email);
     ler_telefone(prof->telefone);
@@ -143,6 +153,24 @@ void gravarprofessor(Professor* prof){
     fclose(fp);
 }
 
+int verifica_existe_prof(char cpf[]){
+    FILE* fp;
+    Professor* prof;
+    prof=(Professor*)malloc(sizeof(Professor));
+    fp=fopen("Professor.dat","rb");
+    if (fp==NULL){
+        printf("\nNenhum professor foi cadastrado!\n");
+    }
+    while(fread(prof, sizeof(Professor), 1, fp)) {
+        if ((strcmp(prof->cpf, cpf) == 0)) {
+            return 0;
+        }
+    }        
+    fclose(fp);
+    free(prof);
+    return 1;
+}
+
 void exibicao_professores(Professor* prof){
     char estado[16];
     if ((prof==NULL) || (prof->status=='I')){
@@ -189,8 +217,12 @@ void procura_professor(char cpf[]) {
     printf("\tProfessor não encontrado!\n");
         return;
     }
+    if (fp==NULL){
+        printf("\nNenhum professor foi cadastrado!\n");
+        return;
+    }
     while(fread(prof, sizeof(Professor), 1, fp)) {
-        if ((strcmp(prof->cpf, cpf) == 0) && (prof->status)) {
+        if ((strcmp(prof->cpf, cpf) == 0) && (prof->status=='A')) {
             exibicao_professores(prof);
         }
     }
@@ -235,6 +267,10 @@ void att_professor(char cpf[]){
     fp=fopen("Professor.dat","r+b");
     if (prof == NULL) {
     printf("\tNão foi possível abrir o arquivo!\n");
+        return;
+    }
+    if (fp==NULL){
+        printf("\nNenhum professor foi cadastrado!\n");
         return;
     }
     while (fread(prof, sizeof(Professor), 1, fp)) {
