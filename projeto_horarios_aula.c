@@ -99,6 +99,7 @@ void menu_sobre(void) {
     printf("  Projeto realizado para a diciplina de programação a qual buscar incoporar      \n");
     printf("  os principais módulos para uma gestão de horário de aula, sendo eles alunos,   \n");
     printf("  professores e horários de aula.                                                \n");
+    printf("                                                                                 \n");
     printf("=================================================================================\n");
     printf("Digite enter para continuar...");getchar(); 
 }
