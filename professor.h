@@ -20,3 +20,5 @@ void listar_todos_professor(void);
 void exicao_professores(Professor* prof);
 void procura_professor(char cpf[]);
 void remover_Professor(char cpf[]);
+void att_professor(char cpf[]);
+int verifica_existe_prof(char cpf[]);

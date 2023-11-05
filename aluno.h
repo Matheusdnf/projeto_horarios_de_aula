@@ -20,3 +20,5 @@ void procura_aluno(char cpf[]);
 void listar_todos_aluno(void);
 void exibicao_alunos(Aluno* std);
 void remover_aluno(char cpf[]);
+void att_aluno(char cpf[]);
+int verifica_existe(char cpf[]);
