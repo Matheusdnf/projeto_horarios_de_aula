@@ -62,7 +62,7 @@ Aluno* cadastrar_aluno(void) {
     while(v){
         ler_cpf(std->cpf);
         c=verifica_existe(std->cpf);
-        if (c == '1') {
+        if (c == 1) {
                 v = f;  
             } else {
                 printf("Aluno já cadastrado com esse cpf\n");
@@ -158,19 +158,19 @@ void gravaraluno(Aluno* std){
     free(std);
 }
 
-char verifica_existe(char cpf[]){
+int verifica_existe(char cpf[]){
     FILE* fa;
     Aluno* std;
     std=(Aluno*)malloc(sizeof(Aluno));
     fa=fopen("Alunos.dat","rb");
     while(fread(std, sizeof(Aluno), 1, fa)) {
         if ((strcmp(std->cpf, cpf) == 0)) {
-            return '0';
+            return 0;
         }
     }        
     fclose(fa);
     free(std);
-    return '1';
+    return 1;
 }
 
 void exibicao_alunos(Aluno* std){
