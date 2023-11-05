@@ -369,3 +369,69 @@ void remover_diciplina(int id) {
     }
     fclose(fd);
 }
+void att_diciplina(int id){
+    FILE* fd;
+    Diciplina *dic;
+    int encontra=0;
+    int esc;
+    dic=(Diciplina*)malloc(sizeof(Diciplina));
+    fd=fopen("Diciplina.dat","r+b");
+    if (dic == NULL) {
+    printf("\tNão foi possível abrir o arquivo!\n");
+        return;
+    }
+    if (fd == NULL) {
+        printf("Nenhuma diciplina cadastrada!\n");
+        return;
+    }
+    while (fread(dic, sizeof(Diciplina), 1, fd)) {
+        if ((dic->id == id) && dic->status == 'A'){
+        encontra=1;  
+            while (esc!=0){
+            system("clear||cls");
+            printf("========================================================\n");
+            printf("   *************** Atualizar Diciplina ***************      \n");
+            printf("                                                        \n");
+            printf("               o que deseja atualizar?                  \n");
+            printf("          Professor[\033[31m1\033[0m] - Diciplina[\033[31m2\033[0m] - Voltar[\033[31m0\033[0m]\n");
+            printf("                                                        \n");
+            printf("Dados cadastrados no sistema:\n");
+            printf("\nNome do professor:%s",dic->cpf);
+            printf("Nome da Diciplina:%s\n",dic->diciplina);
+            printf("========================================================\n");
+            printf("\n");
+            printf("Qual opção deseja atualizar:");
+            scanf("%d",&esc);
+            fflush(stdin);
+            switch (esc) { 
+                case 1:
+                    ler_nome(dic->cpf);
+                    printf("Alteração realizada!\n");
+                    printf("\nDigite enter para continuar...");getchar();
+                    break;
+                case 2:
+                    diciplinas();
+                    ler_diciplina(dic->diciplina);
+                    printf("Alteração realizada!\n");
+                    printf("\nDigite enter para continuar...");getchar();
+                    break;
+                case 0:
+                    esc=0;
+                    break;
+                default:
+                    printf("\nOpção Inválida!\n");
+                    printf("Digite enter para continuar...");getchar(); 
+                    break;
+            }
+                fseek(fd, -1 * (long)sizeof(Diciplina), SEEK_CUR);
+                fwrite(dic, sizeof(Diciplina), 1, fd);       
+            }break;
+        }
+        }
+        if (!encontra) {
+            printf("Diciplina não encontrado!\n");
+    } 
+    fclose(fd);
+    free(dic);
+}
+

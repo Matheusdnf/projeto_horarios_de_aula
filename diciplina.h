@@ -1,7 +1,7 @@
 //struct diciplina
 typedef struct diciplina {
     int id;
-    char nome[100]; //referente ao nome do professor
+    char cpf[15]; //referente ao nome do professor
     char diciplina[3];
     char status;           //A-Ativo I-Inexistente 
     //char status;
@@ -26,3 +26,5 @@ void exibir_diciplinas(Diciplina* dic);
 void listar_todas_diciplina(void);
 void procura_diciplina(int id);
 void remover_diciplina(int id);
+void att_diciplina(int id);
+int verifica_existe_prof_d(char cpf[]);
