@@ -87,7 +87,7 @@ void buscar_horario(void) {
     procura_horario(id);
     printf("                                                        \n");
     printf("========================================================\n");
-    printf("Digite enter para continuar...");getchar();
+    getchar();printf("Digite enter para continuar...");getchar();
 }
 
 
@@ -353,8 +353,8 @@ void procura_horario(int id) {
     Horario* h;
     h=(Horario*)malloc(sizeof(Horario));
     fh=fopen("Horario.dat","rb");
-    if (h == NULL) {
-    printf("\t Horário não encontrado!\n");
+    if (fh == NULL)  {
+    printf("Horário não encontrado!\n");
         return;
     }
     while(fread(h, sizeof(Horario), 1, fh)) {
@@ -374,7 +374,7 @@ void remover_horario(int id) {
     int encontra = 0;
     fh = fopen("Horario.dat", "r+b");
     if (fh == NULL) {
-        printf("Erro na abertura do arquivo!\n");
+        printf("\nNenhum horário cadastrado!\n");
         return;
     }
     while (fread(h, sizeof(Horario), 1, fh)) {
@@ -393,3 +393,76 @@ void remover_horario(int id) {
     fclose(fh);
 }
 //fazer uma exibição de horários 
+
+void att_h(int id){
+    FILE* fh;
+    Horario *h;
+    int encontra=0;
+    int esc;
+    h=(Horario*)malloc(sizeof(Horario));
+    fh=fopen("Horario.dat","r+b");
+    if (fh == NULL) {
+    printf("\tNenhum horário foi cadastrado!\n");
+        return;
+    }
+    while (fread(h, sizeof(Horario), 1, fh)) {
+        if ((h->id == id) && h->status == 'A') {
+        encontra=1;  
+            while (esc!=0){
+            system("clear||cls");
+            printf("========================================================\n");
+            printf("   *************** Atualizar Horario ***************    \n");
+            printf("                                                        \n");
+            printf("               o que deseja atualizar?                  \n");
+            printf("          Tempo[\033[31m1\033[0m] - Dia[\033[31m2\033[0m] - Disciplina[\033[31m3\033[0m] - Período[\033[31m4\033[0m] - Voltar[\033[31m0\033[0m]\n");
+            printf("                                                        \n");
+            printf("Dados cadastrados no sistema:\n");
+            printf("\nNome do Horario:%s",h->diciplina);
+            printf("CPF Do Horario:%s\n",h->dia);
+            printf("Email:%s\n",h->tempo);
+            printf("Telefone:%s\n",h->periodo);
+            printf("========================================================\n");
+            printf("\n");
+            printf("Qual opção deseja atualizar:");
+            scanf("%d",&esc);
+            fflush(stdin);
+            switch (esc) { 
+                case 1:
+                    ler_diciplina(h->diciplina);
+                    printf("\nAlteração realizada!\n");
+                    printf("\nDigite enter para continuar...");getchar();
+                    break;
+                case 2:
+                    ler_tempo(h->tempo);
+                    printf("\nAlteração realizada!\n");
+                    printf("\nDigite enter para continuar...");getchar();
+                    break;
+                case 3:
+                    ler_dia(h->dia);
+                    printf("\nAlteração realizada!\n");
+                    printf("\nDigite enter para continuar...");getchar();
+                    break;
+                case 4:
+                    ler_periodo(h->periodo);
+                    printf("\nAlteração realizada!\n");
+                    printf("\nDigite enter para continuar...");getchar();
+                    break;
+                case 0:
+                    esc=0;
+                    break;
+                default:
+                    printf("\nOpção Inválida!\n");
+                    printf("Digite enter para continuar...");getchar(); 
+                    break;
+            }
+                fseek(fh, -1 * (long)sizeof(Horario), SEEK_CUR);
+                fwrite(h, sizeof(Horario), 1, fh);       
+            }break;
+        }
+        }
+        if (!encontra) {
+            printf("Horario não encontrado!\n");
+    } 
+    fclose(fh);
+    free(h);
+}
