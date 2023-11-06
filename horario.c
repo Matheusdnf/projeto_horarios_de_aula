@@ -2,6 +2,7 @@
 #include "horario.h"
 #include "valida.h"    //arquivos com as assinaturas das validações
 #include "diciplina.h"
+#include "checagem.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -27,6 +28,9 @@ void menu_horario(void) {
         switch (opc){
             case '1':
                 h=cadastrar_horario();
+                if(h==NULL){
+                    break;
+                }
                 gravar_h(h);
                 break;
             case '2':
@@ -56,21 +60,49 @@ Horario* cadastrar_horario(void) {
     system("clear||cls");
     Horario* h;
     h=(Horario*)malloc(sizeof(Horario));
+    //verificar se alguma diciplina foi cadastrada no sistema
+    FILE* fd;
+    Diciplina *dic;
+    dic=(Diciplina*)malloc(sizeof(Diciplina));
+    bool v=true,f=false;
+    int c;
+    fd=fopen("Diciplina.dat","rb");
     printf("========================================================\n");
     printf(" **************** Cadastrar Horário ******************  \n\n");
     printf("                                                        \n");
+    if (dic == NULL) {
+    printf("\tNão foi possível abrir o arquivo!\n");
+        getchar();printf("Digite enter para continuar...");getchar();        
+        return NULL;
+    }
+    if (fd == NULL) {
+        printf("Nenhuma diciplina cadastrada!\n");
+        getchar();printf("Digite enter para continuar...");getchar();        
+        return NULL;
+    }
     ler_periodo(h->periodo); 
     ler_tempo(h->tempo);
     ler_dia(h->dia);
     diciplinas();
-    ler_diciplina(h->diciplina);
+    listar_todos_diciplina_alt();
+    while(v){
+        ler_diciplina(h->diciplina);
+        c=verifica_existe_d(h->diciplina);
+        if (c == 1) {
+                v = f;  
+            } else {
+                printf("Essa Diciplina não foi cadastrada!\n");
+            }
+        }
     h->id=criar_id_h();
     h->status='A';
     printf("                                                        \n");
     printf("Dados cadastrados!\n");
     printf("========================================================\n");
     printf("\n");
-    printf("Digite enter para continuar...");getchar(); //para aparecer o menu e ele não sair rapidamente
+    getchar();printf("Digite enter para continuar...");getchar(); //para aparecer o menu e ele não sair rapidamente
+    fclose(fd);
+    free(dic);
     return h;
 }
 
@@ -84,7 +116,7 @@ void buscar_horario(void) {
     printf("Informe o id do horário:");
     scanf("%d",&id);
     printf("\n");
-    procura_horario(id);
+    procura_h(id);
     printf("                                                        \n");
     printf("========================================================\n");
     getchar();printf("Digite enter para continuar...");getchar();
@@ -93,15 +125,19 @@ void buscar_horario(void) {
 
 void atualizar_horario(void) {
     system("clear||cls");
+    int id=0;
     printf("\n");
     printf("========================================================\n");
     printf("    *************** Atualizar Horário *************   \n\n");
     printf("                                                        \n");
-    printf("Informe o id do horário:\n");
+    printf("Informe o id do horário:");
+    scanf("%d",&id);
+    printf("\n");
+    att_h(id);
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    getchar(); printf("Digite enter para continuar...");getchar(); 
+    getchar();printf("Digite enter para continuar...");getchar(); 
 }
 
 
@@ -115,7 +151,7 @@ void excluir_horario(void) {
     printf("Informe o id do horário:");
     scanf("%d",&id);
     getchar();
-    remover_horario(id);
+    remover_h(id);
     printf("                                                        \n");
     printf("========================================================\n");
     printf("Digite enter para continuar...");getchar(); 
@@ -132,9 +168,8 @@ void relatorio_horario(void){
     lista_todos_h();
     printf("========================================================\n");
     printf("\n");
-    getchar(); printf("Digite enter para continuar...");getchar(); 
+    getchar();printf("Digite enter para continuar...");getchar(); 
 }
-
 
 //funções referente a validação dos horários
 void ler_periodo(char* periodo){ 
@@ -313,10 +348,8 @@ void exibir_h(Horario* h){
         printf("\nEste Horário não foi cadastrado no sistema!\n");
     }else{
         printf("********Dados do Horário ********");
-        printf("\nPeriodo:%s\n",h->periodo);
-        printf("Dia:%s\n",h->dia);
-        printf("Tempo:%s\n",h->tempo);
-        printf("Diciplina:%s\n",h->diciplina);
+        explicacao();
+        printf("\n%s/%s/%s/%s",h->periodo,h->dia,h->tempo,h->diciplina);
         printf("id:%d\n",h->id);
         printf("\n");
         if(h->status=='A'){
@@ -348,14 +381,14 @@ void lista_todos_h(void){
 
 //feito com a ajuda de marlison silva chat 
 
-void procura_horario(int id) {
+void procura_h(int id) {
     FILE* fh;
     Horario* h;
     h=(Horario*)malloc(sizeof(Horario));
     fh=fopen("Horario.dat","rb");
     if (fh == NULL)  {
-    printf("Horário não encontrado!\n");
-        return;
+        printf("Nenhum horário cadastrado!\n");
+            return;
     }
     while(fread(h, sizeof(Horario), 1, fh)) {
         if ((h->id == id) && (h->status)) {
@@ -367,7 +400,7 @@ void procura_horario(int id) {
 }
 
 //feito com a ajuda de marlison silva chat gpt e adapatada por matheus diniz
-void remover_horario(int id) {
+void remover_h(int id) {
     FILE* fh;
     Horario *h;
     h=(Horario*)malloc(sizeof(Horario));
@@ -402,7 +435,7 @@ void att_h(int id){
     h=(Horario*)malloc(sizeof(Horario));
     fh=fopen("Horario.dat","r+b");
     if (fh == NULL) {
-    printf("\tNenhum horário foi cadastrado!\n");
+    printf("Nenhum horário foi cadastrado!\n");
         return;
     }
     while (fread(h, sizeof(Horario), 1, fh)) {
@@ -414,13 +447,13 @@ void att_h(int id){
             printf("   *************** Atualizar Horario ***************    \n");
             printf("                                                        \n");
             printf("               o que deseja atualizar?                  \n");
-            printf("          Tempo[\033[31m1\033[0m] - Dia[\033[31m2\033[0m] - Disciplina[\033[31m3\033[0m] - Período[\033[31m4\033[0m] - Voltar[\033[31m0\033[0m]\n");
+            printf("Tempo[\033[31m1\033[0m] - Dia[\033[31m2\033[0m] - Disciplina[\033[31m3\033[0m] - Período[\033[31m4\033[0m] - Voltar[\033[31m0\033[0m]\n");
             printf("                                                        \n");
             printf("Dados cadastrados no sistema:\n");
-            printf("\nNome do Horario:%s",h->diciplina);
-            printf("CPF Do Horario:%s\n",h->dia);
-            printf("Email:%s\n",h->tempo);
-            printf("Telefone:%s\n",h->periodo);
+            printf("Matérias:%s\n",h->diciplina);
+            printf("Horários:%s\n",h->dia);
+            printf("Período do Dia:%s\n",h->tempo);
+            printf("Dia da Semana:%s\n",h->periodo);
             printf("========================================================\n");
             printf("\n");
             printf("Qual opção deseja atualizar:");
@@ -428,17 +461,17 @@ void att_h(int id){
             fflush(stdin);
             switch (esc) { 
                 case 1:
-                    ler_diciplina(h->diciplina);
-                    printf("\nAlteração realizada!\n");
-                    printf("\nDigite enter para continuar...");getchar();
-                    break;
-                case 2:
                     ler_tempo(h->tempo);
                     printf("\nAlteração realizada!\n");
                     printf("\nDigite enter para continuar...");getchar();
                     break;
-                case 3:
+                case 2:
                     ler_dia(h->dia);
+                    printf("\nAlteração realizada!\n");
+                    printf("\nDigite enter para continuar...");getchar();
+                    break;
+                case 3:
+                    ler_diciplina(h->diciplina);
                     printf("\nAlteração realizada!\n");
                     printf("\nDigite enter para continuar...");getchar();
                     break;
