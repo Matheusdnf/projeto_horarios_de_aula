@@ -19,7 +19,8 @@ char opc;
 int main(void) {
     do{
         menu_principal();
-        printf("\nDigite o que deseja fazer: "); scanf("%1s", &opc); getchar();
+        fflush(stdin);
+        printf("\nDigite o que deseja fazer: "); scanf("%[^\n]", &opc);getchar();
         switch (opc) { 
             case '1':
                 menu_aluno();
@@ -57,8 +58,8 @@ int main(void) {
 
 
 void menu_principal() {
-    system("clear||cls");
     printf("\n");
+    system("clear||cls");   
     printf("\033[34m             ####\033[0m     \033[31m####\033[0m    \033[37m######\033[0m               \n"); //feito com a ajuda do chat gpt
     printf("\033[34m            ##  ##\033[0m   \033[31m##  ##\033[0m     \033[37m##\033[0m                 \n");
     printf("\033[34m            ##\033[0m       \033[31m##\033[0m         \033[37m##\033[0m                 \n");

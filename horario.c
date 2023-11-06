@@ -23,8 +23,7 @@ void menu_horario(void) {
         printf("          0 - Voltar                                     \n");
         printf("===========================================================\n");
         printf("\n");
-        printf("Escolha uma das opções:");
-        scanf("%s",&opc);
+        printf("\nDigite o que deseja fazer: "); scanf("%c", &opc);
         switch (opc){
             case '1':
                 h=cadastrar_horario();
@@ -50,7 +49,7 @@ void menu_horario(void) {
                 break;
             default:
                 printf("Opção Inválida!\n");
-                getchar(); printf("Digite enter para continuar...");getchar(); 
+                printf("Digite enter para continuar...");getchar(); 
                 break;
         }
     }

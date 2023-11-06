@@ -24,8 +24,7 @@ void menu_diciplina(void) {
         printf("          0 - Voltar                                       \n");
         printf("===========================================================\n");
         printf("\n");
-        printf("Escolha uma das opções:");
-        scanf("%s",&opc);
+        printf("\nDigite o que deseja fazer: "); scanf("%c", &opc);
         switch (opc){
             case '1':
                 dic=cadastrar_diciplina();
@@ -51,7 +50,7 @@ void menu_diciplina(void) {
                 break;
             default:
                 printf("Opção Inválida!\n");
-                getchar(); printf("Digite enter para continuar...");getchar();          
+                printf("Digite enter para continuar...");getchar();          
                 break;
         }
     }

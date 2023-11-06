@@ -20,9 +20,7 @@ void menu_aluno(void) {
         printf("          5 - Relatório dos alunos                         \n");
         printf("          0 - Voltar                                       \n");
         printf("===========================================================\n");
-        printf("\n");
-        printf("Escolha uma das opções:");
-        scanf("%s",&opc);
+        printf("\nDigite o que deseja fazer: "); scanf("%c", &opc);
         switch (opc){
             case '1':
                 std = cadastrar_aluno();
@@ -45,7 +43,7 @@ void menu_aluno(void) {
                 break;
             default:
                 printf("Opção Inválida!\n");
-                getchar(); printf("Digite enter para continuar...");getchar();          
+                printf("Digite enter para continuar...");getchar();          
                 break;
         }
     }
