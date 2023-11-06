@@ -1,6 +1,7 @@
 #include "global.h" //incluede para deixar opc global 
 #include "aluno.h"
 #include "valida.h"
+#include "checagem.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -25,7 +26,7 @@ void menu_aluno(void) {
         switch (opc){
             case '1':
                 std = cadastrar_aluno();
-                gravaraluno(std);
+                gravar_aluno(std);
                 break;
             case '2':
                 buscar_aluno();
@@ -61,7 +62,7 @@ Aluno* cadastrar_aluno(void) {
     printf("    ************* Cadastrar Aluno *************     \n\n");
     while(v){
         ler_cpf(std->cpf);
-        c=verifica_existe(std->cpf);
+        c=verifica_existe_aluno(std->cpf);
         if (c == 1) {
                 v = f;  
             } else {
@@ -146,7 +147,7 @@ void relatorio_aluno(void){
 }
 
 
-void gravaraluno(Aluno* std){
+void gravar_aluno(Aluno* std){
     FILE* fa;  //File aluno
     fa=fopen("Alunos.dat","ab");
     if (fa==NULL){
@@ -156,21 +157,6 @@ void gravaraluno(Aluno* std){
     fwrite(std,sizeof(Aluno),1,fa);
     fclose(fa);
     free(std);
-}
-
-int verifica_existe(char cpf[]){
-    FILE* fa;
-    Aluno* std;
-    std=(Aluno*)malloc(sizeof(Aluno));
-    fa=fopen("Alunos.dat","rb");
-    while(fread(std, sizeof(Aluno), 1, fa)) {
-        if ((strcmp(std->cpf, cpf) == 0)) {
-            return 0;
-        }
-    }        
-    fclose(fa);
-    free(std);
-    return 1;
 }
 
 void exibicao_alunos(Aluno* std){
@@ -215,11 +201,12 @@ void procura_aluno(char cpf[]) {
     std=(Aluno*)malloc(sizeof(Aluno));
     fa=fopen("Alunos.dat","rb");
     if (std == NULL) {
-    printf("\tAluno não encontrado!\n");
+        printf("\tAluno não encontrado!\n");
         return;
     }
     if (fa==NULL){
         printf("\nNenhum aluno cadastrado!\n");
+        return;
     }
     while(fread(std, sizeof(Aluno), 1, fa)) {
         if ((strcmp(std->cpf, cpf) == 0) && (std->status=='M')) {

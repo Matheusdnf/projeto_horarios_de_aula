@@ -2,6 +2,7 @@
 #include "diciplina.h"
 #include "valida.h"
 #include "professor.h"
+#include "checagem.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -85,8 +86,8 @@ Diciplina* cadastrar_diciplina(void) {
     printf("Pode ser 1 ou 2 diciplinas\n"); 
     diciplinas();
     ler_diciplina(dic->diciplina);
+    listar_todos_professor_alt();
     while(v){
-        listar_todos_professor_alt();
         printf("Digite o cpf do professor\n");
         ler_cpf(dic->cpf);
         c=verifica_existe_prof_d(dic->cpf);
@@ -138,7 +139,7 @@ void atualizar_diciplina(void) {
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    printf("Digite enter para continuar...");getchar(); 
+    getchar();printf("Digite enter para continuar...");getchar(); 
 }
 
 void excluir_diciplina(void) {
@@ -197,13 +198,11 @@ void ler_diciplina(char *diciplina) {
     while (v) {
         fflush(stdin);
         printf("Digite a sigla da disciplina:");
-        fgets(diciplina, 3 , stdin);
-        letra_maiuscula(diciplina);
+        scanf("%s", diciplina);
         fflush(stdin);
         t = valida_diciplina(diciplina);
         if (t == 1) {
-            printf("válido\n");
-            v = f; // Saia do loop quando a disciplina for válida
+            v = f; 
         } else if (t == 0) {
             printf("inválido\n");
         }
@@ -312,36 +311,11 @@ void gravardiciplina(Diciplina* dic){
     fclose(fd);
 }
 
-int verifica_existe_prof_d(char cpf[]){
-    FILE* fp;
-    Professor* prof;
-    int encontrado=0;
-    prof=(Professor*)malloc(sizeof(Professor));
-    fp=fopen("Professor.dat","rb");
-    if (fp==NULL){
-        printf("Erro ao abrir o arquivo!\n");
-    }
-    while(!feof(fp)) {
-        fread(prof, sizeof(Professor), 1, fp);
-        if ((strcmp(prof->cpf, cpf) == 0) && (prof->status=='A')) {
-            encontrado=1;
-            return 1;
-        }
-    }if(!encontrado){
-        printf("não achado!");
-    }        
-    fclose(fp);
-    free(prof);
-    return 0;
-}
-
-
 void exibir_diciplinas(Diciplina* dic){
     char estado[16];
     if ((dic==NULL) || (dic->status=='I')){
         printf("\nEsta Diciplinas não foi cadastrada no sistema!\n");
     }else{
-        printf("\n");
         printf(" ********Informações da diciplina********");
         printf("\nCPF do Professor:%s\n",dic->cpf);
         printf("Nome da diciplina:%s\n",dic->diciplina);
@@ -429,11 +403,11 @@ void att_diciplina(int id){
     dic=(Diciplina*)malloc(sizeof(Diciplina));
     fd=fopen("Diciplina.dat","r+b");
     if (dic == NULL) {
-    printf("\tNão foi possível abrir o arquivo!\n");
+    printf("\tNenhuma diciplina foi cadastrada!\n");
         return;
     }
     if (fd == NULL) {
-        printf("Nenhuma diciplina cadastrada!\n");
+        printf("nNenhuma diciplina cadastrada!\n");
         return;
     }
     while (fread(dic, sizeof(Diciplina), 1, fd)) {

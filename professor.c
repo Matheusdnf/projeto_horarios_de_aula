@@ -2,6 +2,7 @@
 #include "professor.h"
 #include "valida.h"
 #include "diciplina.h"
+#include "checagem.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -26,7 +27,7 @@ void menu_professor(void) {
         switch (opc){
             case '1':
                 prof=cadastrar_professor();
-                gravarprofessor(prof);
+                gravar_professor(prof);
                 break;
             case '2':
                 buscar_professor();
@@ -143,7 +144,7 @@ void relatorio_professor(void){
     getchar(); printf("Digite enter para continuar...");getchar(); 
 }
 
-void gravarprofessor(Professor* prof){
+void gravar_professor(Professor* prof){
     FILE* fp;  //File Professor
     fp=fopen("Professor.dat","ab");
     if (fp==NULL){
@@ -153,25 +154,7 @@ void gravarprofessor(Professor* prof){
     fclose(fp);
 }
 
-int verifica_existe_prof(char cpf[]){
-    FILE* fp;
-    Professor* prof;
-    prof=(Professor*)malloc(sizeof(Professor));
-    fp=fopen("Professor.dat","rb");
-    if (fp==NULL){
-        printf("\nNenhum professor foi cadastrado!\n");
-    }
-    while(fread(prof, sizeof(Professor), 1, fp)) {
-        if ((strcmp(prof->cpf, cpf) == 0)) {
-            return 0;
-        }
-    }        
-    fclose(fp);
-    free(prof);
-    return 1;
-}
-
-void exibicao_professores(Professor* prof){
+void exibicao_professor(Professor* prof){
     char estado[16];
     if ((prof==NULL) || (prof->status=='I')){
         printf("\nEste Professor não existe no sistema!\n");
@@ -199,14 +182,12 @@ void listar_todos_professor(void){
     }
     while(fread(prof,sizeof(Professor),1,fp)){
         if (prof->status!='I'){
-            exibicao_professores(prof);
+            exibicao_professor(prof);
         }
     }
     fclose(fp);
     free(prof);
 }
-
-//feito com a ajuda de marlison silva
 
 void procura_professor(char cpf[]) {
     FILE* fp;
@@ -223,7 +204,7 @@ void procura_professor(char cpf[]) {
     }
     while(fread(prof, sizeof(Professor), 1, fp)) {
         if ((strcmp(prof->cpf, cpf) == 0) && (prof->status=='A')) {
-            exibicao_professores(prof);
+            exibicao_professor(prof);
         }
     }
     fclose(fp);
@@ -231,7 +212,6 @@ void procura_professor(char cpf[]) {
 }
 
 //feito com a ajuda de marlison silva chat gpt e adapatada por matheus diniz
-
 void remover_Professor(char cpf[]) {
     FILE* fp;
     Professor *prof;
@@ -239,7 +219,7 @@ void remover_Professor(char cpf[]) {
     prof = (Professor*) malloc(sizeof(Professor));
     fp = fopen("Professor.dat", "r+b");
     if (fp == NULL) {
-        printf("Erro na abertura do arquivo!\n");
+        printf("Nenhum professor foi cadastrado!\n");
         return;
     }
     while (fread(prof, sizeof(Professor), 1, fp)) {
