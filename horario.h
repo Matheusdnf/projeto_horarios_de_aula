@@ -7,7 +7,7 @@ typedef struct horario {
     char diciplina[3];
     char status;           //A-Ativo I-Inexistente N-Não encontrado
 } Horario;
-//módulo horário de aula
+//telas horário de aula
 void menu_horario(void);
 Horario* cadastrar_horario(void);
 void buscar_horario(void);
@@ -28,5 +28,6 @@ void gravar_h(Horario* h);
 //função crud
 void exibir_h(Horario* h);
 void lista_todos_h(void);
-void procura_horario(int id);
-void remover_horario(int id);
+void procura_h(int id);
+void remover_h(int id);
+void att_h(int id);

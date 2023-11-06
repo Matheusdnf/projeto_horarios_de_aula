@@ -6,7 +6,7 @@ typedef struct diciplina {
     char status;           //A-Ativo I-Inexistente 
     //char status;
 } Diciplina;
-//funções do módulo diciplina
+//tela do módulo diciplina
 void menu_diciplina(void);
 Diciplina* cadastrar_diciplina(void);
 void buscar_diciplina(void);
@@ -27,4 +27,3 @@ void listar_todas_diciplina(void);
 void procura_diciplina(int id);
 void remover_diciplina(int id);
 void att_diciplina(int id);
-int verifica_existe_prof_d(char cpf[]);
