@@ -22,8 +22,7 @@ void menu_horario(void) {
         printf("          5 - Relatório dos Horários                     \n");
         printf("          0 - Voltar                                     \n");
         printf("===========================================================\n");
-        printf("\n");
-        printf("\nDigite o que deseja fazer: "); scanf("%c", &opc);
+        printf("\nDigite o que deseja fazer: "); scanf("%s", &opc);
         switch (opc){
             case '1':
                 h=cadastrar_horario();
@@ -70,13 +69,13 @@ Horario* cadastrar_horario(void) {
     printf(" **************** Cadastrar Horário ******************  \n\n");
     printf("                                                        \n");
     if (dic == NULL) {
-    printf("\tNão foi possível abrir o arquivo!\n");
+        printf("\tNão foi possível abrir o arquivo!\n");
         getchar();printf("Digite enter para continuar...");getchar();        
         return NULL;
     }
     if (fd == NULL) {
         printf("Nenhuma diciplina cadastrada!\n");
-        getchar();printf("Digite enter para continuar...");getchar();        
+        getchar();printf("\nDigite enter para continuar...");getchar();        
         return NULL;
     }
     ler_periodo(h->periodo); 
@@ -96,7 +95,7 @@ Horario* cadastrar_horario(void) {
     h->id=criar_id_h();
     h->status='A';
     printf("                                                        \n");
-    printf("Dados cadastrados!\n");
+    printf("Horário cadastrados!\n");
     printf("========================================================\n");
     printf("\n");
     getchar();printf("Digite enter para continuar...");getchar(); //para aparecer o menu e ele não sair rapidamente
@@ -346,10 +345,10 @@ void exibir_h(Horario* h){
     if ((h==NULL) || (h->status=='I')){
         printf("\nEste Horário não foi cadastrado no sistema!\n");
     }else{
-        printf("********Dados do Horário ********");
+        printf("\n******** Dados do Horário ********\n");
         explicacao();
         printf("\n%s/%s/%s/%s",h->periodo,h->dia,h->tempo,h->diciplina);
-        printf("id:%d\n",h->id);
+        printf("\nid:%d\n",h->id);
         printf("\n");
         if(h->status=='A'){
             strcpy(estado,"Horário Ativo");
@@ -471,6 +470,7 @@ void att_h(int id){
                     printf("\nDigite enter para continuar...");getchar();
                     break;
                 case 3:
+                    diciplina();
                     ler_diciplina(h->diciplina);
                     printf("\nAlteração realizada!\n");
                     printf("\nDigite enter para continuar...");getchar();

@@ -10,7 +10,7 @@ void ler_telefone(char *telefone) {
     int t;
     bool v=true,f=false;
     while (v) {
-        printf("Digite seu telefone com DDD (apenas números):");
+        printf("Digite seu telefone com DDD:");
         fgets(telefone, 15, stdin);
         t = valida_telefone(telefone);
         if (t == 1) {
@@ -87,7 +87,7 @@ void ler_nome(char *nome) {
             v=f;
         } else if (n == 0) {
             printf("Nome inválido\n");
-            printf("Certifiquisse se não colocou letras ou espaços a mais!\n");
+            printf("Certifiquisse se não colocou números ou espaços a mais!\n");
         }
     }
 }

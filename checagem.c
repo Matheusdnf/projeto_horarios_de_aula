@@ -169,7 +169,7 @@ void listar_todos_professor_alt(void){
     fp=fopen("Professor.dat","rb");
     if (fp==NULL){
         printf("\nNenhum professor cadastrado!\n");
-        return 1;
+        return ;
     }
     while(fread(prof,sizeof(Professor),1,fp)){
         if (prof->status!='I'){

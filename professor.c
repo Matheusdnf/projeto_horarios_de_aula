@@ -21,8 +21,7 @@ void menu_professor(void) {
         printf("          5 - Relatório dos Professores                    \n");
         printf("          0 - Voltar                                       \n");
         printf("===========================================================\n");
-        printf("\n");
-        printf("\nDigite o que deseja fazer: "); scanf("%c", &opc);
+        printf("\nDigite o que deseja fazer: "); scanf("%s", &opc);
         switch (opc){
             case '1':
                 prof=cadastrar_professor();
@@ -111,7 +110,7 @@ void atualizar_professor(void) {
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    printf("Digite enter para continuar...");getchar(); 
+    getchar();printf("Digite enter para continuar...");getchar(); 
 }
 
 
@@ -274,7 +273,7 @@ void att_professor(char cpf[]){
             printf("\n");
             printf("Qual opção deseja atualizar:");
             scanf("%d",&esc);
-            fflush(stdin);
+            limpar_buffer();
             switch (esc) { 
                 case 1:
                     ler_telefone(prof->telefone);

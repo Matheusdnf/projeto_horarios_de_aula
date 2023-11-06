@@ -20,7 +20,7 @@ void menu_aluno(void) {
         printf("          5 - Relatório dos alunos                         \n");
         printf("          0 - Voltar                                       \n");
         printf("===========================================================\n");
-        printf("\nDigite o que deseja fazer: "); scanf("%c", &opc);
+        printf("\nDigite o que deseja fazer: "); scanf("%s", &opc);
         switch (opc){
             case '1':
                 std = cadastrar_aluno();
@@ -280,7 +280,7 @@ void att_aluno(char cpf[]){
             printf("\n");
             printf("Qual opção deseja atualizar:");
             scanf("%d",&esc);
-            fflush(stdin);
+            limpar_buffer();
             switch (esc) { 
                 case 1:
                     ler_telefone(std->telefone);
