@@ -60,7 +60,7 @@ Aluno* cadastrar_aluno(void) {
     printf("    ************* Cadastrar Aluno *************     \n\n");
     while(v){
         ler_cpf(std->cpf);
-        c=verifica_existe_aluno(std->cpf);
+        c=verifica_existe_aluno(std->cpf); //problema linux
         if (c == 1) {
                 v = f;  
             } else {
@@ -77,6 +77,7 @@ Aluno* cadastrar_aluno(void) {
     printf("\n");
     printf("Digite enter para continuar...");getchar(); //para aparecer o menu e ele não sair rapidamente
     return std;
+    free(std);
 
 }
 
@@ -150,7 +151,7 @@ void gravar_aluno(Aluno* std){
     fa=fopen("Alunos.dat","ab");
     if (fa==NULL){
         printf("Erro na recuperação dos dados do Aluno!\n");
-        exit(1);
+        return;
     }
     fwrite(std,sizeof(Aluno),1,fa);
     fclose(fa);
@@ -182,6 +183,7 @@ void listar_todos_aluno(void){
     fa=fopen("Alunos.dat","rb");
     if (fa==NULL){
         printf("\nNenhum aluno cadastrado!\n");
+        return;
     }
     while(fread(std,sizeof(Aluno),1,fa)){
         if (std->status!='I'){
@@ -251,11 +253,12 @@ void att_aluno(char cpf[]){
     std=(Aluno*)malloc(sizeof(Aluno));
     fa=fopen("Alunos.dat","r+b");
     if (std == NULL) {
-    printf("\tNão foi possível abrir o arquivo!\n");
+        printf("\tNão foi possível abrir o arquivo!\n");
         return;
     }
     if (fa==NULL){
         printf("\nNenhum aluno cadastrado!\n");
+        return;
     }
     while (fread(std, sizeof(Aluno), 1, fa)) {
         if ((strcmp(std->cpf, cpf) == 0) && (std->status == 'M')) {

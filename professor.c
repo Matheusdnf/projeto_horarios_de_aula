@@ -148,6 +148,7 @@ void gravar_professor(Professor* prof){
     fp=fopen("Professor.dat","ab");
     if (fp==NULL){
         printf("Erro na recuperação dos dados do Professor!\n");
+        return;
     }
     fwrite(prof,sizeof(Professor),1,fp);
     fclose(fp);
@@ -178,6 +179,7 @@ void listar_todos_professor(void){
     fp=fopen("Professor.dat","rb");
     if (fp==NULL){
         printf("\nNenhum professor cadastrado!\n");
+        return;
     }
     while(fread(prof,sizeof(Professor),1,fp)){
         if (prof->status!='I'){

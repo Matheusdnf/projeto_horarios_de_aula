@@ -36,6 +36,7 @@ void listar_todos_diciplina_alt(void){
     fd=fopen("Diciplina.dat","rb");
     if (fd==NULL){
         printf("\nNenhuma diciplina cadastrada!\n");
+        return;
     }
     while(fread(dic,sizeof(Diciplina),1,fd)){
         if (dic->status!='I'){
@@ -55,7 +56,8 @@ int verifica_existe_prof_d(char cpf[]){
     prof=(Professor*)malloc(sizeof(Professor));
     fp=fopen("Professor.dat","rb");
     if (fp==NULL){
-        printf("Erro ao abrir o arquivo!\n");
+        printf("Nenhum professor cadastrado!\n");
+        return 1;
     }
     while(!feof(fp)) {
         fread(prof, sizeof(Professor), 1, fp);
@@ -78,6 +80,9 @@ int verifica_existe_aluno(char cpf[]){
     Aluno* std;
     std=(Aluno*)malloc(sizeof(Aluno));
     fa=fopen("Alunos.dat","rb");
+    if(fa==NULL){
+        return 1;
+    }
     while(fread(std, sizeof(Aluno), 1, fa)) {
         if ((strcmp(std->cpf, cpf) == 0)) {
             return 0;
@@ -98,6 +103,7 @@ int verifica_existe_d(char diciplina[]){
     fd=fopen("Diciplina.dat","rb");
     if (fd==NULL){
         printf("Erro ao abrir o arquivo!\n");
+        return 1;
     }
     while(!feof(fd)) {
         fread(dic, sizeof(Diciplina), 1, fd);
@@ -120,7 +126,7 @@ int verifica_existe_prof(char cpf[]){
     prof=(Professor*)malloc(sizeof(Professor));
     fp=fopen("Professor.dat","rb");
     if (fp==NULL){
-        printf("Nenhum professor foi cadastrado!\n");
+        return 1;
     }
     while(fread(prof, sizeof(Professor), 1, fp)) {
         if ((strcmp(prof->cpf, cpf) == 0)) {
@@ -163,6 +169,7 @@ void listar_todos_professor_alt(void){
     fp=fopen("Professor.dat","rb");
     if (fp==NULL){
         printf("\nNenhum professor cadastrado!\n");
+        return 1;
     }
     while(fread(prof,sizeof(Professor),1,fp)){
         if (prof->status!='I'){

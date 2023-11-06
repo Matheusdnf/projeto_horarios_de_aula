@@ -335,7 +335,7 @@ void gravar_h(Horario* h){
     fh=fopen("Horario.dat","ab");
     if (fh==NULL){
         printf("Erro na recuperação dos dados do Horário!\n");
-        exit(1);
+        return;
     }
     fwrite(h,sizeof(Horario),1,fh);
     fclose(fh);
@@ -368,6 +368,7 @@ void lista_todos_h(void){
     fh=fopen("Horario.dat","rb");
     if (fh==NULL){
         printf("Nenhum horário cadastrado!\n");
+        return;
     }
     while(fread(h,sizeof(Horario),1,fh)){
         if (h->status!='I'){

@@ -305,6 +305,7 @@ void gravardiciplina(Diciplina* dic){
     fd=fopen("Diciplina.dat","ab");
     if (fd==NULL){
         printf("Erro na recuperação dos dados da Diciplinas!\n");
+        return;
     }
     fwrite(dic,sizeof(Diciplina),1,fd);
     fclose(fd);
@@ -335,6 +336,7 @@ void listar_todas_diciplina(void){
     fd=fopen("Diciplina.dat","rb");
     if (fd==NULL){
         printf("Nenhuma diciplina cadastrada!\n");
+        return;
     }
     while(fread(dic,sizeof(Diciplina),1,fd)){
         if (dic->status!='I'){
@@ -353,11 +355,12 @@ void procura_diciplina(int id) {
     dic=(Diciplina*)malloc(sizeof(Diciplina));
     fd=fopen("Diciplina.dat","rb");
     if (dic == NULL) {
-    printf("\t Diciplina não encontrada!\n");
+    printf("\n Diciplina não encontrada!\n");
         return;
     }
     if (fd==NULL){
         printf("\nNenhuma diciplina cadastrado!\n");
+        return;
     }
     while(fread(dic, sizeof(Diciplina), 1, fd)) {
         if ((dic->id == id) && (dic->status)) {
