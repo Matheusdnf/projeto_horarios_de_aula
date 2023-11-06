@@ -211,10 +211,51 @@ void ler_diciplina(char *diciplina) {
 }
 
 int valida_diciplina(char *diciplina) {
+    //feito com ajuda de maria eloisa
     int tam = strlen(diciplina);
-    //só pode ser 2 caracteres
-    if (tam != 2){
+    //Só é permitidos 1 ou 2 matérias por vez
+    //string que contem todas as iniciais referentes as diciplinas
+    if ((tam!=2) && (tam!=1)){
         return 0;
+    }
+    //não permitir que o usuário digite duas letras iguais
+    else if (tam==2 && diciplina[0]==diciplina[1]){
+        return 0;
+    }
+    int cont=0;
+    //permitir que o usuário digite a letra da maneira que preferir
+    //apos isso chamara essa função que tratara os dados
+    letra_maiuscula(diciplina);
+    //um array com as iniciais das letras das matérias
+    char materia[]="PIEAHGLOSMBQF";
+    //caso o usuário digitar só uma letra cairá nesse if
+    if (tam==1){
+        //rodará 13 vezes que é referente a quantidade de diciplinas
+        for (int i=0 ; i<13;i++){
+            //diciplina [0] referindo ao primeiro índice
+            if (diciplina[0] == materia[i]) {
+                return 1;
+            }
+        }
+    }
+    //caso o usuário digitar duas matérias
+    else if (tam==2 ){
+        //esse for vai rodar 2 vezes para pegar ambas as posições
+        for (int i=0 ; i<2;i++){
+            //rodará 13 vezes que é referente a quantidade de diciplinas
+            for (int j=0 ; j<13;j++){
+                if (diciplina[i] == materia[j]){
+                    cont++;
+                }
+            }
+        }
+        //para poder rodar duas vezes e conferir ambos os caracter
+        if (cont!=2){
+            return 0;
+        }
+        else{
+            return 1;
+        }
     }
     //verificar a questão dos espaços e a ocorrência de números
     for (int i = 0; i < tam; i++) {
