@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
+
 void menu_diciplina(void) {
     while (opc!=0){
         system("clear||cls");   
@@ -27,6 +28,9 @@ void menu_diciplina(void) {
         switch (opc){
             case '1':
                 dic=cadastrar_diciplina();
+                if (dic==NULL){
+                    break;
+                }
                 gravardiciplina(dic);
                 break;
             case '2':
@@ -56,18 +60,34 @@ void menu_diciplina(void) {
 Diciplina* cadastrar_diciplina(void) {
     system("clear||cls");   
     Diciplina* dic;
+    dic=(Diciplina*)malloc(sizeof(Diciplina));
     bool v=true,f=false;
     int c;
-    dic=(Diciplina*)malloc(sizeof(Diciplina));
+    //verificar se algum professor já foi cadastrado no sistema
+    FILE* fp;
+    Professor* prof;
+    prof=(Professor*)malloc(sizeof(Professor));
+    fp=fopen("Professor.dat","rb");
     printf("\n");
     printf("========================================================\n");
     printf("    *************** Cadastrar Diciplina *************   \n\n");
     printf("                                                        \n");
+    if (prof == NULL) {
+    printf("\tNão foi possível abrir o arquivo!\n");
+        getchar();printf("Digite enter para continuar...");getchar();        
+        return NULL;
+    }
+    if (fp == NULL) {
+        printf("Nenhum professor cadastrado!\n");
+        getchar();printf("Digite enter para continuar...");getchar();        
+        return NULL;
+    }
     printf("Pode ser 1 ou 2 diciplinas\n"); 
     diciplinas();
     ler_diciplina(dic->diciplina);
     while(v){
-        printf("Digite o nome do professor\n");
+        listar_todos_professor_alt();
+        printf("Digite o cpf do professor\n");
         ler_cpf(dic->cpf);
         c=verifica_existe_prof_d(dic->cpf);
         if (c == 1) {
@@ -83,6 +103,8 @@ Diciplina* cadastrar_diciplina(void) {
     printf("========================================================\n");
     printf("\n");
     printf("Digite enter para continuar...");getchar(); //para aparecer o menu e ele não sair rapidamente
+    fclose(fp);
+    free(prof);
     return dic;
 }
 
@@ -116,7 +138,7 @@ void atualizar_diciplina(void) {
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    getchar(); printf("Digite enter para continuar...");getchar(); 
+    printf("Digite enter para continuar...");getchar(); 
 }
 
 void excluir_diciplina(void) {
@@ -175,7 +197,7 @@ void ler_diciplina(char *diciplina) {
     while (v) {
         fflush(stdin);
         printf("Digite a sigla da disciplina:");
-        scanf(" %[^\n]", diciplina);
+        fgets(diciplina, 3 , stdin);
         letra_maiuscula(diciplina);
         fflush(stdin);
         t = valida_diciplina(diciplina);
@@ -190,20 +212,9 @@ void ler_diciplina(char *diciplina) {
 
 int valida_diciplina(char *diciplina) {
     int tam = strlen(diciplina);
-    //Só é permitidos 1 ou 2 matérias por vez
-    //string que contem todas as iniciais referentes as diciplinas
+    //só pode ser 2 caracteres
     if (tam != 2){
         return 0;
-    }
-    char *materia[]={
-    "P","I","E","A","H",
-    "G","L","O","S",
-    "M","B","Q","F",};
-    for (int i=0 ; i<13;i++){
-        //compara se ambos os caracteres digitados estão presente no que foi digitado
-        if (strncmp(diciplina, materia[i], 2) == 0 || strncmp(diciplina, materia[i], 1) == 0) {  
-            return 1;
-        }
     }
     //verificar a questão dos espaços e a ocorrência de números
     for (int i = 0; i < tam; i++) {
@@ -291,7 +302,7 @@ void exibir_diciplinas(Diciplina* dic){
     }else{
         printf("\n");
         printf(" ********Informações da diciplina********");
-        printf("\nNome do Professor:%s\n",dic->cpf);
+        printf("\nCPF do Professor:%s\n",dic->cpf);
         printf("Nome da diciplina:%s\n",dic->diciplina);
         printf("Id da diciplina:%d\n",dic->id);
         printf("\n");
@@ -393,11 +404,11 @@ void att_diciplina(int id){
             printf("   *************** Atualizar Diciplina ***************      \n");
             printf("                                                        \n");
             printf("               o que deseja atualizar?                  \n");
-            printf("          Professor[\033[31m1\033[0m] - Diciplina[\033[31m2\033[0m] - Voltar[\033[31m0\033[0m]\n");
+            printf("        Professor[\033[31m1\033[0m] - Diciplina[\033[31m2\033[0m] - Voltar[\033[31m0\033[0m]\n");
             printf("                                                        \n");
             printf("Dados cadastrados no sistema:\n");
-            printf("\nNome do professor:%s",dic->cpf);
-            printf("Nome da Diciplina:%s\n",dic->diciplina);
+            printf("\nCPF do professor:%s\n",dic->cpf);
+            printf("\nNome da Diciplina:%s\n",dic->diciplina);
             printf("========================================================\n");
             printf("\n");
             printf("Qual opção deseja atualizar:");
