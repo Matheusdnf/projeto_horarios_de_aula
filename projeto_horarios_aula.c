@@ -3,7 +3,6 @@
 #include "aluno.h"
 #include "horario.h"
 #include "professor.h"
-#include "global.h"  //incluede para deixar opc global 
 #include "diciplina.h"
 
 // Assinatura das funções
@@ -12,55 +11,55 @@ void menu_sobre(void);
 void menu_equipe(void);
 void relatorio_tudo(void);
 
-//variável global
-char opc;
-
 // Programa principal
-int main(void) {
+int main(void)
+{
+    int opc;
     do{
         menu_principal();
         fflush(stdin);
-        printf("\nDigite o que deseja fazer: "); scanf("%[^\n]", &opc);getchar();
-        switch (opc) { 
-            case '1':
+        printf("\nDigite o que deseja fazer: ");
+        scanf("%d", &opc);
+        getchar();
+        switch (opc){
+            case 1:
                 menu_aluno();
                 break;
-            case '2':
+            case 2:
                 menu_professor();
                 break;
-            case '3':
+            case 3:
                 menu_horario();
                 break;
-            case '4':
+            case 4:
                 menu_diciplina();
                 break;
-            case '5':
+            case 5:
                 relatorio_tudo();
                 break;
-            case '6':
+            case 6:
                 menu_equipe();
                 break;
-            case '7':
+            case 7:
                 menu_sobre();
                 break;
-            case '0':
+            case 0:
                 printf("\nPrograma Finalizado!\n");
-                opc='0';
                 break;
             default:
                 printf("\nOpção Inválida!\n");
-                printf("Digite enter para continuar...");getchar(); 
+                printf("Digite enter para continuar...");
+                getchar();
                 break;
         }
-    }while (opc!='0');
+    } while (opc != 0);
     return 0;
 }
 
-
-void menu_principal() {
+void menu_principal(){
     printf("\n");
-    system("clear||cls");   
-    printf("\033[34m             ####\033[0m     \033[31m####\033[0m    \033[37m######\033[0m               \n"); //feito com a ajuda do chat gpt
+    system("clear||cls");
+    printf("\033[34m             ####\033[0m     \033[31m####\033[0m    \033[37m######\033[0m               \n"); // feito com a ajuda do chat gpt
     printf("\033[34m            ##  ##\033[0m   \033[31m##  ##\033[0m     \033[37m##\033[0m                 \n");
     printf("\033[34m            ##\033[0m       \033[31m##\033[0m         \033[37m##\033[0m                 \n");
     printf("\033[34m            ##\033[0m        \033[31m####\033[0m      \033[37m##\033[0m                 \n");
@@ -82,8 +81,7 @@ void menu_principal() {
     printf("                                                  \n");
 }
 
-
-void menu_sobre(void) {
+void menu_sobre(void){
     system("clear||cls");
     printf("\n");
     printf("=================================================================================\n");
@@ -102,7 +100,8 @@ void menu_sobre(void) {
     printf("  professores e horários de aula.                                                \n");
     printf("                                                                                 \n");
     printf("=================================================================================\n");
-    printf("Digite enter para continuar...");getchar(); 
+    printf("Digite enter para continuar...");
+    getchar();
 }
 
 void tela_relatorio(void){
@@ -117,7 +116,7 @@ void tela_relatorio(void){
     printf("===================================================\n");
 }
 
-void menu_equipe(void) {
+void menu_equipe(void){
     system("clear||cls");
     printf("\n");
     printf("===========================================================================\n");
@@ -132,34 +131,39 @@ void menu_equipe(void) {
     printf("            Git: Matheusdnf                                              \n");
     printf("                                                                         \n");
     printf("===========================================================================\n");
-    printf("Digite enter para continuar...");getchar(); 
-} 
+    printf("Digite enter para continuar...");
+    getchar();
+}
 
-//fazer um switch case para mostrar os tipos de dados armazenados
+// fazer um switch case para mostrar os tipos de dados armazenados
 void relatorio_tudo(void){
-    while(opc!=0){
+    int opc;
+    do{
         tela_relatorio();
-        printf("\nQual relatório deseja ver: "); scanf("%s", &opc);
-        switch (opc) { 
-            case '1':
-                relatorio_aluno();
-                break;
-            case '2':
-                relatorio_professor();
-                break;
-            case '3':
-                relatorio_horario();
-                break;
-            case '4':
-                relatorio_diciplina();
-                break;
-            case '0':
-                opc=0;
-                break;
-            default:
-                printf("\nOpção Inválida!\n");
-                getchar();printf("Digite enter para continuar...");getchar(); 
-                break;
+        printf("\nQual relatório deseja ver: ");
+        scanf("%d", &opc);
+        switch (opc)
+        {
+        case 1:
+            relatorio_aluno();
+            break;
+        case 2:
+            relatorio_professor();
+            break;
+        case 3:
+            relatorio_horario();
+            break;
+        case 4:
+            relatorio_diciplina();
+            break;
+        case 0:
+            break;
+        default:
+            printf("\nOpção Inválida!\n");
+            getchar();
+            printf("Digite enter para continuar...");
+            getchar();
+            break;
         }
-    }
+    } while (opc != 0);
 }

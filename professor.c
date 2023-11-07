@@ -1,4 +1,3 @@
-#include "global.h" //incluede para deixar opc global 
 #include "professor.h"
 #include "valida.h"
 #include "diciplina.h"
@@ -7,10 +6,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-void menu_professor(void) {
-    while (opc!=0){
-        Professor* prof;
-        system("clear||cls");   
+void menu_professor(void){
+    int opc;
+    do{
+        Professor *prof;
+        system("clear||cls");
         printf("\n");
         printf("===========================================================\n");
         printf("     ****************  Menu Professor ******************   \n");
@@ -21,66 +21,69 @@ void menu_professor(void) {
         printf("          5 - Relatório dos Professores                    \n");
         printf("          0 - Voltar                                       \n");
         printf("===========================================================\n");
-        printf("\nDigite o que deseja fazer: "); scanf("%s", &opc);
+        printf("\nDigite o que deseja fazer: ");
+        scanf("%d", &opc);
         switch (opc){
-            case '1':
-                prof=cadastrar_professor();
+            case 1:
+                prof = cadastrar_professor();
                 gravar_professor(prof);
                 break;
-            case '2':
+            case 2:
                 buscar_professor();
                 break;
-            case '3':
+            case 3:
                 atualizar_professor();
                 break;
-            case '4':
+            case 4:
                 excluir_professor();
                 break;
-            case '5':
+            case 5:
                 relatorio_professor();
                 break;
-            case '0':
-                opc=0;
+            case 0:
                 break;
             default:
                 printf("Opção Inválida!\n");
-                printf("Digite enter para continuar...");getchar(); 
+                printf("Digite enter para continuar...");
+                getchar();
                 break;
         }
-    }
+    } while (opc != 0);
 }
 
-Professor* cadastrar_professor(void) {
+Professor *cadastrar_professor(void){
     system("clear||cls");
-    Professor* prof;
-    bool v=true,f=false;
+    Professor *prof;
+    bool v = true, f = false;
     char c;
-    prof=(Professor*)malloc(sizeof(Professor));
+    prof = (Professor *)malloc(sizeof(Professor));
     printf("\n");
     printf("========================================================\n\n");
     printf("   *************** Cadastrar Professor ***************  \n\n");
-    while(v){
+    while (v){
         ler_cpf(prof->cpf);
-        c=verifica_existe_prof(prof->cpf);
-        if (c == 1) {
-                v = f;  
-            } else {
-                printf("Professor já cadastrado com esse cpf\n");
-            }
+        c = verifica_existe_prof(prof->cpf);
+        if (c == 1){
+            v = f;
         }
+        else{
+            printf("Professor já cadastrado com esse cpf\n");
+        }
+    }
     ler_nome(prof->nome);
     ler_email(prof->email);
     ler_telefone(prof->telefone);
-    prof->status='A';
+    prof->status = 'A';
     printf("                                                        \n");
     printf("Dados do Professor cadastrados!\n");
     printf("========================================================\n");
     printf("\n");
-    printf("Digite enter para continuar...");getchar(); //para aparecer o menu e ele não sair rapidamente
+    printf("Digite enter para continuar...");
+    getchar(); // para aparecer o menu e ele não sair rapidamente
     return prof;
 }
 
-void buscar_professor(void) {
+void buscar_professor(void){
     system("clear||cls");
     char cpf[15];
     printf("\n");
@@ -91,11 +94,11 @@ void buscar_professor(void) {
     procura_professor(cpf);
     printf("========================================================\n");
     printf("\n");
-    printf("Digite enter para continuar...");getchar(); 
+    printf("Digite enter para continuar...");
+    getchar();
 }
 
-
-void atualizar_professor(void) {
+void atualizar_professor(void){
     system("clear||cls");
     char cpf[15];
     printf("\n");
@@ -110,11 +113,12 @@ void atualizar_professor(void) {
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    getchar();printf("Digite enter para continuar...");getchar(); 
+    getchar();
+    printf("Digite enter para continuar...");
+    getchar();
 }
 
-
-void excluir_professor(void) {
+void excluir_professor(void){
     system("clear||cls");
     char cpf[15];
     printf("\n");
@@ -126,7 +130,8 @@ void excluir_professor(void) {
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    printf("Digite enter para continuar...");getchar(); 
+    printf("Digite enter para continuar...");
+    getchar();
 }
 
 void relatorio_professor(void){
@@ -139,49 +144,53 @@ void relatorio_professor(void){
     listar_todos_professor();
     printf("========================================================\n");
     printf("\n");
-    getchar(); printf("Digite enter para continuar...");getchar(); 
+    getchar();
+    printf("Digite enter para continuar...");
+    getchar();
 }
 
-void gravar_professor(Professor* prof){
-    FILE* fp;  //File Professor
-    fp=fopen("Professor.dat","ab");
-    if (fp==NULL){
+void gravar_professor(Professor *prof){
+    FILE *fp; // File Professor
+    fp = fopen("Professor.dat", "ab");
+    if (fp == NULL){
         printf("Erro na recuperação dos dados do Professor!\n");
         return;
     }
-    fwrite(prof,sizeof(Professor),1,fp);
+    fwrite(prof, sizeof(Professor), 1, fp);
     fclose(fp);
 }
 
-void exibicao_professor(Professor* prof){
+void exibicao_professor(Professor *prof){
     char estado[16];
-    if ((prof==NULL) || (prof->status=='I')){
+    if ((prof == NULL) || (prof->status == 'I')){
         printf("\nEste Professor não existe no sistema!\n");
-    }else{
+    }
+    else{
         printf("\n ********Dados Do Professor********");
-        printf("\nNome:%s",prof->nome);
-        printf("CPF:%s\n",prof->cpf);
-        printf("Email:%s\n",prof->email);
-        printf("Telefone:%s\n",prof->telefone);
-        if(prof->status=='A'){
-            strcpy(estado,"Professor Ativo");
-        }else if(prof->status=='I'){
-            strcpy(estado,"Não Encontrado");
+        printf("\nNome:%s", prof->nome);
+        printf("CPF:%s\n", prof->cpf);
+        printf("Email:%s\n", prof->email);
+        printf("Telefone:%s\n", prof->telefone);
+        if (prof->status == 'A'){
+            strcpy(estado, "Professor Ativo");
+        }
+        else if (prof->status == 'I'){
+            strcpy(estado, "Não Encontrado");
         }
     }
 }
 
 void listar_todos_professor(void){
-    FILE* fp;
-    Professor* prof;
-    prof=(Professor*)malloc(sizeof(Professor));
-    fp=fopen("Professor.dat","rb");
-    if (fp==NULL){
+    FILE *fp;
+    Professor *prof;
+    prof = (Professor *)malloc(sizeof(Professor));
+    fp = fopen("Professor.dat", "rb");
+    if (fp == NULL){
         printf("\nNenhum professor cadastrado!\n");
         return;
     }
-    while(fread(prof,sizeof(Professor),1,fp)){
-        if (prof->status!='I'){
+    while (fread(prof, sizeof(Professor), 1, fp)){
+        if (prof->status != 'I'){
             exibicao_professor(prof);
         }
     }
@@ -189,21 +198,21 @@ void listar_todos_professor(void){
     free(prof);
 }
 
-void procura_professor(char cpf[]) {
-    FILE* fp;
-    Professor* prof;
-    prof=(Professor*)malloc(sizeof(Professor));
-    fp=fopen("Professor.dat","rb");
-    if (prof == NULL) {
-    printf("\tProfessor não encontrado!\n");
+void procura_professor(char cpf[]){
+    FILE *fp;
+    Professor *prof;
+    prof = (Professor *)malloc(sizeof(Professor));
+    fp = fopen("Professor.dat", "rb");
+    if (prof == NULL){
+        printf("\tProfessor não encontrado!\n");
         return;
     }
-    if (fp==NULL){
+    if (fp == NULL){
         printf("\nNenhum professor foi cadastrado!\n");
         return;
     }
-    while(fread(prof, sizeof(Professor), 1, fp)) {
-        if ((strcmp(prof->cpf, cpf) == 0) && (prof->status=='A')) {
+    while (fread(prof, sizeof(Professor), 1, fp)){
+        if ((strcmp(prof->cpf, cpf) == 0) && (prof->status == 'A')){
             exibicao_professor(prof);
         }
     }
@@ -211,19 +220,19 @@ void procura_professor(char cpf[]) {
     free(prof);
 }
 
-//feito com a ajuda de marlison silva chat gpt e adapatada por matheus diniz
-void remover_Professor(char cpf[]) {
-    FILE* fp;
+// feito com a ajuda de marlison silva chat gpt e adapatada por matheus diniz
+void remover_Professor(char cpf[]){
+    FILE *fp;
     Professor *prof;
     int encontra = 0;
-    prof = (Professor*) malloc(sizeof(Professor));
+    prof = (Professor *)malloc(sizeof(Professor));
     fp = fopen("Professor.dat", "r+b");
-    if (fp == NULL) {
-        printf("Nenhum professor foi cadastrado!\n");
+    if (fp == NULL){
+        printf("\nNenhum professor foi cadastrado!\n");
         return;
     }
-    while (fread(prof, sizeof(Professor), 1, fp)) {
-        if ((strcmp(prof->cpf, cpf) == 0) && (prof->status == 'A')) {
+    while (fread(prof, sizeof(Professor), 1, fp)){
+        if ((strcmp(prof->cpf, cpf) == 0) && (prof->status == 'A')){
             encontra = 1;
             prof->status = 'I';
             fseek(fp, -1 * (long)sizeof(Professor), SEEK_CUR);
@@ -232,75 +241,74 @@ void remover_Professor(char cpf[]) {
             break; // Encerre o loop após a exclusão
         }
     }
-    if (!encontra) {
+    if (!encontra){
         printf("\nProfessor não encontrado!\n");
     }
     fclose(fp);
 }
 
 void att_professor(char cpf[]){
-    FILE* fp;
+    FILE *fp;
     Professor *prof;
-    int encontra=0;
-    int esc;
-    prof=(Professor*)malloc(sizeof(Professor));
-    fp=fopen("Professor.dat","r+b");
-    if (prof == NULL) {
-    printf("\tNão foi possível abrir o arquivo!\n");
-        return;
-    }
-    if (fp==NULL){
+    int encontra = 0;
+    int esc = 1;
+    prof = (Professor *)malloc(sizeof(Professor));
+    fp = fopen("Professor.dat", "r+b");
+    if (fp == NULL){
         printf("\nNenhum professor foi cadastrado!\n");
         return;
     }
-    while (fread(prof, sizeof(Professor), 1, fp)) {
-        if ((strcmp(prof->cpf, cpf) == 0) && (prof->status == 'A')) {
-        encontra=1;  
-            while (esc!=0){
-            system("clear||cls");
-            printf("========================================================\n");
-            printf("   *************** Atualizar Professor ***************      \n");
-            printf("                                                        \n");
-            printf("               o que deseja atualizar?                  \n");
-            printf("          Telefone[\033[31m1\033[0m] - Email[\033[31m2\033[0m] - Voltar[\033[31m0\033[0m]\n");
-            printf("                                                        \n");
-            printf("Dados cadastrados no sistema:\n");
-            printf("\nNome do Professor:%s",prof->nome);
-            printf("CPF Do Professor:%s\n",prof->cpf);
-            printf("Email:%s\n",prof->email);
-            printf("Telefone:%s\n",prof->telefone);
-            printf("========================================================\n");
-            printf("\n");
-            printf("Qual opção deseja atualizar:");
-            scanf("%d",&esc);
-            limpar_buffer();
-            switch (esc) { 
-                case 1:
-                    ler_telefone(prof->telefone);
-                    printf("Alteração realizada!\n");
-                    printf("Digite enter para continuar...");getchar();
-                    break;
-                case 2:
-                    ler_email(prof->email);
-                    printf("Alteração realizada!\n");
-                    printf("Digite enter para continuar...");getchar();
-                    break;
-                case 0:
-                    esc=0;
-                    break;
-                default:
-                    printf("\nOpção Inválida!\n");
-                    printf("Digite enter para continuar...");getchar(); 
-                    break;
-            }
+    while (fread(prof, sizeof(Professor), 1, fp)){
+        if ((strcmp(prof->cpf, cpf) == 0) && (prof->status == 'A')){
+            encontra = 1;
+            do{
+                system("clear||cls");
+                printf("========================================================\n");
+                printf("   *************** Atualizar Professor ***************      \n");
+                printf("                                                        \n");
+                printf("               o que deseja atualizar?                  \n");
+                printf("          Telefone[\033[31m1\033[0m] - Email[\033[31m2\033[0m] - Voltar[\033[31m0\033[0m]\n");
+                printf("                                                        \n");
+                printf("Dados cadastrados no sistema:\n");
+                printf("\nNome do Professor:%s", prof->nome);
+                printf("CPF Do Professor:%s\n", prof->cpf);
+                printf("Email:%s\n", prof->email);
+                printf("Telefone:%s\n", prof->telefone);
+                printf("========================================================\n");
+                printf("\n");
+                printf("Qual opção deseja atualizar:");
+                scanf("%d", &esc);
+                limpar_buffer();
+                switch (esc){
+                    case 1:
+                        ler_telefone(prof->telefone);
+                        printf("Alteração realizada!\n");
+                        printf("Digite enter para continuar...");
+                        getchar();
+                        break;
+                    case 2:
+                        ler_email(prof->email);
+                        printf("Alteração realizada!\n");
+                        printf("Digite enter para continuar...");
+                        getchar();
+                        break;
+                    case 0:
+                        esc = 0;
+                        break;
+                    default:
+                        printf("\nOpção Inválida!\n");
+                        printf("Digite enter para continuar...");
+                        getchar();
+                        break;
+                }
                 fseek(fp, -1 * (long)sizeof(Professor), SEEK_CUR);
-                fwrite(prof, sizeof(Professor), 1, fp);       
-            }break;
+                fwrite(prof, sizeof(Professor), 1, fp);
+            } while (esc != 0);
         }
-        }
-        if (!encontra) {
-            printf("Professor não encontrado!\n");
-    } 
+    }
+    if (!encontra){
+        printf("Professor não encontrado!\n");
+    }
     fclose(fp);
     free(prof);
 }
