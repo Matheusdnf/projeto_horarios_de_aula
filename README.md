@@ -8,6 +8,11 @@ BSI - Bacharelado em Sistemas de Informação.\
 DCT1106 - Programação - Flavius Gorgônio.\
 Desenvolvido por @matheusdnf
 
+Para compilar o projeto Bastar executar.\
+# .\compilar.bat
+
+Que irá acompanhar o código.\
+
 <!--gcc *.c -o projeto -Wall-->
 
 <!--//break (nome da função)
