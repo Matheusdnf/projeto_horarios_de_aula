@@ -4,12 +4,11 @@
 #include "horario.h"
 #include "professor.h"
 #include "diciplina.h"
-
+#include "relatorio.h"
 // Assinatura das funções
 void menu_principal(void);
 void menu_sobre(void);
 void menu_equipe(void);
-void relatorio_tudo(void);
 
 // Programa principal
 int main(void)
@@ -32,7 +31,7 @@ int main(void)
                 menu_horario();
                 break;
             case 4:
-                menu_diciplina();
+                menu_diciplinas();
                 break;
             case 5:
                 relatorio_tudo();
@@ -104,17 +103,7 @@ void menu_sobre(void){
     getchar();
 }
 
-void tela_relatorio(void){
-    system("clear||cls");
-    printf("===================================================\n");
-    printf("   ************* Menu Relatório ***************    \n");
-    printf("            1 - Relatório de alunos                   \n");
-    printf("            2 - Relatório de professores              \n");
-    printf("            3 - Relatório de Horários                 \n");
-    printf("            4 - Relatório de Diciplinas               \n");
-    printf("            0 - Voltar                                \n");
-    printf("===================================================\n");
-}
+
 
 void menu_equipe(void){
     system("clear||cls");
@@ -135,35 +124,3 @@ void menu_equipe(void){
     getchar();
 }
 
-// fazer um switch case para mostrar os tipos de dados armazenados
-void relatorio_tudo(void){
-    int opc;
-    do{
-        tela_relatorio();
-        printf("\nQual relatório deseja ver: ");
-        scanf("%d", &opc);
-        switch (opc)
-        {
-        case 1:
-            relatorio_aluno();
-            break;
-        case 2:
-            relatorio_professor();
-            break;
-        case 3:
-            relatorio_horario();
-            break;
-        case 4:
-            relatorio_diciplina();
-            break;
-        case 0:
-            break;
-        default:
-            printf("\nOpção Inválida!\n");
-            getchar();
-            printf("Digite enter para continuar...");
-            getchar();
-            break;
-        }
-    } while (opc != 0);
-}
