@@ -155,7 +155,7 @@ void exibicao_professores_alt(Professor *prof){
     else{
         printf("Dados do professores cadastrados:\n");
         printf("\nNome:%s", prof->nome);
-        printf("CPF:%s\n", prof->cpf);
+        printf("\nCPF:%s\n", prof->cpf);
         printf("\n");
         if (prof->status == 'A'){
             strcpy(estado, "Professor Ativo");
