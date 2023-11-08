@@ -78,6 +78,7 @@ Professor *cadastrar_professor(void){
     printf("Dados do Professor cadastrados!\n");
     printf("========================================================\n");
     printf("\n");
+    getchar();
     printf("Digite enter para continuar...");
     getchar(); // para aparecer o menu e ele não sair rapidamente
     return prof;
@@ -168,7 +169,7 @@ void exibicao_professor(Professor *prof){
     else{
         printf("\n ********Dados Do Professor********");
         printf("\nNome:%s", prof->nome);
-        printf("CPF:%s\n", prof->cpf);
+        printf("\nCPF:%s\n", prof->cpf);
         printf("Email:%s\n", prof->email);
         printf("Telefone:%s\n", prof->telefone);
         if (prof->status == 'A'){

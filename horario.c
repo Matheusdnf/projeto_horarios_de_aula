@@ -26,8 +26,7 @@ void menu_horario(void){
         switch (opc){
             case 1:
                 h = cadastrar_horario();
-                if (h == NULL)
-                {
+                if (h == NULL){
                     break;
                 }
                 gravar_h(h);
@@ -89,7 +88,7 @@ Horario *cadastrar_horario(void){
     diciplinas();
     listar_todos_diciplina_alt();
     while (v){
-        ler_diciplina(h->diciplina);
+        ler_diciplinas(h->diciplina);
         c = verifica_existe_d(h->diciplina);
         if (c == 1){
             v = f;
@@ -491,7 +490,7 @@ void att_h(int id){
                         break;
                     case 3:
                         diciplinas();
-                        ler_diciplina(h->diciplina);
+                        ler_diciplinas(h->diciplina);
                         printf("\nAlteração realizada!\n");
                         printf("\nDigite enter para continuar...");
                         getchar();

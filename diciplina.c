@@ -8,7 +8,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 
-void menu_diciplina(void){
+void menu_diciplinas(void){
     int opc;
     do{
         system("clear||cls");
@@ -27,24 +27,23 @@ void menu_diciplina(void){
         scanf("%d", &opc);
         switch (opc){
             case 1:
-                dic = cadastrar_diciplina();
-                if (dic == NULL)
-                {
+                dic = cadastrar_diciplinas();
+                if (dic == NULL){
                     break;
                 }
-                gravardiciplina(dic);
+                gravardiciplinas(dic);
                 break;
             case 2:
-                buscar_diciplina();
+                buscar_diciplinas();
                 break;
             case 3:
-                atualizar_diciplina();
+                atualizar_diciplinas();
                 break;
             case 4:
-                excluir_diciplina();
+                excluir_diciplinas();
                 break;
             case 5:
-                relatorio_diciplina();
+                relatorio_diciplinas();
                 break;
             case 0:
                 break;
@@ -57,7 +56,7 @@ void menu_diciplina(void){
     } while (opc != 0);
 }
 
-Diciplina *cadastrar_diciplina(void){
+Diciplina *cadastrar_diciplinas(void){
     system("clear||cls");
     Diciplina *dic;
     dic = (Diciplina *)malloc(sizeof(Diciplina));
@@ -88,7 +87,7 @@ Diciplina *cadastrar_diciplina(void){
     }
     printf("Pode ser 1 ou 2 diciplinas\n");
     diciplinas();
-    ler_diciplina(dic->diciplina);
+    ler_diciplinas(dic->diciplina);
     listar_todos_professor_alt();
     while (v){
         printf("Digite o cpf do professor\n");
@@ -104,17 +103,18 @@ Diciplina *cadastrar_diciplina(void){
     dic->id = criar_id_d();
     dic->status = 'A';
     printf("                                                        \n");
-    printf("Diciplina cadastrados!\n");
+    printf("Diciplina cadastrada!\n");
     printf("========================================================\n");
     printf("\n");
     printf("Digite enter para continuar...");
+    getchar();
     getchar(); // para aparecer o menu e ele não sair rapidamente
     fclose(fp);
     free(prof);
     return dic;
 }
 
-void buscar_diciplina(void){
+void buscar_diciplinas(void){
     system("clear||cls");
     int id = 0;
     printf("\n");
@@ -123,7 +123,7 @@ void buscar_diciplina(void){
     printf("                                                        \n");
     printf("Informe o id da diciplina:");
     scanf("%d", &id);
-    procura_diciplina(id);
+    procura_diciplinas(id);
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
@@ -132,7 +132,7 @@ void buscar_diciplina(void){
     getchar();
 }
 
-void atualizar_diciplina(void){
+void atualizar_diciplinas(void){
     system("clear||cls");
     int id = 0;
     printf("\n");
@@ -141,7 +141,7 @@ void atualizar_diciplina(void){
     printf("                                                        \n");
     printf("Informe o id da diciplina:");
     scanf("%d", &id);
-    att_diciplina(id);
+    att_diciplinas(id);
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
@@ -150,7 +150,7 @@ void atualizar_diciplina(void){
     getchar();
 }
 
-void excluir_diciplina(void){
+void excluir_diciplinas(void){
     system("clear||cls");
     printf("\n");
     int id = 0;
@@ -159,7 +159,7 @@ void excluir_diciplina(void){
     printf("                                                        \n");
     printf("Informe o id da diciplina:");
     scanf("%d", &id);
-    remover_diciplina(id);
+    remover_diciplinas(id);
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
@@ -168,7 +168,7 @@ void excluir_diciplina(void){
     getchar();
 }
 
-void relatorio_diciplina(void){
+void relatorio_diciplinas(void){
     system("clear||cls");
     printf("\n");
     printf("========================================================\n");
@@ -177,7 +177,8 @@ void relatorio_diciplina(void){
     printf("(informar todas as diciplinas cadastrado)               \n");
     printf("                                                        \n");
     listar_todos_professor_alt();
-    listar_todas_diciplina();
+    printf("\n");
+    listar_todas_diciplinas();
     printf("========================================================\n");
     printf("\n");
     getchar();
@@ -203,7 +204,7 @@ void diciplinas(void){
 }
 
 // funções para a validação da diciplina
-void ler_diciplina(char *diciplina){
+void ler_diciplinas(char *diciplina){
     int t;
     bool v = true, f = false;
     while (v){
@@ -211,7 +212,7 @@ void ler_diciplina(char *diciplina){
         printf("Digite a sigla da Matéria:");
         scanf("%s", diciplina);
         fflush(stdin);
-        t = valida_diciplina(diciplina);
+        t = valida_diciplinas(diciplina);
         if (t == 1){
             v = f;
         }
@@ -221,7 +222,7 @@ void ler_diciplina(char *diciplina){
     }
 }
 
-int valida_diciplina(char *diciplina){
+int valida_diciplinas(char *diciplina){
     // feito com ajuda de maria eloisa
     int tam = strlen(diciplina);
     // Só é permitidos 1 ou 2 matérias por vez
@@ -314,7 +315,7 @@ int criar_id_d(void){
     }
 }
 
-void gravardiciplina(Diciplina *dic){
+void gravardiciplinas(Diciplina *dic){
     FILE *fd; // File Diciplina
     fd = fopen("Diciplina.dat", "ab");
     if (fd == NULL){
@@ -345,7 +346,7 @@ void exibir_diciplinas(Diciplina *dic){
     }
 }
 
-void listar_todas_diciplina(void){
+void listar_todas_diciplinas(void){
     FILE *fd;
     Diciplina *dic;
     dic = (Diciplina *)malloc(sizeof(Diciplina));
@@ -365,7 +366,7 @@ void listar_todas_diciplina(void){
 
 // feito com a ajuda de marlison silva chat
 
-void procura_diciplina(int id){
+void procura_diciplinas(int id){
     FILE *fd;
     Diciplina *dic;
     dic = (Diciplina *)malloc(sizeof(Diciplina));
@@ -388,7 +389,7 @@ void procura_diciplina(int id){
 }
 
 // feito com a ajuda de marlison silva chat gpt e adapatada por matheus diniz
-void remover_diciplina(int id){
+void remover_diciplinas(int id){
     FILE *fd;
     Diciplina *dic;
     dic = (Diciplina *)malloc(sizeof(Diciplina));
@@ -413,7 +414,7 @@ void remover_diciplina(int id){
     }
     fclose(fd);
 }
-void att_diciplina(int id){
+void att_diciplinas(int id){
     FILE *fd;
     Diciplina *dic;
     int encontra = 0;
@@ -441,7 +442,7 @@ void att_diciplina(int id){
                 printf("                                                        \n");
                 printf("Dados cadastrados no sistema:\n");
                 printf("\nCPF do professor:%s\n", dic->cpf);
-                printf("\nNome da Diciplina:%s\n", dic->diciplina);
+                printf("\nNome da(s) Diciplina(s):%s\n", dic->diciplina);
                 printf("========================================================\n");
                 printf("\n");
                 printf("Qual opção deseja atualizar:");
@@ -456,7 +457,7 @@ void att_diciplina(int id){
                         break;
                     case 2:
                         diciplinas();
-                        ler_diciplina(dic->diciplina);
+                        ler_diciplinas(dic->diciplina);
                         printf("Alteração realizada!\n");
                         printf("\nDigite enter para continuar...");
                         getchar();

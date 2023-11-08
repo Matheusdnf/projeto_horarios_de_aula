@@ -77,6 +77,7 @@ Aluno *cadastrar_aluno(void){
     printf("Dados do Aluno cadastrados!\n");
     printf("========================================================\n");
     printf("\n");
+    getchar();
     printf("Digite enter para continuar...");
     getchar(); // para aparecer o menu e ele não sair rapidamente
     return std;
@@ -169,7 +170,7 @@ void exibicao_alunos(Aluno *std){
     else{
         printf("\n********Dados Do Aluno********");
         printf("\nNome:%s", std->nome);
-        printf("CPF:%s\n", std->cpf);
+        printf("\nCPF:%s\n", std->cpf);
         printf("Email:%s\n", std->email);
         printf("Telefone:%s\n", std->telefone);
         if (std->status == 'M'){
