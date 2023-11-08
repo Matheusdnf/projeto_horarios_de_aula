@@ -11,7 +11,8 @@ void ler_telefone(char *telefone) {
     bool v=true,f=false;
     while (v) {
         printf("Digite seu telefone com DDD:");
-        fgets(telefone, 15, stdin);
+        scanf("%s",telefone);
+        fflush(stdin);
         t = valida_telefone(telefone);
         if (t == 1) {
             v = f;  // Saia do loop quando o telefone for válido
@@ -36,7 +37,7 @@ int valida_telefone(char *telefone) {
     };
     int tam = strlen(telefone);
     // Deve ter no mínimo 12 caracteres (incluindo '\n') e o ddd
-    if (tam != 12) {
+    if (tam != 11) {
         return 0;
     }
 
@@ -81,7 +82,8 @@ void ler_nome(char *nome) {
     bool v=true,f=false;
     while (v) {
         printf("Digite o nome:");
-        fgets(nome, 100, stdin);
+        scanf("%s",nome);
+        limpar_buffer();
         n = valida_nome(nome);
         if (n == 1) {
             v=f;
@@ -184,7 +186,7 @@ void ler_cpf(char cpf[]) {
     while (v) {
         printf("Digite o seu CPF: ");
         scanf("%s", cpf);
-        limpar_buffer();
+        fflush(stdin);
         c = validarCPF(cpf);
         if (c == 1) {
             v=f;
@@ -210,7 +212,7 @@ void ler_email(char email[]) {
     while (v) {
         printf("Digite seu Email:");
         scanf("%[-._@A-Za-z0-9]", email);
-        limpar_buffer();
+        fflush(stdin);
         e = validate_email(email);
         if (e == 1) {
            v=f;
