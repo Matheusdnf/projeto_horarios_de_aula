@@ -77,7 +77,6 @@ Aluno *cadastrar_aluno(void){
     printf("Dados do Aluno cadastrados!\n");
     printf("========================================================\n");
     printf("\n");
-    getchar();
     printf("Digite enter para continuar...");
     getchar(); // para aparecer o menu e ele não sair rapidamente
     return std;
