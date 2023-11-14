@@ -501,6 +501,7 @@ void att_h(int id){
                 }
                 fseek(fh, -1 * (long)sizeof(Horario), SEEK_CUR);
                 fwrite(h, sizeof(Horario), 1, fh);
+                fclose(fh);
             } while (esc != 0);
         }
     }

@@ -468,6 +468,7 @@ void att_diciplinas(int id){
                 }
                 fseek(fd, -1 * (long)sizeof(Diciplina), SEEK_CUR);
                 fwrite(dic, sizeof(Diciplina), 1, fd);
+                fclose(fd);
             } while (esc != 0);
         }
     }

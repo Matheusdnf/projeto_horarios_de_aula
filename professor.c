@@ -303,6 +303,7 @@ void att_professor(char cpf[]){
                 }
                 fseek(fp, -1 * (long)sizeof(Professor), SEEK_CUR);
                 fwrite(prof, sizeof(Professor), 1, fp);
+                fclose(fp);
             } while (esc != 0);
         }
     }

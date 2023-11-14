@@ -273,7 +273,7 @@ void att_aluno(char cpf[]){
                 printf("          Telefone[\033[31m1\033[0m] - Email[\033[31m2\033[0m] - Voltar[\033[31m0\033[0m]\n");
                 printf("                                                        \n");
                 printf("Dados cadastrados no sistema:\n");
-                printf("\nNome do aluno:%s", std->nome);
+                printf("\nNome do aluno:%s\n", std->nome);
                 printf("CPF Do Aluno:%s\n", std->cpf);
                 printf("Email:%s\n", std->email);
                 printf("Telefone:%s\n", std->telefone);
@@ -306,6 +306,7 @@ void att_aluno(char cpf[]){
                 }
                 fseek(fa, -1 * (long)sizeof(Aluno), SEEK_CUR);
                 fwrite(std, sizeof(Aluno), 1, fa);
+                fclose(fa);
             } while (esc != 0);
         }
     }
