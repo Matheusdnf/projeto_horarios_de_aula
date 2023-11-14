@@ -15,7 +15,7 @@ void menu_diciplinas(void){
         Diciplina *dic;
         printf("\n");
         printf("===========================================================\n");
-        printf("     ****************  Menu Diciplina ******************       \n");
+        printf("     ****************  Menu Diciplina ******************   \n");
         printf("          1 - Cadastrar Diciplina                          \n");
         printf("          2 - Pesquisar Diciplina                          \n");
         printf("          3 - Atualizar informações da Diciplina           \n");
@@ -127,7 +127,6 @@ void buscar_diciplinas(void){
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    getchar();
     printf("Digite enter para continuar...");
     getchar();
 }
@@ -206,20 +205,16 @@ void diciplinas(void){
 // funções para a validação da diciplina
 void ler_diciplinas(char *diciplina){
     int t;
-    bool v = true, f = false;
-    while (v){
-        fflush(stdin);
+    do{
         printf("Digite a sigla da Matéria:");
-        scanf("%s", diciplina);
-        fflush(stdin);
+        fgets(diciplina, 3, stdin);
+        //remover o //n, função pega de @Lleusxam
+        diciplina[strlen(diciplina)-1]=0;
         t = valida_diciplinas(diciplina);
-        if (t == 1){
-            v = f;
+        if (t == 0) {
+            printf("Diciplina Invalida!\n");
         }
-        else if (t == 0){
-            printf("inválido\n");
-        }
-    }
+  } while (t != 1);
 }
 
 int valida_diciplinas(char *diciplina){
@@ -372,7 +367,7 @@ void procura_diciplinas(int id){
     dic = (Diciplina *)malloc(sizeof(Diciplina));
     fd = fopen("Diciplina.dat", "rb");
     if (dic == NULL){
-        printf("\n Diciplina não encontrada!\n");
+        printf("\nDiciplina não encontrada!\n");
         return;
     }
     if (fd == NULL){
