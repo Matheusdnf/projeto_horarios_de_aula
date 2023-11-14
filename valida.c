@@ -83,7 +83,7 @@ void ler_nome(char *nome) {
         nome[strlen(nome)-1]=0;
         t = valida_nome(nome);
         if (t == 0) {
-            printf("Nome inválido,Certifiquisse se não colocou números ou espaços a mais!");
+            printf("Nome inválido,Certifiquisse se não colocou números ou espaços a mais!\n");
         }
   } while (t != 1);
 }
