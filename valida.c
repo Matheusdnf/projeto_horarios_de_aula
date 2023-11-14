@@ -6,21 +6,18 @@
 #include "valida.h"
 
 void ler_telefone(char *telefone) {
-    //função reutilizável para realizar a leitura do telefone
     int t;
-    bool v=true,f=false;
-    while (v) {
-        printf("Digite seu telefone com DDD:");
-        scanf("%s",telefone);
-        fflush(stdin);
+    //função inpirada na de @Claudio-Arauj
+    do {
+        printf("Digite o telefone com DDD:");
+        fgets(telefone, 15 , stdin);
+        //remover o //n, função pega de @Lleusxam
+        telefone[strlen(telefone)-1]=0;
         t = valida_telefone(telefone);
-        if (t == 1) {
-            v = f;  // Saia do loop quando o telefone for válido
-        } else if (t == 0) {
-            printf("Telefone inválido\n");
-            printf("Certifiquisse de que tenha colocado DDD ou só números\n");
-        }
+        if (t == 0) {
+        printf("Telefone inválido,Certifiquisse de que tenha colocado DDD ou só números!\n");
     }
+  } while (t != 1);
 }
 
 int valida_telefone(char *telefone) {
@@ -77,23 +74,19 @@ bool eh_letra_acentuada(char c) {   //recebe uma letra por vez
 
 
 void ler_nome(char *nome) {
-    //função pega de @SoutoCB
-    do{
+  int t;
+  //função inpirada na de @Claudio-Arauj
+  do {
         printf("Digite o nome:");
         fgets(nome, 100, stdin);
-        if (nome[strlen(nome) - 1] == '\n') {
-            nome[strlen(nome) - 1] = '\0';
-        }else {
-            limpar_buffer();
+        //remover o //n, função pega de @Lleusxam
+        nome[strlen(nome)-1]=0;
+        t = valida_nome(nome);
+        if (t == 0) {
+            printf("Nome inválido,Certifiquisse se não colocou números ou espaços a mais!");
         }
-        if(!valida_nome(nome)){
-            printf("Nome inválido\n");
-            printf("Certifiquisse se não colocou números ou espaços a mais!\n");
-        }
-   }while(!valida_nome(nome));
+  } while (t != 1);
 }
-
-
 
 int valida_nome(char *nome) {
     // Pega o tamanho da variável nome
