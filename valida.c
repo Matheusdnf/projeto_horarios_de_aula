@@ -77,22 +77,23 @@ bool eh_letra_acentuada(char c) {   //recebe uma letra por vez
 
 
 void ler_nome(char *nome) {
-    //função reutilizável para realizar a leitura do nome
-    int n;
-    bool v=true,f=false;
-    while (v) {
+    //função pega de @SoutoCB
+    do{
         printf("Digite o nome:");
-        scanf("%s",nome);
-        limpar_buffer();
-        n = valida_nome(nome);
-        if (n == 1) {
-            v=f;
-        } else if (n == 0) {
+        fgets(nome, 100, stdin);
+        if (nome[strlen(nome) - 1] == '\n') {
+            nome[strlen(nome) - 1] = '\0';
+        }else {
+            limpar_buffer();
+        }
+        if(!valida_nome(nome)){
             printf("Nome inválido\n");
             printf("Certifiquisse se não colocou números ou espaços a mais!\n");
         }
-    }
+   }while(!valida_nome(nome));
 }
+
+
 
 int valida_nome(char *nome) {
     // Pega o tamanho da variável nome
