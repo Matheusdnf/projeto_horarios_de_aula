@@ -183,61 +183,50 @@ void relatorio_horario(void){
 
 // funções referente a validação dos horários
 void ler_periodo(char *periodo){
-    int n;
-    bool v = true, f = false;
-    while (v){
+    int t;
+    do{
+        //liberar lixo de memória
+        fflush(stdin);
         printf("Digite em que horários serão [1,2...6] horário\n");
         printf("Digite o periodo (só números):");
-        scanf("%s", periodo);
-        limpar_buffer();
-        n = valida_periodo(periodo);
-        if (n == 1)
-        {
-            printf("válido\n");
-            v = f;
+        fgets(periodo,7,stdin);
+        periodo[strlen(periodo)-1]=0;
+        t = valida_periodo(periodo);
+        if (t == 0){
+            printf("Período inválido!\n");
         }
-        else if (n == 0)
-        {
-            printf("inválido\n");
-        }
-    }
+    }while(t!=1);
 }
+
 void ler_tempo(char *tempo){
     int t;
-    bool v = true, f = false;
-    while (v){
+    do{
+        fflush(stdin);
         printf("Escolha se será manhã,tarde ou noite\n");
         printf("Digite o tempo (M,T,N):");
-        scanf("%s", tempo);
-        limpar_buffer();
+        fgets(tempo,3,stdin);
+        tempo[strlen(tempo)-1]=0;
         t = valida_tempo(tempo);
-        if (t == 1){
-            printf("válido\n");
-            v = f;
+        if (t == 0){
+            printf("tempo inválido!\n");
         }
-        else if (t == 0){
-            printf("inválido\n");
-        }
-    }
+    }while(t!=1);
 }
 
 void ler_dia(char *dia){
-    int d;
-    bool v = true, f = false;
-    while (v){
+    int t;
+    do{
+        fflush(stdin);
         printf("Escolha se será: \n2-Segunda \n3-Terça \nAté 6-Sexta\n");
         printf("Digite o dia:");
-        scanf("%s", dia);
-        limpar_buffer();
-        d = valida_dia(dia);
-        if (d == 1){
-            printf("válido\n");
-            v = f;
+        fgets(dia,7,stdin);
+        //remover o \n
+        dia[strlen(dia)-1]=0;
+        t = valida_dia(dia);
+        if (t == 0){
+            printf("Dia Inválido\n");
         }
-        else if (d == 0){
-            printf("inválido\n");
-        }
-    }
+    }while(t!=1);
 }
 
 int valida_periodo(char *periodo){
