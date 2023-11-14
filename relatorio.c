@@ -33,20 +33,20 @@ void relatorio_tudo(void){
         switch (opc){
             case 1:
                 system("clear||cls");
-                printf("===================================================\n");
-                printf("   *************   ALUNOS   ***************    \n\n");
+                printf("=============================================================================================\n");
+                printf("                      *************   Alunos   ***************    \n\n");
                 relatorio_tabela_aluno();
-                printf("\n===================================================\n");
+                printf("=============================================================================================\n");
                 printf("\nDigite enter para continuar...");
                 getchar();
                 getchar();
                 break;
             case 2:
                 system("clear||cls");
-                printf("===================================================\n");
-                printf("   *************   Professores   ***************    \n\n");
+                printf("=============================================================================================\n");
+                printf("                   *************   Professores   ***************    \n\n");
                 relatorio_tabela_professor();
-                printf("\n===================================================\n");
+                printf("=============================================================================================\n");
                 printf("\nDigite enter para continuar...");
                 getchar();
                 getchar();
@@ -90,7 +90,7 @@ void formato_exibido_a(Aluno *std){
         printf("\nEste Aluno não existe no sistema!\n");
     }
     else{
-        printf("|%-8s|%-11s|%-s|%-11s|\n",std->nome,std->cpf,std->email,std->telefone);
+        printf("|%-30s|%-11s|%-36s|%-11s|\n",std->nome,std->cpf,std->email,std->telefone);
         if (std->status == 'M'){
             strcpy(estado, "Matriculado");
         }
@@ -109,10 +109,10 @@ void relatorio_tabela_aluno(void){
         printf("\nNenhum aluno cadastrado!\n");
         return;
     }
-        printf("|%-17s","\x1B[31mNome\x1B[0m");
+        printf("|%-39s","\x1B[31mNome\x1B[0m");
         printf("|%-20s", "\x1B[31mCPF\x1B[0m");
-        printf("|%-24s", "\x1B[31mEmail\x1B[0m");
-        printf("|%-1s", "\x1B[31mTelefone\x1B[0m");
+        printf("|%-45s", "\x1B[31mEmail\x1B[0m");
+        printf("|%-15s", "\x1B[31mTelefone\x1B[0m");
         printf("\n");
     while (fread(std, sizeof(Aluno), 1, fa)){
         if (std->status != 'I'){
@@ -129,7 +129,7 @@ void formato_exibido_p(Professor *prof){
         printf("\nEste Professor não existe no sistema!\n");
     }
     else{
-        printf("|%-8s|%-11s|%-s|%-11s|\n",prof->nome,prof->cpf,prof->email,prof->telefone);
+        printf("|%-30s|%-11s|%-36s|%-11s|\n",prof->nome,prof->cpf,prof->email,prof->telefone);
         if (prof->status == 'A'){
             strcpy(estado, "Ativo");
         }
@@ -148,10 +148,10 @@ void relatorio_tabela_professor(void){
         printf("\nNenhum professor cadastrado!\n");
         return;
     }
-        printf("|%-17s","\x1B[31mNome\x1B[0m");
+        printf("|%-39s","\x1B[31mNome\x1B[0m");
         printf("|%-20s", "\x1B[31mCPF\x1B[0m");
-        printf("|%-24s", "\x1B[31mEmail\x1B[0m");
-        printf("|%-1s", "\x1B[31mTelefone\x1B[0m");
+        printf("|%-45s", "\x1B[31mEmail\x1B[0m");
+        printf("|%-15s", "\x1B[31mTelefone\x1B[0m");
         printf("\n");
     while (fread(prof, sizeof(Professor), 1, fp)){
         if (prof->status != 'I'){
@@ -205,7 +205,7 @@ void formato_exibido_h(Horario *h){
         printf("\nEste horário não foi cadastrada no sistema!\n");
     }
     else{
-        printf("|%-8s|%-11s|%-s|%-11s|\n",h->periodo,h->diciplina,h->dia,h->tempo);
+        printf("|%-7s|%-9s|%-13s|%-12s|\n",h->periodo,h->diciplina,h->dia,h->tempo);
         printf("\n");
         if (h->status == 'A'){
             strcpy(estado, "Horário Ativo");
@@ -224,10 +224,10 @@ void relatorio_tabela_h(void){
         printf("\nNenhum horario cadastrada!\n");
         return;
     }
-        printf("|%-17s","\x1B[31mNome\x1B[0m");
-        printf("|%-20s", "\x1B[31mCPF\x1B[0m");
-        printf("|%-24s", "\x1B[31mEmail\x1B[0m");
-        printf("|%-1s", "\x1B[31mTelefone\x1B[0m");
+        printf("|%-15s","\x1B[31mPeriodo\x1B[0m");
+        printf("|%-15s", "\x1B[31mDiciplina\x1B[0m");
+        printf("|%-15s", "\x1B[31mDia da semana\x1B[0m");
+        printf("|%-1s|", "\x1B[31mTempo(M,T,D)\x1B[0m");
         printf("\n");
     while (fread(h, sizeof(Horario), 1, fh)){
         if (h->status != 'I'){
