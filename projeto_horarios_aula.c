@@ -34,7 +34,7 @@ int main(void)
                 menu_diciplinas();
                 break;
             case 5:
-                relatorio_tudo();
+                escolha_relatorio();
                 break;
             case 6:
                 menu_equipe();
