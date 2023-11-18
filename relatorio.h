@@ -15,4 +15,6 @@ void formato_exibido_diciplinas(Diciplina *dic);
 void relatorio_tabela_diciplinas(void);
 void relatorio_tabela_h(void);
 void formato_exibido_h(Horario *h);
+void listar_professor_por_disciplina(char *diciplina);
+void algo(void);
 #endif  

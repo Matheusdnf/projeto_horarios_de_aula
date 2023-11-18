@@ -67,6 +67,8 @@ void relatorio_tudo(void){
                 getchar();
                 getchar();
                 break;
+            case 5:
+                algo();
             case 0:
                 break;
             default:
@@ -231,4 +233,26 @@ void relatorio_tabela_h(void){
     }
     fclose(fh);
     free(h);
+}
+
+void listar_professor_por_disciplina(char *diciplina) {
+    FILE* fd;
+    Diciplina *dic;
+    dic = (Diciplina *)malloc(sizeof(Diciplina));
+    fd = fopen("Diciplina.dat", "rb");
+    while (fread(dic, sizeof(Diciplina), 1, fd)){
+        if ((strcmp(dic->diciplina,diciplina)==0) || (strcmp(dic->diciplina+1,diciplina)==0)){
+            printf("|%-20s", dic->cpf);
+        }
+    }
+    fclose(fd);
+    free(dic);
+}
+
+void algo(void){
+    char diciplina[3];
+    ler_diciplinas(diciplina);
+    listar_professor_por_disciplina(diciplina);
+    getchar();
+    getchar();
 }
