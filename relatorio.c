@@ -1,12 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "aluno.h"
-#include "horario.h"
-#include "professor.h"
-#include "diciplina.h"
 #include "relatorio.h"
-#include "checagem.h"
 //futuramente fazer um que exiba tanto os dados apagados como cadastrados
 //utilizar o switch case
 //adicionar uma varíaveu na função que escolhe o tipo

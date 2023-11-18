@@ -1,3 +1,5 @@
+#ifndef horario_h
+#define horario_h
 //struct horário
 typedef struct horario {
     char id;
@@ -31,3 +33,4 @@ void lista_todos_h(void);
 void procura_h(int id);
 void remover_h(int id);
 void att_h(int id);
+#endif

@@ -1,3 +1,5 @@
+#ifndef professor_h
+#define professor_h
 //struct professor
 typedef struct professor {
     char telefone[15];
@@ -21,3 +23,4 @@ void exibicao_professor(Professor* prof);
 void procura_professor(char cpf[]);
 void remover_Professor(char cpf[]);
 void att_professor(char cpf[]);
+#endif

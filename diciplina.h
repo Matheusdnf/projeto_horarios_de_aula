@@ -1,3 +1,5 @@
+#ifndef diciplina_h
+#define diciplina_h
 //struct diciplina
 typedef struct diciplina {
     int id;
@@ -27,3 +29,4 @@ void listar_todas_diciplinas(void);
 void procura_diciplinas(int id);
 void remover_diciplinas(int id);
 void att_diciplinas(int id);
+#endif

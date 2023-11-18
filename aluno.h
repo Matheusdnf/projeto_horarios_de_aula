@@ -1,3 +1,5 @@
+#ifndef aluno_h
+#define aluno_h
 //struct de aluno
 typedef struct aluno {
     char cpf[15];
@@ -21,3 +23,4 @@ void listar_todos_aluno(void);
 void exibicao_alunos(Aluno* std);
 void remover_aluno(char cpf[]);
 void att_aluno(char cpf[]);
+#endif
