@@ -16,5 +16,9 @@ void relatorio_tabela_diciplinas(void);
 void relatorio_tabela_h(void);
 void formato_exibido_h(Horario *h);
 void listar_professor_por_disciplina(char *diciplina);
+//relatório com filtro 
 void algo(void);
+void relatorio_filtro(void);
+void tela_filtro_relatorio(void);
+void escolha_relatorio(void);
 #endif  

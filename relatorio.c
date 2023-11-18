@@ -6,7 +6,26 @@
 //utilizar o switch case
 //adicionar uma varíaveu na função que escolhe o tipo
 
-
+void escolha_relatorio(void){
+    int opc;
+    do{
+        system("clear||cls");
+        printf("            1 - Relatório tudo                   \n");
+        printf("            2 - Relatório filtro             \n");
+        scanf("%d",&opc);
+        switch (opc){
+        case 1:
+            relatorio_tudo();
+            break;
+        case 2:
+            relatorio_filtro();
+        case 0:
+            break;
+        default:
+            break;
+        }
+    }while(opc!=0);
+}
 void tela_relatorio(void){
     system("clear||cls");
     printf("===================================================\n");
@@ -19,6 +38,33 @@ void tela_relatorio(void){
     printf("===================================================\n");
 }
 
+void tela_filtro_relatorio(void){
+    system("clear||cls");
+    printf("===================================================\n");
+    printf("   ************* Relatório Filtro ***************    \n");
+    printf("            1 - Relatório de professores por diciplina\n");
+    printf("            2 -               \n");
+    printf("            3 -                  \n");
+    printf("            4 -                \n");
+    printf("            0 - Voltar                                \n");
+    printf("===================================================\n");
+}
+void relatorio_filtro(void){
+    int opc;
+    do{
+        tela_filtro_relatorio();
+        scanf("%d",&opc);
+        switch (opc){
+        case 1:
+            algo();
+            break;
+        case 0:
+            break;
+        default:
+            break;
+        }
+    }while(opc!=0);
+}
 void relatorio_tudo(void){
     int opc;
     do{
@@ -240,8 +286,8 @@ void listar_professor_por_disciplina(char *diciplina) {
     Diciplina *dic;
     dic = (Diciplina *)malloc(sizeof(Diciplina));
     fd = fopen("Diciplina.dat", "rb");
-    while (fread(dic, sizeof(Diciplina), 1, fd)){
-        if ((strcmp(dic->diciplina,diciplina)==0) || (strcmp(dic->diciplina+1,diciplina)==0)){
+    while (fread(dic, sizeof(Diciplina), 1, fd)) {
+        if ((strncmp(dic->diciplina, diciplina, strlen(diciplina)) == 0) || (strcmp(dic->diciplina+1,diciplina)==0)) {
             printf("|%-20s", dic->cpf);
         }
     }
@@ -256,3 +302,7 @@ void algo(void){
     getchar();
     getchar();
 }
+
+//relatorio com os dias das semanas
+//relatorio com os horarios
+//relatorio relacionando diciplina e professor
