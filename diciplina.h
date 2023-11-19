@@ -4,7 +4,7 @@
 typedef struct diciplina {
     int id;
     char cpf[15]; //referente ao nome do professor
-    char diciplina[3];
+    char diciplina[4];
     char status;           //A-Ativo I-Inexistente 
     //char status;
 } Diciplina;
