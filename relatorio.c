@@ -329,7 +329,36 @@ void filtro_diciplina(void){
     getchar();
 }
 
+void filtro_tempo_horario(void){
+    char tempo[3];
+    ler_tempo(tempo);
+    listar_h_por_periodo(tempo);
+    getchar();
+    getchar();
+}
 
+void listar_h_por_periodo(char *tempo) {
+    FILE *fh;
+    Horario *h;
+    h = (Horario *)malloc(sizeof(Horario));
+    fh = fopen("Horario.dat", "rb");
+    if (fh == NULL){
+        printf("\nNenhum horario cadastrada!\n");
+        return;
+    }
+    while (fread(h, sizeof(Horario), 1, fh)){
+        if (strcmp (h->tempo,tempo)==0){
+            printf("|%-15s","\x1B[31mPeriodo\x1B[0m");
+            printf("|%-15s", "\x1B[31mDiciplina\x1B[0m");
+            printf("|%-15s", "\x1B[31mDia da semana\x1B[0m");
+            printf("\n");
+            printf("|%-7s|%-9s|%-13s|\n",h->periodo,h->diciplina,h->dia);
+
+        }
+    }
+    fclose(fh);
+    free(h);
+}
 //relatorio com os dias das semanas
 //relatorio com os horarios
 //relatorio relacionando diciplina e professor
