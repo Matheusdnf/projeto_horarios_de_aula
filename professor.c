@@ -7,7 +7,7 @@
 #include <string.h>
 
 void menu_professor(void){
-    int opc;
+    char opc;
     do{
         Professor *prof;
         system("clear||cls");
@@ -22,25 +22,25 @@ void menu_professor(void){
         printf("          0 - Voltar                                       \n");
         printf("===========================================================\n");
         printf("\nDigite o que deseja fazer: ");
-        scanf("%d", &opc);
+        scanf("%c", &opc);
         switch (opc){
-            case 1:
+            case '1':
                 prof = cadastrar_professor();
                 gravar_professor(prof);
                 break;
-            case 2:
+            case '2':
                 buscar_professor();
                 break;
-            case 3:
+            case '3':
                 atualizar_professor();
                 break;
-            case 4:
+            case '4':
                 excluir_professor();
                 break;
-            case 5:
+            case '5':
                 relatorio_professor();
                 break;
-            case 0:
+            case '0':
                 break;
             default:
                 printf("Opção Inválida!\n");
@@ -48,7 +48,7 @@ void menu_professor(void){
                 getchar();
                 break;
         }
-    } while (opc != 0);
+    } while (opc != '0');
 }
 
 Professor *cadastrar_professor(void){

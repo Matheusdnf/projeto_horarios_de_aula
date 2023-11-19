@@ -9,7 +9,7 @@
 #include <ctype.h>
 
 void menu_diciplinas(void){
-    int opc;
+    char opc;
     do{
         system("clear||cls");
         Diciplina *dic;
@@ -24,28 +24,28 @@ void menu_diciplinas(void){
         printf("          0 - Voltar                                       \n");
         printf("===========================================================\n");
         printf("\nDigite o que deseja fazer: ");
-        scanf("%d", &opc);
+        scanf("%c", &opc);
         switch (opc){
-            case 1:
+            case '1':
                 dic = cadastrar_diciplinas();
                 if (dic == NULL){
                     break;
                 }
                 gravardiciplinas(dic);
                 break;
-            case 2:
+            case '2':
                 buscar_diciplinas();
                 break;
-            case 3:
+            case '3':
                 atualizar_diciplinas();
                 break;
-            case 4:
+            case '4':
                 excluir_diciplinas();
                 break;
-            case 5:
+            case '5':
                 relatorio_diciplinas();
                 break;
-            case 0:
+            case '0':
                 break;
             default:
                 printf("Opção Inválida!\n");
@@ -53,7 +53,7 @@ void menu_diciplinas(void){
                 getchar();
                 break;
         }
-    } while (opc != 0);
+    } while (opc != '0');
 }
 
 Diciplina *cadastrar_diciplinas(void){
@@ -206,8 +206,9 @@ void diciplinas(void){
 void ler_diciplinas(char *diciplina){
     int t;
     do{
+        fflush(stdin);
         printf("Digite a sigla da Matéria:");
-        fgets(diciplina, 3, stdin);
+        fgets(diciplina, 4, stdin);
         //remover o //n, função pega de @Lleusxam
         diciplina[strlen(diciplina)-1]=0;
         t = valida_diciplinas(diciplina);

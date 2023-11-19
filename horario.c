@@ -7,7 +7,7 @@
 #include <string.h>
 
 void menu_horario(void){
-    int opc;
+    char opc;
     do{
         system("clear||cls");
         Horario *h;
@@ -22,28 +22,28 @@ void menu_horario(void){
         printf("          0 - Voltar                                     \n");
         printf("===========================================================\n");
         printf("\nDigite o que deseja fazer: ");
-        scanf("%d", &opc);
+        scanf("%c", &opc);
         switch (opc){
-            case 1:
+            case '1':
                 h = cadastrar_horario();
                 if (h == NULL){
                     break;
                 }
                 gravar_h(h);
                 break;
-            case 2:
+            case '2':
                 buscar_horario();
                 break;
-            case 3:
+            case '3':
                 atualizar_horario();
                 break;
-            case 4:
+            case '4':
                 excluir_horario();
                 break;
-            case 5:
+            case '5':
                 relatorio_horario();
                 break;
-            case 0:
+            case '0':
                 break;
             default:
                 printf("Opção Inválida!\n");
@@ -51,7 +51,7 @@ void menu_horario(void){
                 getchar();
                 break;
         }
-    } while (opc != 0);
+    } while (opc != '0');
 }
 
 Horario *cadastrar_horario(void){
@@ -279,8 +279,7 @@ int valida_dia(char *dia){
     // fazer com que o usuário só digite números entre 2 e 6
     for (int i = 0; i < tam; i++){
         // feito com a ajuda do gpt
-        if (dia[i] < '2' || dia[i] > '6')
-        {
+        if (dia[i] < '2' || dia[i] > '6'){
             return 0;
         }
         // evitar que o usuário digitei dois dias repetidos
