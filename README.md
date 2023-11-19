@@ -9,10 +9,9 @@ DCT1106 - Programação - Flavius Gorgônio.\
 Desenvolvido por @matheusdnf
 
 # Para compilar o projeto Bastar executar
-gcc *.c -o projeto -Wall
+gcc *.c -o projeto -Wall\
 ./projeto
 
-Que irá acompanhar o código.
 
 <!--gcc *.c -o projeto -Wall-->
 
