@@ -13,45 +13,47 @@ void menu_equipe(void);
 // Programa principal
 int main(void)
 {
-    int opc;
+    char opc;
     do{
         menu_principal();
-        fflush(stdin);
         printf("\nDigite o que deseja fazer: ");
-        scanf("%d", &opc);
+        fflush(stdin);
+        scanf("%c", &opc);
         getchar();
+        fflush(stdin);
         switch (opc){
-            case 1:
+            case '1':
                 menu_aluno();
                 break;
-            case 2:
+            case '2':
                 menu_professor();
                 break;
-            case 3:
+            case '3':
                 menu_horario();
                 break;
-            case 4:
+            case '4':
                 menu_diciplinas();
                 break;
-            case 5:
+            case '5':
                 escolha_relatorio();
                 break;
-            case 6:
+            case '6':
                 menu_equipe();
                 break;
-            case 7:
+            case '7':
                 menu_sobre();
                 break;
-            case 0:
+            case '0':
                 printf("\nPrograma Finalizado!\n");
                 break;
             default:
                 printf("\nOpção Inválida!\n");
                 printf("Digite enter para continuar...");
+                fflush(stdin);
                 getchar();
                 break;
         }
-    } while (opc != 0);
+    } while (opc != '0');
     return 0;
 }
 
