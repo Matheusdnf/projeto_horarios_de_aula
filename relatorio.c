@@ -7,24 +7,35 @@
 //adicionar uma varíaveu na função que escolhe o tipo
 
 void escolha_relatorio(void){
-    int opc;
+    char opc;
     do{
         system("clear||cls");
+        printf("===================================================\n");
+        printf("   ************* Relatórios ***************    \n");
         printf("            1 - Relatório tudo                   \n");
-        printf("            2 - Relatório filtro             \n");
-        scanf("%d",&opc);
+        printf("            2 - Relatório filtro                 \n");
+        printf("            0 - Voltar                           \n");
+        printf("===================================================\n");
+        printf("\nQual relatório deseja ver: ");
+        fflush(stdin);
+        scanf("%c",&opc);
+        getchar();
+        fflush(stdin);
         switch (opc){
-        case 1:
-            relatorio_tudo();
-            break;
-        case 2:
-            relatorio_filtro();
-        case 0:
-            break;
-        default:
-            break;
-        }
-    }while(opc!=0);
+            case '1':
+                relatorio_tudo();
+                break;
+            case '2':
+                relatorio_filtro();
+            case '0':
+                break;
+            default:
+                printf("\nOpção Inválida!\n");
+                printf("Digite enter para continuar...");
+                getchar();
+                break;
+            }
+    }while(opc!='0');
 }
 void tela_relatorio(void){
     system("clear||cls");
@@ -42,37 +53,49 @@ void tela_filtro_relatorio(void){
     system("clear||cls");
     printf("===================================================\n");
     printf("   ************* Relatório Filtro ***************    \n");
-    printf("            1 - Relatório de professores por diciplina\n");
-    printf("            2 -               \n");
-    printf("            3 -                  \n");
-    printf("            4 -                \n");
-    printf("            0 - Voltar                                \n");
+    printf("       1 - Relatório de diciplina por professor      \n");
+    printf("       2 - Relatório dos tempo dos horários          \n");
+    printf("       3 - Relatório dos dias dos horários           \n");
+    printf("       4 - Relatório professor diciplina             \n");
+    printf("       5-                                            \n");
+    printf("       6-                                            \n");
+    printf("       7-                                            \n");
+    printf("       8-                                            \n");
+    printf("       9-                                            \n");
+    printf("       0 - Voltar                                    \n");
     printf("===================================================\n");
+    printf("\nQual relatório deseja ver: ");
+
 }
 void relatorio_filtro(void){
-    int opc;
+    char opc;
     do{
         tela_filtro_relatorio();
-        scanf("%d",&opc);
+        scanf("%c",&opc);
         switch (opc){
-        case 1:
-            algo();
-            break;
-        case 0:
-            break;
-        default:
-            break;
-        }
-    }while(opc!=0);
+            case '1':
+                filtro_diciplina();
+                break;
+            case '2':
+                filtro_tempo_horario();
+            case '0':
+                break;
+            default:
+                printf("\nOpção Inválida!\n");
+                printf("Digite enter para continuar...");
+                getchar();
+                break;
+            }
+    }while(opc!='0');
 }
 void relatorio_tudo(void){
-    int opc;
+    char opc;
     do{
         tela_relatorio();
         printf("\nQual relatório deseja ver: ");
-        scanf("%d", &opc);
+        scanf("%c", &opc);
         switch (opc){
-            case 1:
+            case '1':
                 system("clear||cls");
                 printf("=============================================================================================\n");
                 printf("                      *************   Alunos   ***************    \n\n");
@@ -82,7 +105,7 @@ void relatorio_tudo(void){
                 getchar();
                 getchar();
                 break;
-            case 2:
+            case '2':
                 system("clear||cls");
                 printf("=============================================================================================\n");
                 printf("                   *************   Professores   ***************    \n\n");
@@ -92,7 +115,7 @@ void relatorio_tudo(void){
                 getchar();
                 getchar();
                 break;
-            case 3:
+            case '3':
                 system("clear||cls");
                 printf("===================================================\n");
                 printf("   *************   Horários   ***************    \n\n");
@@ -102,7 +125,7 @@ void relatorio_tudo(void){
                 getchar();
                 getchar();
                 break;
-            case 4:
+            case '4':
                 system("clear||cls");
                 printf("===================================================\n");
                 printf("   *************   Diciplina   ***************    \n\n");
@@ -113,9 +136,7 @@ void relatorio_tudo(void){
                 getchar();
                 getchar();
                 break;
-            case 5:
-                algo();
-            case 0:
+            case '0':
                 break;
             default:
                 printf("\nOpção Inválida!\n");
@@ -124,7 +145,7 @@ void relatorio_tudo(void){
                 getchar();
                 break;
         }
-    } while (opc != 0);
+    } while (opc != '0');
 }
 
 void formato_exibido_a(Aluno *std){
@@ -209,9 +230,10 @@ void formato_exibido_diciplinas(Diciplina *dic){
     char estado[16];
     if ((dic == NULL) || (dic->status == 'I')){
         printf("\nEsta Diciplinas não foi cadastrada no sistema!\n");
+        printf("\n");
     }
     else{
-        printf("|%-11s|%-9s|\n",dic->cpf,dic->diciplina);
+        printf("|%-11s|%-9s|",dic->cpf,dic->diciplina);
         printf("\n");
         if (dic->status == 'A'){
             strcpy(estado, "Diciplina Ativa");
@@ -286,6 +308,10 @@ void listar_professor_por_disciplina(char *diciplina) {
     Diciplina *dic;
     dic = (Diciplina *)malloc(sizeof(Diciplina));
     fd = fopen("Diciplina.dat", "rb");
+    if (fd==NULL){
+        printf("Nenhuma diciplina cadastrada");
+        return;
+    }
     while (fread(dic, sizeof(Diciplina), 1, fd)) {
         if ((strncmp(dic->diciplina, diciplina, strlen(diciplina)) == 0) || (strcmp(dic->diciplina+1,diciplina)==0)) {
             printf("|%-20s", dic->cpf);
@@ -295,13 +321,14 @@ void listar_professor_por_disciplina(char *diciplina) {
     free(dic);
 }
 
-void algo(void){
+void filtro_diciplina(void){
     char diciplina[3];
     ler_diciplinas(diciplina);
     listar_professor_por_disciplina(diciplina);
     getchar();
     getchar();
 }
+
 
 //relatorio com os dias das semanas
 //relatorio com os horarios
