@@ -167,8 +167,8 @@ void exibicao_professor(Professor *prof){
     }
     else{
         printf("\n ********Dados Do Professor********");
-        printf("\nNome:%s", prof->nome);
-        printf("\nCPF:%s\n", prof->cpf);
+        printf("\nNome:%s\n", prof->nome);
+        printf("CPF:%s\n", prof->cpf);
         printf("Email:%s\n", prof->email);
         printf("Telefone:%s\n", prof->telefone);
         if (prof->status == 'A'){
@@ -251,7 +251,7 @@ void att_professor(char cpf[]){
     FILE *fp;
     Professor *prof;
     int encontra = 0;
-    int esc = 1;
+    char esc;
     prof = (Professor *)malloc(sizeof(Professor));
     fp = fopen("Professor.dat", "r+b");
     if (fp == NULL){
@@ -277,23 +277,24 @@ void att_professor(char cpf[]){
                 printf("========================================================\n");
                 printf("\n");
                 printf("Qual opção deseja atualizar:");
-                scanf("%d", &esc);
-                limpar_buffer();
+                fflush(stdin);
+                scanf("%c", &esc);
+                getchar();
+                fflush(stdin);
                 switch (esc){
-                    case 1:
+                    case '1':
                         ler_telefone(prof->telefone);
                         printf("Alteração realizada!\n");
                         printf("Digite enter para continuar...");
                         getchar();
                         break;
-                    case 2:
+                    case '2':
                         ler_email(prof->email);
                         printf("Alteração realizada!\n");
                         printf("Digite enter para continuar...");
                         getchar();
                         break;
-                    case 0:
-                        esc = 0;
+                    case '0':
                         break;
                     default:
                         printf("\nOpção Inválida!\n");
@@ -304,7 +305,7 @@ void att_professor(char cpf[]){
                 fseek(fp, -1 * (long)sizeof(Professor), SEEK_CUR);
                 fwrite(prof, sizeof(Professor), 1, fp);
                 fclose(fp);
-            } while (esc != 0);
+            } while (esc != '0');
         }
     }
     if (!encontra){

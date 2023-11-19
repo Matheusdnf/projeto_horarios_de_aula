@@ -414,7 +414,7 @@ void att_diciplinas(int id){
     FILE *fd;
     Diciplina *dic;
     int encontra = 0;
-    int esc;
+    char esc;
     dic = (Diciplina *)malloc(sizeof(Diciplina));
     fd = fopen("Diciplina.dat", "r+b");
     if (dic == NULL){
@@ -442,24 +442,25 @@ void att_diciplinas(int id){
                 printf("========================================================\n");
                 printf("\n");
                 printf("Qual opção deseja atualizar:");
-                scanf("%d", &esc);
+                fflush(stdin);
+                scanf("%c", &esc);
+                getchar();
                 fflush(stdin);
                 switch (esc){
-                    case 1:
+                    case '1':
                         ler_nome(dic->cpf);
                         printf("Alteração realizada!\n");
                         printf("\nDigite enter para continuar...");
                         getchar();
                         break;
-                    case 2:
+                    case '2':
                         diciplinas();
                         ler_diciplinas(dic->diciplina);
                         printf("Alteração realizada!\n");
                         printf("\nDigite enter para continuar...");
                         getchar();
                         break;
-                    case 0:
-                        esc = 0;
+                    case '0':
                         break;
                     default:
                         printf("\nOpção Inválida!\n");
@@ -470,7 +471,7 @@ void att_diciplinas(int id){
                 fseek(fd, -1 * (long)sizeof(Diciplina), SEEK_CUR);
                 fwrite(dic, sizeof(Diciplina), 1, fd);
                 fclose(fd);
-            } while (esc != 0);
+            } while (esc != '0');
         }
     }
     if (!encontra){

@@ -280,8 +280,10 @@ void att_aluno(char cpf[]){
                 printf("========================================================\n");
                 printf("\n");
                 printf("Qual opção deseja atualizar:");
+                fflush(stdin);
                 scanf("%c", &esc);
-                limpar_buffer();
+                fflush(stdin);
+                getchar();
                 switch (esc){
                     case '1':
                         ler_telefone(std->telefone);
@@ -296,7 +298,6 @@ void att_aluno(char cpf[]){
                         getchar();
                         break;
                     case '0':
-                        esc = 0;
                         break;
                     default:
                         printf("\nOpção Inválida!\n");

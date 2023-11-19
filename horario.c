@@ -435,7 +435,7 @@ void att_h(int id){
     FILE *fh;
     Horario *h;
     int encontra = 0;
-    int esc;
+    char esc;
     h = (Horario *)malloc(sizeof(Horario));
     fh = fopen("Horario.dat", "r+b");
     if (fh == NULL){
@@ -461,36 +461,37 @@ void att_h(int id){
                 printf("========================================================\n");
                 printf("\n");
                 printf("Qual opção deseja atualizar:");
-                scanf("%d", &esc);
                 fflush(stdin);
+                scanf("%c", &esc);
+                fflush(stdin);
+                getchar();
                 switch (esc){
-                    case 1:
+                    case '1':
                         ler_tempo(h->tempo);
                         printf("\nAlteração realizada!\n");
                         printf("\nDigite enter para continuar...");
                         getchar();
                         break;
-                    case 2:
+                    case '2':
                         ler_dia(h->dia);
                         printf("\nAlteração realizada!\n");
                         printf("\nDigite enter para continuar...");
                         getchar();
                         break;
-                    case 3:
+                    case '3':
                         diciplinas();
                         ler_diciplinas(h->diciplina);
                         printf("\nAlteração realizada!\n");
                         printf("\nDigite enter para continuar...");
                         getchar();
                         break;
-                    case 4:
+                    case '4':
                         ler_periodo(h->periodo);
                         printf("\nAlteração realizada!\n");
                         printf("\nDigite enter para continuar...");
                         getchar();
                         break;
-                    case 0:
-                        esc = 0;
+                    case '0':
                         break;
                     default:
                         printf("\nOpção Inválida!\n");
@@ -501,7 +502,7 @@ void att_h(int id){
                 fseek(fh, -1 * (long)sizeof(Horario), SEEK_CUR);
                 fwrite(h, sizeof(Horario), 1, fh);
                 fclose(fh);
-            } while (esc != 0);
+            } while (esc != '0');
         }
     }
     if (!encontra){
