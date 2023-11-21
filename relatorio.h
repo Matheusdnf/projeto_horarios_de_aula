@@ -25,4 +25,8 @@ void filtro_diciplina(void);
 void listar_professor_por_disciplina(char *diciplina);
 void filtro_tempo_horario(void);
 void listar_h_por_periodo(char *tempo);
+void filtro_diasemana_horario(void);
+void listar_h_pelo_diasemana(char *dia);
+void listar_h_pelo_periodo(char *periodo);
+void filtro_periodo_horario(void);
 #endif  
