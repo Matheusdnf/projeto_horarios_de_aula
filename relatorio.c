@@ -78,6 +78,10 @@ void relatorio_filtro(void){
                 break;
             case '2':
                 filtro_tempo_horario();
+            case '3':
+                filtro_diasemana_horario();
+            case '4':
+                filtro_periodo_horario();
             case '0':
                 break;
             default:
@@ -313,7 +317,7 @@ void listar_professor_por_disciplina(char *diciplina) {
         return;
     }
     while (fread(dic, sizeof(Diciplina), 1, fd)) {
-        if ((strncmp(dic->diciplina, diciplina, strlen(diciplina)) == 0) || (strcmp(dic->diciplina+1,diciplina)==0)) {
+        if (((strncmp(dic->diciplina, diciplina, strlen(diciplina)) == 0) || (strcmp(dic->diciplina+1,diciplina)==0)) && (dic->status != 'I')) {
             printf("|%-20s", dic->cpf);
         }
     }
@@ -340,6 +344,7 @@ void filtro_tempo_horario(void){
 void listar_h_por_periodo(char *tempo) {
     FILE *fh;
     Horario *h;
+    int cont=0;
     h = (Horario *)malloc(sizeof(Horario));
     fh = fopen("Horario.dat", "rb");
     if (fh == NULL){
@@ -347,18 +352,20 @@ void listar_h_por_periodo(char *tempo) {
         return;
     }
     while (fread(h, sizeof(Horario), 1, fh)){
-        if (strcmp (h->tempo,tempo)==0){
+        if ((strcmp (h->tempo,tempo)==0) && (h->status != 'I')) {
+            cont++;
             printf("|%-15s","\x1B[31mPeriodo\x1B[0m");
             printf("|%-15s", "\x1B[31mDiciplina\x1B[0m");
             printf("|%-15s", "\x1B[31mDia da semana\x1B[0m");
             printf("\n");
             printf("|%-7s|%-9s|%-13s|\n",h->periodo,h->diciplina,h->dia);
-
         }
+    }if(!cont){
+        printf("Não existe horário nesse periodo!");
     }
     fclose(fh);
     free(h);
 }
-//relatorio com os dias das semanas
-//relatorio com os horarios
+
+
 //relatorio relacionando diciplina e professor
