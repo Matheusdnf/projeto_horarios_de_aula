@@ -401,3 +401,37 @@ void filtro_diasemana_horario(void){
     getchar();
 }
 
+void listar_h_pelo_periodo(char *periodo){
+    FILE *fh;
+    Horario *h;
+    int cont=0;
+    h = (Horario *)malloc(sizeof(Horario));
+    fh = fopen("Horario.dat", "rb");
+    if (fh == NULL){
+        printf("\nNenhum horario cadastrada!\n");
+        return;
+    }
+    while (fread(h, sizeof(Horario), 1, fh)){
+         if (((strncmp(h->periodo,periodo, strlen(periodo)) == 0) || (strcmp(h->periodo+1,periodo)==0)) && (h->status != 'I')){
+            cont++;
+            printf("|%-15s","\x1B[31mDia\x1B[0m");
+            printf("|%-15s", "\x1B[31mDiciplina\x1B[0m");
+            printf("|%-15s", "\x1B[31mTempo\x1B[0m");
+            printf("\n");
+            printf("|%-7s|%-9s|%-13s|\n",h->dia,h->diciplina,h->tempo);
+        }
+    }if (!cont){
+        printf("Esse horário não foi cadastrado!");
+    }
+    fclose(fh);
+    free(h);
+}
+
+void filtro_periodo_horario(void){
+    char periodo[7];
+    ler_periodo(periodo);
+    listar_h_pelo_periodo(periodo);
+    getchar();
+    getchar();
+}
+//relatorio relacionando diciplina e professor
