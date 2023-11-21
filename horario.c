@@ -451,13 +451,13 @@ void att_h(int id){
                 printf("   *************** Atualizar Horario ***************    \n");
                 printf("                                                        \n");
                 printf("               o que deseja atualizar?                  \n");
-                printf("Tempo[\033[31m1\033[0m] - Dia[\033[31m2\033[0m] - Disciplina[\033[31m3\033[0m] - Período[\033[31m4\033[0m] - Voltar[\033[31m0\033[0m]\n");
+                printf("Turno[\033[31m1\033[0m] - Dia[\033[31m2\033[0m] - Disciplina[\033[31m3\033[0m] - Período[\033[31m4\033[0m] - Voltar[\033[31m0\033[0m]\n");
                 printf("                                                        \n");
                 printf("Dados cadastrados no sistema:\n");
-                printf("Matérias:%s\n", h->diciplina);
-                printf("Horários:%s\n", h->dia);
-                printf("Período do Dia:%s\n", h->tempo);
-                printf("Dia da Semana:%s\n", h->periodo);
+                printf("Disciplina:%s\n", h->diciplina);
+                printf("Horários:%s\n", h->periodo);
+                printf("Turno:%s\n", h->tempo);
+                printf("Dia da Semana:%s\n", h->dia);
                 printf("========================================================\n");
                 printf("\n");
                 printf("Qual opção deseja atualizar:");
@@ -467,7 +467,7 @@ void att_h(int id){
                 getchar();
                 switch (esc){
                     case '1':
-                        ler_tempo(h->tempo);
+                        ler_tempo(h->tempo); //mudar para turno
                         printf("\nAlteração realizada!\n");
                         printf("\nDigite enter para continuar...");
                         getchar();
@@ -486,7 +486,7 @@ void att_h(int id){
                         getchar();
                         break;
                     case '4':
-                        ler_periodo(h->periodo);
+                        ler_periodo(h->periodo); //horario (1°,2°)
                         printf("\nAlteração realizada!\n");
                         printf("\nDigite enter para continuar...");
                         getchar();
