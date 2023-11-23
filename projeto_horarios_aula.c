@@ -11,49 +11,58 @@ void menu_sobre(void);
 void menu_equipe(void);
 
 // Programa principal
-int main(void)
-{
-    char opc;
+int main(void){
+    int opc=-1;
     do{
+        opc=-1;
         menu_principal();
         printf("\nDigite o que deseja fazer: ");
         fflush(stdin);
-        scanf("%c", &opc);
+        scanf("%d", &opc);
         getchar();
         fflush(stdin);
         switch (opc){
-            case '1':
+            case 1:
                 menu_aluno();
                 break;
-            case '2':
+            case 2:
                 menu_professor();
                 break;
-            case '3':
+            case 3:
+                printf("Produzindo!");
+                getchar();
+                getchar();
+                break;
+            case 4:
+                printf("Produzindo!");
+                getchar();
+                getchar();
+                break;
+            case 5:
                 menu_horario();
                 break;
-            case '4':
+            case 6:
                 menu_diciplinas();
                 break;
-            case '5':
+            case 7:
                 escolha_relatorio();
                 break;
-            case '6':
+            case 8:
                 menu_equipe();
                 break;
-            case '7':
+            case 9:
                 menu_sobre();
                 break;
-            case '0':
+            case 0:
                 printf("\nPrograma Finalizado!\n");
                 break;
             default:
                 printf("\nOpção Inválida!\n");
                 printf("Digite enter para continuar...");
-                fflush(stdin);
                 getchar();
                 break;
         }
-    } while (opc != '0');
+    } while (opc != 0);
     return 0;
 }
 
@@ -71,13 +80,15 @@ void menu_principal(){
     printf(" Preocupados em ensinar da melhor forma possível! \n\n");
     printf("===================================================\n");
     printf("   ************* Menu principal ***************    \n");
-    printf("            1 - Gestão de alunos                   \n");
-    printf("            2 - Gestão de professores              \n");
-    printf("            3 - Gestão de Horários                 \n");
-    printf("            4 - Gestão de Diciplinas              \n");
-    printf("            5 - Menu Relatório                    \n");
-    printf("            6 - Sobre a Equipe                    \n");
-    printf("            7 - Sobre o Projeto                   \n");
+    printf("            1 - Gestão de Alunos                   \n");
+    printf("            2 - Gestão de Professores              \n");
+    printf("            3 - Gestão de Turmas                  \n");
+    printf("            4 - Gestão de Matrículas              \n");
+    printf("            5 - Gestão de Horários                 \n");
+    printf("            6 - Gestão de Diciplinas              \n");
+    printf("            7 - Menu Relatório                    \n");
+    printf("            8 - Sobre a Equipe                    \n");
+    printf("            9 - Sobre o Projeto                   \n");
     printf("            0 - Finalizar programa                \n");
     printf("                                                  \n");
 }
