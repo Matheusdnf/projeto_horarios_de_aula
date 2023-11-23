@@ -135,3 +135,165 @@
 //     printf("Digite enter para continuar...");
 //     getchar();
 // }
+// void gravar_matricula(Matricula *matri){
+//     FILE *fm; // File Turma
+//     fm = fopen("Matricula.dat", "ab");
+//     if (fm == NULL){
+//         printf("Erro na recuperação dos dados da Matrícula!\n");
+//         return;
+//     }
+//     fwrite(matri, sizeof(Matricula), 1, fm);
+//     fclose(fm);
+//     free(matri);
+// }
+
+
+
+// void exibicao_Matricula(Matricula *matri){
+//     char estado[17];
+//     if ((matri == NULL) || (matri->status == 'I')){
+//         printf("\nEsta Matricula não existe no sistema!\n");
+//     }
+//     else{
+//         printf("\n********Dados Da Matricula********");
+//         // printf("\nMatrícula:%s", matri->cod);
+//         // printf("\nCpf do aluno:%s\n", matri->nome);
+//         if (matri->status == 'A'){
+//             strcpy(estado, "Matricula ativa");
+//         }
+//         else if (matri->status == 'I'){
+//             strcpy(estado, "Matricula Fechada");
+//         }
+//     }
+// }
+
+// void listar_todas_matricula(void){
+//     FILE *fm;
+//     Matricula *matri;
+//     matri = (Matricula*)malloc(sizeof(Matricula));
+//     fm = fopen("Matricula.dat", "rb");
+//     if (fm == NULL){
+//         printf("\nNenhuma Matricula cadastrada!\n");
+//         return;
+//     }
+//     while (fread(matri, sizeof(Matricula), 1, fm)){
+//         if (matri->status != 'I'){
+//             exibicao_matricula(matri);
+//         }
+//     }
+//     fclose(fm);
+//     free(matri);
+// }
+
+// // feito com a ajuda de marlison silva
+// // void procura_matricula(char *cod){
+// //     FILE *fm;                                     utilizar cpf ou a matrícula
+// //     Matricula *t;
+// //     t = (Matricula *)malloc(sizeof(Matricula));
+// //     fm = fopen("Matricula.dat", "rb");
+// //     if (t == NULL){
+// //         printf("\tMatricula não encontrada!\n");
+// //         return;
+// //     }
+// //     if (fm == NULL){
+// //         printf("\nNenhuma Matricula cadastrada!\n");
+// //         return;
+// //     }
+// //     while (fread(t, sizeof(Matricula), 1, fm)){
+// //         if ((strcmp(t->cod, cod) == 0) && (t->status == 'A')){
+// //             exibicao_matricula(t);
+// //         }
+// //     }
+// //     fclose(fm);
+// //     free(t);
+// // }
+
+// // feito com a ajuda de marlison silva chat gpt e adapatada por matheus diniz
+
+// // void remover_matricula(char *cod){
+// //     FILE *fm;                                      usar matrícula ou cpf
+// //     Matricula *matri;
+// //     int encontra = 0;
+// //     t = (Matricula *)malloc(sizeof(Matricula));
+// //     fm = fopen("Matricula.dat", "r+b");
+// //     if (fm == NULL){
+// //         printf("\nNenhuma Matricula foi cadastrada!\n");
+// //         return;
+// //     }
+// //     while (fread(matri, sizeof(Matricula), 1, fm)){
+// //         if ((strcmp(t->cod, cod) == 0) && (t->status == 'A')){
+// //             encontra = 1;
+// //             t->status = 'I';
+// //             fseek(fm, -1 * (long)sizeof(Matricula), SEEK_CUR);
+// //             fwrite(matri, sizeof(Matricula), 1, fm);
+// //             printf("\nMatricula excluída!\n");
+// //             break; // Encerre o loop após a exclusão
+// //         }
+// //     }
+// //     if (!encontra){
+// //         printf("\nMatricula não encontrada!\n");
+// //     }
+// //     fclose(fm);
+// // }
+
+// void att_matricula(char *cod){
+//     FILE *fm;
+//     Matricula *t;
+//     int encontra = 0;
+//     int esc=-1;
+//     t = (Matricula *)malloc(sizeof(Matricula));
+//     fm = fopen("Matricula.dat", "r+b");
+//     if (fm == NULL){
+//         printf("\nNenhuma Matricula cadastrada!\n");
+//         return;
+//     }
+//     while (fread(t, sizeof(Matricula), 1, fm)){
+//         if ((strcmp(t->cod, cod) == 0) && (t->status == 'A')){
+//             encontra = 1;
+//             do{
+//                 system("clear||cls");
+//                 printf("========================================================\n");
+//                 printf("   *************** Atualizar Matricula ***************      \n");
+//                 printf("                                                        \n");
+//                 printf("               o que deseja atualizar?                  \n");
+//                 printf(" Nome da turma[\033[31m2\033[0m] - Voltar[\033[31m0\033[0m]    \n");
+//                 printf("                                                        \n");
+//                 printf("Dados cadastrados no sistema:\n");
+//                 printf("Código da Turma:%s\n", t->cod);
+//                 printf("Nome da turuma:%s\n", t->nome);
+//                 printf("========================================================\n");
+//                 printf("\n");
+//                 printf("Qual opção deseja atualizar:");
+//                 fflush(stdin);
+//                 scanf("%d", &esc);
+//                 fflush(stdin);
+//                 getchar();
+//                 switch (esc){
+//                     case 1:
+//                         ler_nome(t->nome);
+//                         printf("\nAlteração realizada!\n");
+//                         printf("\nDigite enter para continuar...");
+//                         getchar();
+//                         break;
+//                     case 0:
+//                         break;
+//                     default:
+//                         printf("\nOpção Inválida!\n");
+//                         printf("Digite enter para continuar...");
+//                         getchar();
+//                         break;
+//                 }
+//                 fseek(fm, -1 * (long)sizeof(Turma), SEEK_CUR);
+//                 fwrite(t, sizeof(Turma), 1, fm);
+//                 fclose(fm);
+//             } while (esc != 0);
+//         }
+//     }
+//     if (!encontra){
+//         printf("Turma não encontrada!\n");
+//     }
+//     fclose(fm);
+//     free(t);
+// }
+
+
