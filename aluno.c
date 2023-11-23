@@ -60,7 +60,6 @@ Aluno *cadastrar_aluno(void){
     printf("\n");
     printf("========================================================\n");
     printf("    ************* Cadastrar Aluno *************     \n\n");
-    ler_turma(std->turma);
     while (v){
         ler_cpf(std->cpf);
         c = verifica_existe_aluno(std->cpf); // problema linux
