@@ -7,8 +7,9 @@
 //adicionar uma varíaveu na função que escolhe o tipo
 
 void escolha_relatorio(void){
-    char opc;
+    int opc=-1;
     do{
+        opc=-1;
         system("clear||cls");
         printf("===================================================\n");
         printf("   ************* Relatórios ***************    \n");
@@ -18,16 +19,16 @@ void escolha_relatorio(void){
         printf("===================================================\n");
         printf("\nQual relatório deseja ver: ");
         fflush(stdin);
-        scanf("%c",&opc);
+        scanf("%d",&opc);
         getchar();
         fflush(stdin);
         switch (opc){
-            case '1':
+            case 1:
                 relatorio_tudo();
                 break;
-            case '2':
+            case 2:
                 relatorio_filtro();
-            case '0':
+            case 0:
                 break;
             default:
                 printf("\nOpção Inválida!\n");
@@ -35,7 +36,7 @@ void escolha_relatorio(void){
                 getchar();
                 break;
             }
-    }while(opc!='0');
+    }while(opc!=0);
 }
 void tela_relatorio(void){
     system("clear||cls");
@@ -68,21 +69,22 @@ void tela_filtro_relatorio(void){
 
 }
 void relatorio_filtro(void){
-    char opc;
+    int opc=-1;
     do{
+        opc=-1;
         tela_filtro_relatorio();
-        scanf("%c",&opc);
+        scanf("%d",&opc);
         switch (opc){
-            case '1':
+            case 1:
                 filtro_diciplina();
                 break;
-            case '2':
+            case 2:
                 filtro_tempo_horario();
-            case '3':
+            case 3:
                 filtro_diasemana_horario();
-            case '4':
+            case 4:
                 filtro_periodo_horario();
-            case '0':
+            case 0:
                 break;
             default:
                 printf("\nOpção Inválida!\n");
@@ -90,16 +92,17 @@ void relatorio_filtro(void){
                 getchar();
                 break;
             }
-    }while(opc!='0');
+    }while(opc!=0);
 }
 void relatorio_tudo(void){
-    char opc;
+    int opc=-1;
     do{
+        opc=-1;
         tela_relatorio();
         printf("\nQual relatório deseja ver: ");
-        scanf("%c", &opc);
+        scanf("%d", &opc);
         switch (opc){
-            case '1':
+            case 1:
                 system("clear||cls");
                 printf("=============================================================================================\n");
                 printf("                      *************   Alunos   ***************    \n\n");
@@ -109,7 +112,7 @@ void relatorio_tudo(void){
                 getchar();
                 getchar();
                 break;
-            case '2':
+            case 2:
                 system("clear||cls");
                 printf("=============================================================================================\n");
                 printf("                   *************   Professores   ***************    \n\n");
@@ -119,7 +122,7 @@ void relatorio_tudo(void){
                 getchar();
                 getchar();
                 break;
-            case '3':
+            case 3:
                 system("clear||cls");
                 printf("===================================================\n");
                 printf("   *************   Horários   ***************    \n\n");
@@ -129,7 +132,7 @@ void relatorio_tudo(void){
                 getchar();
                 getchar();
                 break;
-            case '4':
+            case 4:
                 system("clear||cls");
                 printf("===================================================\n");
                 printf("   *************   Diciplina   ***************    \n\n");
@@ -140,7 +143,7 @@ void relatorio_tudo(void){
                 getchar();
                 getchar();
                 break;
-            case '0':
+            case 0:
                 break;
             default:
                 printf("\nOpção Inválida!\n");
@@ -149,7 +152,7 @@ void relatorio_tudo(void){
                 getchar();
                 break;
         }
-    } while (opc != '0');
+    } while (opc != 0);
 }
 
 void formato_exibido_a(Aluno *std){
