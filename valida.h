@@ -18,3 +18,6 @@ int has_space(char* str);
 //limpar o buffer de entrada para quando for utilizado o scanf
 void limpar_buffer();
 void letra_maiuscula(char* algo);
+//validação de turma
+void ler_turma(char *turma);
+int valida_turma(char* turma);

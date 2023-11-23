@@ -78,7 +78,7 @@ void ler_nome(char *nome) {
   //função inpirada na de @Claudio-Arauj
   do {
         printf("Digite o nome:");
-        fgets(nome, 100, stdin);
+        fgets(nome, sizeof(nome), stdin);
         //remover o //n, função pega de @Lleusxam
         nome[strlen(nome)-1]=0;
         t = valida_nome(nome);
@@ -334,3 +334,76 @@ void letra_maiuscula(char* algo) {
     }
 }
 // não esquecer  scanf(" %[^\n]", palavra);
+
+void ler_turma(char *turma){
+    int t;
+    do{
+        fflush(stdin);
+        printf("Digite sua turma:");
+        fgets(turma,5,stdin);
+        //remover o \n
+        turma[strlen(turma)-1]=0;
+        t = valida_turma(turma);
+        if (t == 0){
+            printf("Turma Inválida\n");
+        }
+    }while(t!=1);
+}
+
+int valida_turma(char* turma){
+    // int tam = strlen(turma);
+
+    // if ((tam != 2) && (tam != 1)){
+    //     return 0;
+    // }
+    // // não permitir que o usuário digite duas letras iguais
+    // else if (tam == 2 && turma[0] == turma[1]){
+    //     return 0;
+    // };
+    printf("%s\n",turma);
+    if (turma[0] == 'I'){
+        for (int i = 1; i < 6; i++){
+            if ((atoi(&turma[1])== i)){
+                return 1;
+            }
+        }
+    }
+    else if (turma[0] == 'F'){
+        for (int i = 6; i < 10; i++){
+            if ((atoi(&turma[1])== i)){
+                return 1;
+            }
+        }
+    }
+    else if (turma[0] == 'M'){
+        for (int i = 1; i < 4; i++){
+            if ((atoi(&turma[1])== i)){
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+ 
+// int valida_cod_turma(char *cod){
+//     //fazer validação de código de turma
+//     //que tera que ter menos letras e números
+//     //3 letras
+//     //3númmeros
+//     //podem repetir 
+// }
+
+// void ler_cod(char *cod){
+//     int t;
+//     do{
+//         fflush(stdin);
+//         printf("Digite o código da turma:");
+//         fgets(cod,6,stdin);
+//         //remover o \n
+//         cod[strlen(cod)-1]=0;
+//         t = valida_cod_turma(cod);
+//         if (t == 0){
+//             printf("Código Inválida\n");
+//         }
+//     }while(t!=1);
+// }
