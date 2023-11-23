@@ -7,8 +7,9 @@
 #include <string.h>
 
 void menu_horario(void){
-    char opc;
+    int opc=-1;
     do{
+        opc=-1;
         system("clear||cls");
         Horario *h;
         printf("\n");
@@ -22,28 +23,28 @@ void menu_horario(void){
         printf("          0 - Voltar                                     \n");
         printf("===========================================================\n");
         printf("\nDigite o que deseja fazer: ");
-        scanf("%c", &opc);
+        scanf("%d", &opc);
         switch (opc){
-            case '1':
+            case 1:
                 h = cadastrar_horario();
                 if (h == NULL){
                     break;
                 }
                 gravar_h(h);
                 break;
-            case '2':
+            case 2:
                 buscar_horario();
                 break;
-            case '3':
+            case 3:
                 atualizar_horario();
                 break;
-            case '4':
+            case 4:
                 excluir_horario();
                 break;
-            case '5':
+            case 5:
                 relatorio_horario();
                 break;
-            case '0':
+            case 0:
                 break;
             default:
                 printf("Opção Inválida!\n");
@@ -51,7 +52,7 @@ void menu_horario(void){
                 getchar();
                 break;
         }
-    } while (opc != '0');
+    } while (opc != 0);
 }
 
 Horario *cadastrar_horario(void){
@@ -435,7 +436,7 @@ void att_h(int id){
     FILE *fh;
     Horario *h;
     int encontra = 0;
-    char esc;
+    int esc=-1;
     h = (Horario *)malloc(sizeof(Horario));
     fh = fopen("Horario.dat", "r+b");
     if (fh == NULL){
@@ -462,36 +463,36 @@ void att_h(int id){
                 printf("\n");
                 printf("Qual opção deseja atualizar:");
                 fflush(stdin);
-                scanf("%c", &esc);
+                scanf("%d", &esc);
                 fflush(stdin);
                 getchar();
                 switch (esc){
-                    case '1':
+                    case 1:
                         ler_tempo(h->tempo); //mudar para turno
                         printf("\nAlteração realizada!\n");
                         printf("\nDigite enter para continuar...");
                         getchar();
                         break;
-                    case '2':
+                    case 2:
                         ler_dia(h->dia);
                         printf("\nAlteração realizada!\n");
                         printf("\nDigite enter para continuar...");
                         getchar();
                         break;
-                    case '3':
+                    case 3:
                         diciplinas();
                         ler_diciplinas(h->diciplina);
                         printf("\nAlteração realizada!\n");
                         printf("\nDigite enter para continuar...");
                         getchar();
                         break;
-                    case '4':
+                    case 4:
                         ler_periodo(h->periodo); //horario (1°,2°)
                         printf("\nAlteração realizada!\n");
                         printf("\nDigite enter para continuar...");
                         getchar();
                         break;
-                    case '0':
+                    case 0:
                         break;
                     default:
                         printf("\nOpção Inválida!\n");
@@ -502,7 +503,7 @@ void att_h(int id){
                 fseek(fh, -1 * (long)sizeof(Horario), SEEK_CUR);
                 fwrite(h, sizeof(Horario), 1, fh);
                 fclose(fh);
-            } while (esc != '0');
+            } while (esc != 0);
         }
     }
     if (!encontra){

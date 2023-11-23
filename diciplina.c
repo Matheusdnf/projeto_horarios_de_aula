@@ -9,8 +9,9 @@
 #include <ctype.h>
 
 void menu_diciplinas(void){
-    char opc;
+    int opc=-1;
     do{
+        opc=-1;
         system("clear||cls");
         Diciplina *dic;
         printf("\n");
@@ -24,28 +25,28 @@ void menu_diciplinas(void){
         printf("          0 - Voltar                                       \n");
         printf("===========================================================\n");
         printf("\nDigite o que deseja fazer: ");
-        scanf("%c", &opc);
+        scanf("%d", &opc);
         switch (opc){
-            case '1':
+            case 1:
                 dic = cadastrar_diciplinas();
                 if (dic == NULL){
                     break;
                 }
                 gravardiciplinas(dic);
                 break;
-            case '2':
+            case 2:
                 buscar_diciplinas();
                 break;
-            case '3':
+            case 3:
                 atualizar_diciplinas();
                 break;
-            case '4':
+            case 4:
                 excluir_diciplinas();
                 break;
-            case '5':
+            case 5:
                 relatorio_diciplinas();
                 break;
-            case '0':
+            case 0:
                 break;
             default:
                 printf("Opção Inválida!\n");
@@ -53,7 +54,7 @@ void menu_diciplinas(void){
                 getchar();
                 break;
         }
-    } while (opc != '0');
+    } while (opc != 0);
 }
 
 Diciplina *cadastrar_diciplinas(void){
@@ -414,7 +415,7 @@ void att_diciplinas(int id){
     FILE *fd;
     Diciplina *dic;
     int encontra = 0;
-    char esc;
+    int esc=-1;
     dic = (Diciplina *)malloc(sizeof(Diciplina));
     fd = fopen("Diciplina.dat", "r+b");
     if (dic == NULL){
@@ -443,24 +444,24 @@ void att_diciplinas(int id){
                 printf("\n");
                 printf("Qual opção deseja atualizar:");
                 fflush(stdin);
-                scanf("%c", &esc);
+                scanf("%d", &esc);
                 getchar();
                 fflush(stdin);
                 switch (esc){
-                    case '1':
+                    case 1:
                         ler_nome(dic->cpf);
                         printf("Alteração realizada!\n");
                         printf("\nDigite enter para continuar...");
                         getchar();
                         break;
-                    case '2':
+                    case 2:
                         diciplinas();
                         ler_diciplinas(dic->diciplina);
                         printf("Alteração realizada!\n");
                         printf("\nDigite enter para continuar...");
                         getchar();
                         break;
-                    case '0':
+                    case 0:
                         break;
                     default:
                         printf("\nOpção Inválida!\n");
@@ -471,7 +472,7 @@ void att_diciplinas(int id){
                 fseek(fd, -1 * (long)sizeof(Diciplina), SEEK_CUR);
                 fwrite(dic, sizeof(Diciplina), 1, fd);
                 fclose(fd);
-            } while (esc != '0');
+            } while (esc != 0);
         }
     }
     if (!encontra){

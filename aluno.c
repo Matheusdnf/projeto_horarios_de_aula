@@ -6,8 +6,9 @@
 #include <string.h>
 
 void menu_aluno(void){
-    char opc;
+    int opc=-1;
     do{
+        opc=-1;
         system("clear||cls");
         Aluno *std;
         printf("\n");
@@ -21,25 +22,25 @@ void menu_aluno(void){
         printf("          0 - Voltar                                       \n");
         printf("===========================================================\n");
         printf("\nDigite o que deseja fazer: ");
-        scanf("%c", &opc);
+        scanf("%d", &opc);
         switch (opc){
-            case '1':
+            case 1:
                 std = cadastrar_aluno();
                 gravar_aluno(std);
                 break;
-            case '2':
+            case 2:
                 buscar_aluno();
                 break;
-            case '3':
+            case 3:
                 atualizar_aluno();
                 break;
-            case '4':
+            case 4:
                 excluir_aluno();
                 break;
-            case '5':
+            case 5:
                 relatorio_aluno();
                 break;
-            case '0':
+            case 0:
                 break;
             default:
                 printf("Opção Inválida!\n");
@@ -47,7 +48,7 @@ void menu_aluno(void){
                 getchar();
                 break;
         }
-    } while (opc != '0');
+    } while (opc != 0);
 }
 
 Aluno *cadastrar_aluno(void){
@@ -59,6 +60,7 @@ Aluno *cadastrar_aluno(void){
     printf("\n");
     printf("========================================================\n");
     printf("    ************* Cadastrar Aluno *************     \n\n");
+    ler_turma(std->turma);
     while (v){
         ler_cpf(std->cpf);
         c = verifica_existe_aluno(std->cpf); // problema linux
@@ -254,7 +256,7 @@ void att_aluno(char cpf[]){
     FILE *fa;
     Aluno *std;
     int encontra = 0;
-    char esc;
+    int esc=-1;
     std = (Aluno *)malloc(sizeof(Aluno));
     fa = fopen("Alunos.dat", "r+b");
     if (fa == NULL){
@@ -281,23 +283,23 @@ void att_aluno(char cpf[]){
                 printf("\n");
                 printf("Qual opção deseja atualizar:");
                 fflush(stdin);
-                scanf("%c", &esc);
+                scanf("%d", &esc);
                 fflush(stdin);
                 getchar();
                 switch (esc){
-                    case '1':
+                    case 1:
                         ler_telefone(std->telefone);
                         printf("\nAlteração realizada!\n");
                         printf("\nDigite enter para continuar...");
                         getchar();
                         break;
-                    case '2':
+                    case 2:
                         ler_email(std->email);
                         printf("\nAlteração realizada!\n");
                         printf("\nDigite enter para continuar...");
                         getchar();
                         break;
-                    case '0':
+                    case 0:
                         break;
                     default:
                         printf("\nOpção Inválida!\n");
@@ -308,7 +310,7 @@ void att_aluno(char cpf[]){
                 fseek(fa, -1 * (long)sizeof(Aluno), SEEK_CUR);
                 fwrite(std, sizeof(Aluno), 1, fa);
                 fclose(fa);
-            } while (esc != '0');
+            } while (esc != 0);
         }
     }
     if (!encontra){
