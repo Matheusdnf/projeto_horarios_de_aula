@@ -5,6 +5,9 @@
 #include "professor.h"
 #include "diciplina.h"
 #include "relatorio.h"
+#include "turma.h"
+#include "matricula.h"
+
 // Assinatura das funções
 void menu_principal(void);
 void menu_sobre(void);
@@ -29,14 +32,10 @@ int main(void){
                 menu_professor();
                 break;
             case 3:
-                printf("Produzindo!");
-                getchar();
-                getchar();
+                menu_turma();
                 break;
             case 4:
-                printf("Produzindo!");
-                getchar();
-                getchar();
+                menu_matricula();
                 break;
             case 5:
                 menu_horario();
