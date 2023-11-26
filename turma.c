@@ -4,7 +4,7 @@
 #include "valida.h"
 #include "turma.h"
 
-//código turms  6A
+//código turma  6A
 //nome da turma pequenas pragas
 
 void menu_turma(void){
@@ -53,6 +53,12 @@ void menu_turma(void){
     } while (opc != 0);
 }
 
+void tela_turma(void){
+    printf("Com a lestras em MAÍSCULA!");
+    printf("(I-infantil do 1° a 5° Série)\n(F-Fundamental do 6° ao 9° Ano )\n(M-Ensino Médio da 1° 3° Aérie)\n");
+    printf("Digite primeiramente se é I-F-M e após essas letras digite o número conforme mostrado\n\n");
+}
+
 Turma *cadastrar_turma(void){
     system("clear||cls");
     Turma* t; //t-turm
@@ -60,7 +66,9 @@ Turma *cadastrar_turma(void){
     printf("\n");
     printf("========================================================\n");
     printf("    ************* Cadastrar Turma *************     \n\n");
+    tela_turma();
     ler_turma(t->cod);
+    printf("Escreva o nome da turma (Só escreva letras)\n");
     ler_nome(t->nome);
     t->status = 'A';
     printf("                                                        \n");
@@ -68,20 +76,20 @@ Turma *cadastrar_turma(void){
     printf("========================================================\n");
     printf("\n");
     printf("Digite enter para continuar...");
-    getchar(); // para aparecer o menu e ele não sair rapidamente
+    getchar();
     return t;
     free(t);
 }
 
 void buscar_turma(void){
     system("clear||cls");
-    char cpf[15];
+    char cod[6];
     printf("\n");  
     printf("========================================================\n");
     printf("    *************** Pesquisar Turma *************     \n\n");
     printf("                                                        \n");
-    ler_cpf(cpf);
-    procura_turma(cpf);
+    ler_turma(cod);
+    procura_turma(cod);
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
@@ -91,16 +99,16 @@ void buscar_turma(void){
 
 void atualizar_turma(void){
     system("clear||cls");
-    char cpf[15];
+    char cod[6];
     printf("\n");
     printf("========================================================\n");
     printf("    *************** Atualizar Turma *************     \n\n");
     printf("                                                        \n");
     printf("      Informe o código da Turma que será atualizada     \n");
     printf("                                                        \n");
-    ler_cpf(cpf);
+    ler_turma(cod);
     printf("                                                        \n");
-    att_turma(cpf);
+    att_turma(cod);
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
@@ -110,13 +118,13 @@ void atualizar_turma(void){
 
 void excluir_turma(){
     system("clear||cls");
-    char cpf[15];
+    char cod[6];
     printf("\n");
     printf("========================================================\n");
     printf("    *************** Excluir Turma *************       \n\n");
     printf("                                                        \n");
-    ler_cpf(cpf);
-    remover_turma(cpf);
+    ler_turma(cod);
+    remover_turma(cod);
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
@@ -131,7 +139,7 @@ void relatorio_turma(void){
     printf("    *************** Relatório Turma *************       \n\n");
     printf("                                                        \n");
     printf("(informar todas as Turmas cadastradas)                   \n");
-    listar_todos_turma();
+    listar_todas_turma();
     printf("========================================================\n");
     printf("\n");
     getchar();
@@ -159,7 +167,7 @@ void exibicao_turma(Turma *t){
     }
     else{
         printf("\n********Dados Da Turma********");
-        printf("\nCódigo da Turma:%s", t->cod);
+        printf("\nSérie da Turma:%s", t->cod);
         printf("\nNome da Turma:%s\n", t->nome);
         if (t->status == 'A'){
             strcpy(estado, "Turma ativa");
@@ -259,7 +267,7 @@ void att_turma(char *cod){
                 printf("   *************** Atualizar Turma ***************      \n");
                 printf("                                                        \n");
                 printf("               o que deseja atualizar?                  \n");
-                printf(" Nome da turma[\033[31m2\033[0m] - Voltar[\033[31m0\033[0m]    \n");
+                printf(" Nome da turma[\033[31m1\033[0m] - Voltar[\033[31m0\033[0m]    \n");
                 printf("                                                        \n");
                 printf("Dados cadastrados no sistema:\n");
                 printf("Código da Turma:%s\n", t->cod);
@@ -269,7 +277,6 @@ void att_turma(char *cod){
                 printf("Qual opção deseja atualizar:");
                 fflush(stdin);
                 scanf("%d", &esc);
-                fflush(stdin);
                 getchar();
                 switch (esc){
                     case 1:
