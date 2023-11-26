@@ -12,10 +12,11 @@ void escolha_relatorio(void){
         opc=-1;
         system("clear||cls");
         printf("===================================================\n");
-        printf("   ************* Relatórios ***************    \n");
-        printf("            1 - Relatório tudo                   \n");
-        printf("            2 - Relatório filtro                 \n");
-        printf("            0 - Voltar                           \n");
+        printf("   ************* Relatórios ***************        \n");
+        printf("            1 - Relatório Tudo                     \n");
+        printf("            2 - Relatório Filtro                   \n");
+        printf("            3 - Relatório Ordenados                \n");
+        printf("            0 - Voltar                             \n");
         printf("===================================================\n");
         printf("\nQual relatório deseja ver: ");
         fflush(stdin);
@@ -28,6 +29,9 @@ void escolha_relatorio(void){
                 break;
             case 2:
                 relatorio_filtro();
+                break;
+            case 3:
+                relatorio_filtro();
             case 0:
                 break;
             default:
@@ -38,6 +42,23 @@ void escolha_relatorio(void){
             }
     }while(opc!=0);
 }
+
+void tela_relatorio_ordenado(void){
+    system("clear||cls");
+    printf("===================================================\n");
+    printf(" ************* Relatório Ordenado ***************  \n");
+    printf("     1 - Alunos organziados alfabeticamente        \n");
+    printf("     2 - Professores organziados alfabeticamente   \n");
+    printf("     3 - Turmas organziados alfabeticamente        \n");
+    printf("      -                                           \n");
+    printf("      -                                           \n");
+    printf("      -                                           \n");
+    printf("      -                                           \n");
+    printf("      -                                           \n");
+    printf("     0 - Voltar                                    \n");
+    printf("===================================================\n");
+}
+
 void tela_relatorio(void){
     system("clear||cls");
     printf("===================================================\n");
@@ -84,6 +105,41 @@ void relatorio_filtro(void){
                 filtro_diasemana_horario();
             case 4:
                 filtro_periodo_horario();
+            case 0:
+                break;
+            default:
+                printf("\nOpção Inválida!\n");
+                printf("Digite enter para continuar...");
+                getchar();
+                break;
+            }
+    }while(opc!=0);
+}
+
+void relatorio_ordenado(void){
+    int opc=-1;
+    do{
+        opc=-1;
+        tela_relatorio_ordenado();
+        scanf("%d",&opc);
+        switch (opc){
+            case 1:
+                printf("Em produção");
+                getchar();
+                getchar();
+                break;
+            case 2:
+                printf("Em produção");
+                getchar();
+                getchar();
+            case 3:
+                printf("Em produção");
+                getchar();
+                getchar();
+            case 4:
+                printf("Em produção");
+                getchar();
+                getchar();
             case 0:
                 break;
             default:

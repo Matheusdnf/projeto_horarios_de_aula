@@ -29,4 +29,7 @@ void filtro_diasemana_horario(void);
 void listar_h_pelo_diasemana(char *dia);
 void listar_h_pelo_periodo(char *periodo);
 void filtro_periodo_horario(void);
+//relatório ordenados
+void tela_relatorio_ordenado(void);
+void relatorio_ordenado(void);
 #endif  
