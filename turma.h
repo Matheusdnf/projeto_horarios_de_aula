@@ -1,11 +1,12 @@
-//definição estrutura dos alunos
+//definição estrutura da turma
 typedef struct turma{
     char cod [6];
-    char nome[50];
+    char nome[100];
     char status;
 }Turma;
 void menu_turma(void);
 //telas crud
+void tela_turma(void);
 Turma *cadastrar_turma(void);
 void buscar_turma(void);
 void atualizar_turma(void);
