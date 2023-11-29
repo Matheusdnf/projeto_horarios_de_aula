@@ -1,6 +1,8 @@
+#ifndef turma_h
+#define turma_h
 //definição estrutura da turma
 typedef struct turma{
-    char cod [6];
+    char cod [7];
     char nome[100];
     char status;
 }Turma;
@@ -19,7 +21,7 @@ void listar_todas_turma(void);
 void procura_turma(char *cod);
 void remover_turma(char *cod);
 void att_turma(char *cod);
-
+#endif
 
 
 

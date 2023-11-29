@@ -78,7 +78,7 @@ void ler_nome(char *nome) {
   //função inpirada na de @Claudio-Arauj
   do {
         printf("Digite o nome:");
-        fgets(nome, sizeof(nome), stdin);
+        fgets(nome, 100, stdin);
         //remover o //n, função pega de @Lleusxam
         nome[strlen(nome)-1]=0;
         t = valida_nome(nome);
@@ -351,8 +351,10 @@ void ler_turma(char *turma){
 }
 
 int valida_turma(char* turma){
-    // int tam = strlen(turma);
-
+    int tam = strlen(turma);
+    if(tam!=3){
+        return 0;
+    }
     // if ((tam != 2) && (tam != 1)){
     //     return 0;
     // }
@@ -360,11 +362,15 @@ int valida_turma(char* turma){
     // else if (tam == 2 && turma[0] == turma[1]){
     //     return 0;
     // };
-    printf("%s\n",turma);
+    char subsequente[]={'A','B','C'};
+    if(strchr(subsequente,turma[2])==NULL){
+        return 0;
+    }
     if (turma[0] == 'I'){
         for (int i = 1; i < 6; i++){
             if ((atoi(&turma[1])== i)){
                 return 1;
+
             }
         }
     }

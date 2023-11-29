@@ -1,7 +1,9 @@
+#ifndef matricula_h
+#define matricula_h
 //definição estrutura matrícula
 typedef struct matricula{
     char cpf [15];
-    char cod [6];
+    char cod [7];
     char status;
 }Matricula;
 //telas do módulo matrícula
@@ -18,3 +20,4 @@ void menu_matricula(void);
  void procura_matricula(char *cod);
  void remover_matricula(char *cod);
  void att_matricula(char *cod);
+#endif
