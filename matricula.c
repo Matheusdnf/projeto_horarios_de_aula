@@ -6,6 +6,8 @@
 #include "matricula.h"
 #include "valida.h"
 #include "aluno.h"
+#include "checagem.h"
+#include "turma.h"
 void menu_matricula(void){
     int opc=-1;
     do{
@@ -59,31 +61,45 @@ Matricula *cadastrar_matricula(void){
     system("clear||cls");
     Matricula* matri; //t-turm
     matri = (Matricula *)malloc(sizeof(Matricula));
-    FILE *fa;
-    fa=fopen("Aluno.dat","rb");
-    printf("\n");
     printf("========================================================\n");
     printf("    ************* Cadastrar matricula *************     \n\n");
-    if (fa==NULL){
-        printf("Nenhum aluno foi cadastrado no sistemas!\n");
+    //verificar se o cpf do aluno cadastrado está no sistema ou se sua matrícula já foi realizada
+    //criar um leitor que mostre as turmas cadastradas
+    FILE *fa;
+    fa=fopen("Alunos.dat","rb");
+    FILE *ft;
+    ft = fopen("Turma.dat", "rb");
+    if ((fa == NULL) || (ft==NULL)){
+        printf("\nNenhuma Turma ou aluno cadastrado no sistema!\n");
         getchar();
-        printf("Digite enter para continuar...");
+        getchar();
+        fclose(fa);
+        fclose(ft);
+        return NULL;
+    }
+    ler_cpf(matri->cpf);
+    if((verifica_existe_aluno(matri->cpf)) || (!verifica_aluno_matriculado(matri->cpf))){
+        printf("Aluno não cadastrado ou sua matrícula já foi realizada!");
         getchar();
         return NULL;
     }
-    //criar um verificador de turmas que foram cadastradas, não permitindo cadastrar turmas não cadastradas
-    //criar um leitor que mostre as turmas cadastradas
-    ler_cpf(matri->cpf);
+    listar_turma_cadastradas_alt();
     ler_turma(matri->cod);
-    matri->status = 'A';
-    printf("                                                        \n");
-    printf("Dados da matricula cadastrada!\n");
-    printf("========================================================\n");
-    printf("\n");
-    printf("Digite enter para continuar...");
-    getchar(); // para aparecer o menu e ele não sair rapidamente
-    return matri;
-    free(matri);
+    if(verificar_turma_existente(matri->cod)){
+        printf("Turma não cadastrada!");
+        getchar();
+        return NULL;
+    }else{
+        matri->status = 'A';
+        printf("                                                        \n");
+        printf("Dados da matricula cadastrada!\n");
+        printf("========================================================\n");
+        printf("\n");
+        printf("Digite enter para continuar...");
+        getchar(); 
+        return matri;
+        free(matri);
+    }
 }
 
 void buscar_matricula(void){

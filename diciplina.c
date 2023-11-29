@@ -64,26 +64,17 @@ Diciplina *cadastrar_diciplinas(void){
     bool v = true, f = false;
     int c;
     // verificar se algum professor já foi cadastrado no sistema
-    FILE *fp;
-    Professor *prof;
-    prof = (Professor *)malloc(sizeof(Professor));
-    fp = fopen("Professor.dat", "rb");
-    printf("\n");
     printf("========================================================\n");
     printf("    *************** Cadastrar Diciplina *************   \n\n");
     printf("                                                        \n");
-    if (prof == NULL){
-        printf("\tNão foi possível abrir o arquivo!\n");
-        getchar();
-        printf("Digite enter para continuar...");
-        getchar();
-        return NULL;
-    }
+    FILE *fp;
+    fp = fopen("Professor.dat", "rb");
     if (fp == NULL){
-        printf("Nenhum professor cadastrado!\n");
+        printf("Nenhum professor foi cadastrado!\n");
         getchar();
         printf("Digite enter para continuar...");
         getchar();
+        fclose(fp);
         return NULL;
     }
     printf("Pode ser 1 ou 2 diciplinas\n");
@@ -110,8 +101,7 @@ Diciplina *cadastrar_diciplinas(void){
     printf("Digite enter para continuar...");
     getchar();
     getchar(); // para aparecer o menu e ele não sair rapidamente
-    fclose(fp);
-    free(prof);
+    free(dic);
     return dic;
 }
 
