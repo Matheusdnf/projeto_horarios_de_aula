@@ -3,7 +3,7 @@
 #include <string.h>
 #include "valida.h"
 #include "turma.h"
-
+#include "checagem.h"
 //código turma  6A
 //nome da turma pequenas pragas
 
@@ -56,11 +56,13 @@ void menu_turma(void){
 void tela_turma(void){
     printf("Com a lestras em MAÍSCULA!");
     printf("(I-infantil do 1° a 5° Série)\n(F-Fundamental do 6° ao 9° Ano )\n(M-Ensino Médio da 1° 3° Aérie)\n");
-    printf("Digite primeiramente se é I-F-M e após essas letras digite o número conforme mostrado\n\n");
+    printf("Digite primeiramente se é I-F-M e após essas letras digite o número conforme mostrado\n");
+    printf("No fim digite se é da turma A,B ou C\n\n");
 }
 
 Turma *cadastrar_turma(void){
     system("clear||cls");
+    int c;
     Turma* t; //t-turm
     t = (Turma *)malloc(sizeof(Turma));
     printf("\n");
@@ -68,17 +70,24 @@ Turma *cadastrar_turma(void){
     printf("    ************* Cadastrar Turma *************     \n\n");
     tela_turma();
     ler_turma(t->cod);
-    printf("Escreva o nome da turma (Só escreva letras)\n");
-    ler_nome(t->nome);
-    t->status = 'A';
-    printf("                                                        \n");
-    printf("Dados da Turma cadastrada!\n");
-    printf("========================================================\n");
-    printf("\n");
-    printf("Digite enter para continuar...");
-    getchar();
-    return t;
-    free(t);
+    c=verificar_turma_existente(t->cod);
+    if(c==0){
+        printf("Turma já cadastrada!");
+        getchar();
+        return NULL;
+    }else{
+        printf("Escreva o nome da turma (Só escreva letras)\n");
+        ler_nome(t->nome);
+        t->status = 'A';
+        printf("                                                        \n");
+        printf("Dados da Turma cadastrada!\n");
+        printf("========================================================\n");
+        printf("\n");
+        printf("Digite enter para continuar...");
+        getchar();
+        return t;
+        free(t);
+    }
 }
 
 void buscar_turma(void){
