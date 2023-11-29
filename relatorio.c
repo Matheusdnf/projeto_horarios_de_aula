@@ -67,6 +67,8 @@ void tela_relatorio(void){
     printf("            2 - Relatório de professores              \n");
     printf("            3 - Relatório de Horários                 \n");
     printf("            4 - Relatório de Diciplinas               \n");
+    printf("            5 - Relatório de Matrículas               \n");
+    printf("            6 - Relatório de Turmas               \n");
     printf("            0 - Voltar                                \n");
     printf("===================================================\n");
 }
@@ -194,6 +196,26 @@ void relatorio_tudo(void){
                 printf("   *************   Diciplina   ***************    \n\n");
                 listar_todos_professor_alt();
                 relatorio_tabela_diciplinas();
+                printf("\n===================================================\n");
+                printf("\nDigite enter para continuar...");
+                getchar();
+                getchar();
+                break;
+            case 5:
+                system("clear||cls");
+                printf("===================================================\n");
+                printf("   *************   Matriculas   ***************    \n\n");
+                relatorio_tabela_matricula();
+                printf("\n===================================================\n");
+                printf("\nDigite enter para continuar...");
+                getchar();
+                getchar();
+                break;
+            case 6:
+                system("clear||cls");
+                printf("===================================================\n");
+                printf("   *************   Turmas   ***************    \n\n");
+                relatorio_tabela_turmas();
                 printf("\n===================================================\n");
                 printf("\nDigite enter para continuar...");
                 getchar();
@@ -366,6 +388,80 @@ void relatorio_tabela_h(void){
     free(h);
 }
 
+void formato_exibido_matricula(Matricula *matri){
+    char estado[20];
+    if ((matri == NULL) || (matri->status == 'I')){
+        printf("\nEsta matricula não foi cadastrada no sistema!\n");
+    }
+    else{
+        printf("|%-11s|%-8s|\n",matri->cpf,matri->cod);
+        printf("\n");
+        if (matri->status == 'A'){
+            strcpy(estado, "Matrícula Ativa");
+        }
+        else if (matri->status == 'I'){
+            strcpy(estado, "Fechada");
+        }
+    }
+}
+void relatorio_tabela_matricula(void){
+    FILE * fm;
+    Matricula *matri;
+    matri = (Matricula *)malloc(sizeof(Matricula));
+    fm= fopen("Matricula.dat", "rb");
+    if (fm == NULL){
+        printf("\nNenhuma Matricula cadastrada!\n");
+        return;
+    }
+        printf("|%-20s", "\x1B[31mCPF\x1B[0m");
+        printf("|%-10s","turma");
+        printf("\n");
+    while (fread(matri, sizeof(Matricula), 1, fm)){
+        if (matri->status != 'I'){
+            formato_exibido_matricula(matri);
+        }
+    }
+    fclose(fm);
+    free(matri);
+}
+
+void formato_exibido_turmas(Turma *t){
+    char estado[20];
+    if ((t == NULL) || (t->status == 'I')){
+        printf("\nEste aluno não foi manitruculado no sistema!\n");
+    }
+    else{
+        printf("|%-30s|%-8s|\n",t->nome,t->cod);
+        printf("\n");
+        if (t->status == 'A'){
+            strcpy(estado, "Turma Ativa");
+        }
+        else if (t->status == 'I'){
+            strcpy(estado, "Fechada");
+        }
+    }
+}
+void relatorio_tabela_turmas(void){
+    FILE * ft;
+    Turma *t;
+    t = (Turma *)malloc(sizeof(Turma));
+    ft= fopen("Turma.dat", "rb");
+    if (ft == NULL){
+        printf("\nNenhuma Turma cadastrada!\n");
+        return;
+    }
+        printf("|%-39s", "\x1B[31mnome\x1B[0m");
+        printf("|%-10s","turma");
+        printf("\n");
+    while (fread(t, sizeof(Turma), 1, ft)){
+        if (t->status != 'I'){
+            formato_exibido_turmas(t);
+        }
+    }
+    fclose(ft);
+    free(t);
+}
+
 void listar_professor_por_disciplina(char *diciplina) {
     FILE* fd;
     Diciplina *dic;
@@ -494,3 +590,6 @@ void filtro_periodo_horario(void){
     getchar();
 }
 //relatorio relacionando diciplina e professor
+
+//fazer filtro que mostra todos os alunos cadastrados em determinada turma
+//fazer filtro que mostre os horário de uma determinada turma 
