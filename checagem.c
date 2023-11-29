@@ -3,6 +3,8 @@
 #include "diciplina.h"
 #include "horario.h"
 #include "valida.h"
+#include "turma.h"
+#include "matricula.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -46,6 +48,26 @@ void listar_todos_diciplina_alt(void){
     }
     fclose(fd);
     free(dic);
+}
+
+void listar_turma_cadastradas_alt(void){
+    FILE *ft;
+    Turma *t;
+    t = (Turma*)malloc(sizeof(Turma));
+    ft = fopen("Turma.dat", "rb");
+    if ((ft == NULL) || (t==NULL)){
+        printf("\nNenhuma Turma cadastrada cadastrada!\n");
+        return;
+    }
+    //listagem simples para mostrar para o usuário o nome da turma e a respectiva série dela
+    printf("Informação da turma:\n");
+    while (fread(t, sizeof(Turma), 1, ft)){
+        if (t->status == 'A'){
+            printf("\nNome da turma:%s|Turma:%s\n", t->nome,t->cod);
+        }
+    }
+    fclose(ft);
+    free(t);
 }
 
 // verifica se existe algum professor cadastrado no sistema
@@ -94,6 +116,25 @@ int verifica_existe_aluno(char cpf[]){
     free(std);
     return 1;
 }
+
+int verifica_aluno_matriculado(char cpf[]){
+    FILE *fm;
+    Matricula *matri;
+    matri = (Matricula *)malloc(sizeof(Matricula));
+    fm = fopen("Matricula.dat", "rb");
+    if (fm == NULL){
+        return 1;
+    }
+    while (fread(matri, sizeof(Matricula), 1, fm)){
+        if ((strcmp(matri->cpf, cpf) == 0)){
+            return 0;
+        }
+    }
+    fclose(fm);
+    free(matri);
+    return 1;
+}
+
 
 // verificar se existe alguma diciplina já cadastrada
 // evitar repetição e informações não válidas
@@ -183,4 +224,19 @@ void listar_todos_professor_alt(void){
     }
     fclose(fp);
     free(prof);
+}
+
+int verificar_turma_existente(char cod[]){
+    FILE *ft;
+    Turma *t; //t-turm
+    t = (Turma *)malloc(sizeof(Turma));
+    ft = fopen("Turma.dat", "rb");
+    while (fread(t, sizeof(Turma), 1, ft)){
+        if ((strcmp(t->cod,cod)==0)){
+            return 0;
+        }
+    }
+    fclose(ft);
+    free(t);
+    return 1;
 }
