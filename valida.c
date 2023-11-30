@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "valida.h"
 
+//função responsável pela leitura do telefone e validação
 void ler_telefone(char *telefone) {
     int t;
     //função inpirada na de @Claudio-Arauj
@@ -72,10 +73,9 @@ bool eh_letra_acentuada(char c) {   //recebe uma letra por vez
     return isalpha(c) || c == ' ';
 }
 
-
+//função de leitura e validação do nome
 void ler_nome(char *nome) {
   int t;
-  //função inpirada na de @Claudio-Arauj
   do {
         printf("Digite o nome:");
         fgets(nome, 100, stdin);
@@ -173,21 +173,20 @@ int validarCPF(char cpf[]) {
     return 1;
 }
 
+//função para a leitura e validação do cpf
 void ler_cpf(char cpf[]) {
     //função reutilizável para realizar a leitura do cpf
     int c;
-    bool v=true,f=false;
-    while (v) {
+    do{
         printf("Digite o seu CPF: ");
         scanf("%s", cpf);
-        fflush(stdin);
-        c = validarCPF(cpf);
-        if (c == 1) {
-            v=f;
-        } else if (c == 0) {
+        //função utilizada para limpar o buffer
+        limpar_buffer();
+        c=validarCPF(cpf);
+        if (c == 0) {
             printf("CPF inválido!\n");
         }
-    }
+    }while(c!=1);
 }
 
 //feito com a ajuda do chat gpt
@@ -202,18 +201,16 @@ void limpar_buffer() {
 void ler_email(char email[]) {
     //função reutilizável para realizar a leitura do email
     int e;
-    bool v=true,f=false;
-    while (v) {
+    do{
         printf("Digite seu Email:");
         scanf("%[-._@A-Za-z0-9]", email);
-        fflush(stdin);
+        //função utilizada para limpar o buffer
+        limpar_buffer();
         e = validate_email(email);
-        if (e == 1) {
-           v=f;
-        } else if (e == 0) {
+        if (e == 0) {
             printf("Email inválido!\n");
         }
-    }
+    }while(e!=1);
 }
 
 int validate_email(char email[]) {
@@ -329,7 +326,9 @@ char* str_to_lower(char* str){
 void letra_maiuscula(char* algo) {
     //pega o tamanho para saber até onde tera que rodar
     int tam = strlen(algo);
+    //o i será menor que o tamanho de caracter para saber o final
     for (int i = 0; i < tam; i++) {
+        //irá passar letra por letra na função toupper
         algo[i] = toupper(algo[i]);
     }
 }
@@ -352,6 +351,8 @@ void ler_turma(char *turma){
 
 int valida_turma(char* turma){
     int tam = strlen(turma);
+    //não pode ser uma turma com mais de 3 caracter
+    //ajustar na estruct
     if(tam!=3){
         return 0;
     }
@@ -362,12 +363,16 @@ int valida_turma(char* turma){
     // else if (tam == 2 && turma[0] == turma[1]){
     //     return 0;
     // };
+    //verificar se a última letra digitada será uma dessas duas
     char subsequente[]={'A','B','C'};
+    //verifica a posição da string desejada
     if(strchr(subsequente,turma[2])==NULL){
         return 0;
     }
+    //verificar se na posição turma[0] é um desses caracter, para atender os números específicos
     if (turma[0] == 'I'){
         for (int i = 1; i < 6; i++){
+            //atoi tranforma um int em char
             if ((atoi(&turma[1])== i)){
                 return 1;
 
@@ -390,26 +395,3 @@ int valida_turma(char* turma){
     }
     return 0;
 }
- 
-// int valida_cod_turma(char *cod){
-//     //fazer validação de código de turma
-//     //que tera que ter menos letras e números
-//     //3 letras
-//     //3númmeros
-//     //podem repetir 
-// }
-
-// void ler_cod(char *cod){
-//     int t;
-//     do{
-//         fflush(stdin);
-//         printf("Digite o código da turma:");
-//         fgets(cod,6,stdin);
-//         //remover o \n
-//         cod[strlen(cod)-1]=0;
-//         t = valida_cod_turma(cod);
-//         if (t == 0){
-//             printf("Código Inválida\n");
-//         }
-//     }while(t!=1);
-// }
