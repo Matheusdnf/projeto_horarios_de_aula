@@ -2,14 +2,15 @@
 #define professor_h
 //struct professor
 typedef struct professor {
-    char telefone[12];
+    char cpf[12];
     char nome[100];
-    char cpf[15];
+    char telefone[15];
     char email[225];
-    char status;           //A-Ativo I-Inexistente
+    char status;          //A-Ativo I-Inativo
 } Professor;
 //telas módulo professores
 void menu_professor(void);
+//cadatrar professor
 Professor* cadastrar_professor(void);
 void buscar_professor(void);
 void atualizar_professor(void);
