@@ -26,6 +26,9 @@ void menu_professor(void){
         switch (opc){
             case '1':
                 prof = cadastrar_professor();
+                if(prof==NULL){
+                    break;
+                }
                 gravar_professor(prof);
                 break;
             case '2':
@@ -53,25 +56,46 @@ void menu_professor(void){
 
 Professor *cadastrar_professor(void){
     system("clear||cls");
+    char nome[100];
+    char email[225];
+    char escolha;
     Professor *prof;
-    bool v = true, f = false;
-    char c;
     prof = (Professor *)malloc(sizeof(Professor));
     printf("\n");
     printf("========================================================\n\n");
     printf("   *************** Cadastrar Professor ***************  \n\n");
-    while (v){
+    do{
         ler_cpf(prof->cpf);
-        c = verifica_existe_prof(prof->cpf);
-        if (c == 1){
-            v = f;
+        if(!verifica_existe_prof(prof->cpf)){
+         //caso já o usuário vai ter a chance de tentar novamente
+            do {
+                printf("Deseja tentar novamente (S/N)? ");
+                scanf(" %c", &escolha);  
+                getchar();
+                //validar a resposta 
+                if (!valida_s_ou_n(escolha)) {
+                    printf("Digite algo válido (S/N)!\n");
+                }
+                //enquanto o usário digitar "N" o laço continuará
+            } while (escolha == 'N'); 
+            //Caso ele digite algo diferente de "S" no caso "N"
+            //quer dizer que ele não quer mais digitar o cpf e irá retornar NULL
+            if (escolha != 'S') {
+                return NULL;  
+            }
+            //Caso o aluno com o cpf em questão não estiver cadastrado o loop se encerará
+        } else {
+            break;  
         }
-        else{
-            printf("Professor já cadastrado com esse cpf\n");
-        }
-    }
+    } while (escolha == 'S');
     ler_nome(prof->nome);
+    //utilzado essa função par na hora que armazenar o arquivo não inserir lixo de memória
+    //com os caracteres que não foram usados será colocado \0 no lugar
+    strncpy(prof->nome,nome,sizeof(prof->nome));
     ler_email(prof->email);
+    //utilzado essa função par na hora que armazenar o arquivo não inserir lixo de memória
+    //com os caracteres que não foram usados será colocado \0 no lugar
+    strncpy(prof->email,email,sizeof(prof->email));
     ler_telefone(prof->telefone);
     prof->status = 'A';
     printf("                                                        \n");
@@ -81,11 +105,12 @@ Professor *cadastrar_professor(void){
     printf("Digite enter para continuar...");
     getchar(); // para aparecer o menu e ele não sair rapidamente
     return prof;
+    free(prof);
 }
 
 void buscar_professor(void){
     system("clear||cls");
-    char cpf[15];
+    char cpf[12];
     printf("\n");
     printf("========================================================\n");
     printf("    *************** Buscar Professor *************    \n\n");
@@ -100,7 +125,7 @@ void buscar_professor(void){
 
 void atualizar_professor(void){
     system("clear||cls");
-    char cpf[15];
+    char cpf[12];
     printf("\n");
     printf("========================================================\n");
     printf("   *************** Atualizar Professor *************   \n\n");
@@ -120,7 +145,7 @@ void atualizar_professor(void){
 
 void excluir_professor(void){
     system("clear||cls");
-    char cpf[15];
+    char cpf[12];
     printf("\n");
     printf("========================================================\n");
     printf("    *************** Excluir Professor *************     \n\n");
