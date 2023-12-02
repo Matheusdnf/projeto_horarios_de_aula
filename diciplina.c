@@ -59,10 +59,9 @@ void menu_diciplinas(void){
 
 Diciplina *cadastrar_diciplinas(void){
     system("clear||cls");
+    char escolha;
     Diciplina *dic;
     dic = (Diciplina *)malloc(sizeof(Diciplina));
-    bool v = true, f = false;
-    int c;
     // verificar se algum professor já foi cadastrado no sistema
     printf("========================================================\n");
     printf("    *************** Cadastrar Diciplina *************   \n\n");
@@ -81,17 +80,30 @@ Diciplina *cadastrar_diciplinas(void){
     diciplinas();
     ler_diciplinas(dic->diciplina);
     listar_todos_professor_alt();
-    while (v){
-        printf("Digite o cpf do professor\n");
+     do{
         ler_cpf(dic->cpf);
-        c = verifica_existe_prof_d(dic->cpf);
-        if (c == 1){
-            v = f;
+        if(!verifica_existe_prof(dic->cpf)){
+         //caso já o usuário vai ter a chance de tentar novamente
+            do {
+                printf("Deseja tentar novamente (S/N)? ");
+                scanf(" %c", &escolha);  
+                getchar();
+                //validar a resposta 
+                if (!valida_s_ou_n(escolha)) {
+                    printf("Digite algo válido (S/N)!\n");
+                }
+                //enquanto o usário digitar "N" o laço continuará
+            } while (escolha == 'N'); 
+            //Caso ele digite algo diferente de "S" no caso "N"
+            //quer dizer que ele não quer mais digitar o cpf e irá retornar NULL
+            if (escolha != 'S') {
+                return NULL;  
+            }
+            //Caso o aluno com o cpf em questão não estiver cadastrado o loop se encerará
+        } else {
+            break;  
         }
-        else{
-            printf("\nEsse professor não foi cadastrado!\n");
-        }
-    }
+    } while (escolha == 'S');
     dic->id = criar_id_d();
     dic->status = 'A';
     printf("                                                        \n");
