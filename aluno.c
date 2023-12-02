@@ -6,6 +6,8 @@
 #include <string.h>
 
 void menu_aluno(void){
+    //opc -1 para ela poder ser atualiza pelo usuário quando vai navegando
+    //impede que o programa entre em alguma opção que não deveria
     int opc=-1;
     do{
         opc=-1;
@@ -26,6 +28,8 @@ void menu_aluno(void){
         switch (opc){
             case 1:
                 std = cadastrar_aluno();
+                //condição realizada para quando o cadastrado do aluno não quiser ser feito
+                //ou por não atender alguma opção do usuário
                 if(std==NULL){
                     break;
                 }
@@ -74,23 +78,27 @@ Aluno *cadastrar_aluno(void){
             do {
                 printf("Deseja tentar novamente (S/N)? ");
                 scanf(" %c", &escolha);  
+                letra_maiuscula(&escolha); 
                 getchar();
                 //validar a resposta 
                 if (!valida_s_ou_n(escolha)) {
                     printf("Digite algo válido (S/N)!\n");
                 }
                 //enquanto o usário digitar "N" o laço continuará
-            } while (escolha == 'N'); 
+            //desenvolvido com o auxílio do chat gpt
+            //permitir o usuário digitar novamente ou sair do loop
+            } while (escolha != 'S' && escolha != 'N'); 
             //Caso ele digite algo diferente de "S" no caso "N"
             //quer dizer que ele não quer mais digitar o cpf e irá retornar NULL
-            if (escolha != 'S') {
+            if (escolha == 'N') {
                 return NULL;  
             }
             //Caso o aluno com o cpf em questão não estiver cadastrado o loop se encerará
         } else {
             break;  
         }
-    } while (escolha == 'S');
+        //retornar um tela,no caso ao menu 
+    } while (1);
     ler_nome(nome);
     //utilzado essa função par na hora que armazenar o arquivo não inserir lixo de memória
     //com os caracteres que não foram usados será colocado \0 no lugar
@@ -114,7 +122,6 @@ Aluno *cadastrar_aluno(void){
 void buscar_aluno(void){
     system("clear||cls");
     char cpf[12];
-    printf("\n"); // quando o usuário informar o cpf do aluno irá mostrar os dados atrelados a aquelas pessoa,planejo implementar um menu que de outras opções de procura
     printf("========================================================\n");
     printf("    *************** Pesquisar Aluno *************     \n\n");
     printf("                                                        \n");
@@ -130,7 +137,6 @@ void buscar_aluno(void){
 void atualizar_aluno(void){
     system("clear||cls");
     char cpf[12];
-    printf("\n");
     printf("========================================================\n");
     printf("    *************** Atualizar Aluno *************     \n\n");
     printf("                                                        \n");
@@ -149,7 +155,6 @@ void atualizar_aluno(void){
 void excluir_aluno(){
     system("clear||cls");
     char cpf[12];
-    printf("\n");
     printf("========================================================\n");
     printf("    *************** Excluir Aluno *************       \n\n");
     printf("                                                        \n");
@@ -164,7 +169,6 @@ void excluir_aluno(){
 
 void relatorio_aluno(void){
     system("clear||cls");
-    printf("\n");
     printf("========================================================\n");
     printf("    *************** Relatório Aluno *************       \n\n");
     printf("                                                        \n");
@@ -184,6 +188,7 @@ void gravar_aluno(Aluno *std){
         printf("Erro na recuperação dos dados do Aluno!\n");
         return;
     }
+    //escrever os dados digitados no arquivo
     fwrite(std, sizeof(Aluno), 1, fa);
     fclose(fa);
     free(std);
@@ -192,7 +197,7 @@ void gravar_aluno(Aluno *std){
 void exibicao_alunos(Aluno *std){
     char estado[17];
     if ((std == NULL) || (std->status == 'I')){
-        printf("\nEste Aluno não existe no sistema!\n");
+        printf("\nFalha na procura!\n");
     }
     else{
         printf("\n********Dados Do Aluno********");
@@ -214,6 +219,7 @@ void listar_todos_aluno(void){
     Aluno *std;
     std = (Aluno *)malloc(sizeof(Aluno));
     fa = fopen("Alunos.dat", "rb");
+    //verifica se existe o arquivo alunos
     if (fa == NULL){
         printf("\nNenhum aluno cadastrado!\n");
         return;
@@ -231,57 +237,68 @@ void listar_todos_aluno(void){
 void procura_aluno(char cpf[]){
     FILE *fa;
     Aluno *std;
+    //serve para verificar se o cpf digitado está presente no sistema
+    int cont=0;
     std = (Aluno *)malloc(sizeof(Aluno));
     fa = fopen("Alunos.dat", "rb");
-    if (std == NULL){
-        printf("\tAluno não encontrado!\n");
-        return;
-    }
     if (fa == NULL){
         printf("\nNenhum aluno cadastrado!\n");
+        //retornar para a tela anterior
         return;
     }
     while (fread(std, sizeof(Aluno), 1, fa)){
         if ((strcmp(std->cpf, cpf) == 0) && (std->status == 'M')){
             exibicao_alunos(std);
+            cont++;
         }
+    //caso o que foi digitado não for encontrado ele cairá nesse if 
+    }if(!cont){
+        printf("\nEsse aluno não existe no sistema ou ainda não foi cadastrado!\n");
     }
     fclose(fa);
     free(std);
 }
+
 
 // feito com a ajuda de marlison silva chat gpt e adapatada por matheus diniz
 
 void remover_aluno(char cpf[]){
     FILE *fa;
     Aluno *std;
-    int encontra = 0;
+    //serve para verificar se o cpf digitado está presente no sistema
+    int cont = 0;
     std = (Aluno *)malloc(sizeof(Aluno));
     fa = fopen("Alunos.dat", "r+b");
+    //verificar se existe algum artigo existente
     if (fa == NULL){
         printf("\nNenhum aluno foi cadastrado!\n");
         return;
     }
+    //irá ler o arquivdo 
     while (fread(std, sizeof(Aluno), 1, fa)){
+        //irá comparar o cpf digitado com os disponíveis no sistema
         if ((strcmp(std->cpf, cpf) == 0) && (std->status == 'M')){
-            encontra = 1;
+            //encontrando irá contar 1
+            cont++;
+            //irá mudar o campo para I que significa inativo
             std->status = 'I';
             fseek(fa, -1 * (long)sizeof(Aluno), SEEK_CUR);
+            //escrever o novo campo, no caso irá alterar
             fwrite(std, sizeof(Aluno), 1, fa);
             printf("\nAluno excluído!\n");
             break; // Encerre o loop após a exclusão
         }
-    }
-    if (!encontra){
+    }if (!cont){
         printf("\nAluno não encontrado!\n");
     }
     fclose(fa);
+    free(std);
 }
 
 void att_aluno(char cpf[]){
     FILE *fa;
     Aluno *std;
-    int encontra = 0;
+    int cont = 0;
     int esc=-1;
     std = (Aluno *)malloc(sizeof(Aluno));
     fa = fopen("Alunos.dat", "r+b");
@@ -290,15 +307,17 @@ void att_aluno(char cpf[]){
         return;
     }
     while (fread(std, sizeof(Aluno), 1, fa)){
+        //irá procurar o cpf do aluno procurado
         if ((strcmp(std->cpf, cpf) == 0) && (std->status == 'M')){
-            encontra = 1;
+            cont++;
+            //essa tela serve para dar a opção de atualizar o que desejas
             do{
                 system("clear||cls");
                 printf("========================================================\n");
                 printf("   *************** Atualizar Aluno ***************      \n");
                 printf("                                                        \n");
                 printf("               o que deseja atualizar?                  \n");
-                printf("          Telefone[\033[31m1\033[0m] - Email[\033[31m2\033[0m] - Voltar[\033[31m0\033[0m]\n");
+                printf("          Telefone[\033[34m1\033[0m] - Email[\033[34m2\033[0m] - Voltar[\033[34m0\033[0m]\n");// feito com ajuda do chat openIA(Gpt)
                 printf("                                                        \n");
                 printf("Dados cadastrados no sistema:\n");
                 printf("\nNome do aluno:%s\n", std->nome);
@@ -338,7 +357,7 @@ void att_aluno(char cpf[]){
             } while (esc != 0);
         }
     }
-    if (!encontra){
+    if (!cont){
         printf("Aluno não encontrado!\n");
     }
     fclose(fa);
