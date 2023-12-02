@@ -2,7 +2,7 @@
 #define professor_h
 //struct professor
 typedef struct professor {
-    char telefone[15];
+    char telefone[12];
     char nome[100];
     char cpf[15];
     char email[225];

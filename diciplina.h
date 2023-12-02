@@ -3,7 +3,7 @@
 //struct diciplina
 typedef struct diciplina {
     int id;
-    char cpf[15]; //referente ao nome do professor
+    char cpf[12]; //referente ao nome do professor
     char diciplina[4];
     char status;           //A-Ativo I-Inexistente 
     //char status;

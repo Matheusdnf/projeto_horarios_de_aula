@@ -2,7 +2,7 @@
 #define aluno_h
 //struct de aluno
 typedef struct aluno {
-    char cpf[15];
+    char cpf[12];
     char nome[100];
     char telefone[15];
     char email[225];

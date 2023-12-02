@@ -2,7 +2,7 @@
 #define matricula_h
 //definição estrutura matrícula
 typedef struct matricula{
-    char cpf [15];
+    char cpf [12];
     char cod [7];
     char status;
 }Matricula;
