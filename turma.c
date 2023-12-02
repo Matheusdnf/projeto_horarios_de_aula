@@ -28,6 +28,11 @@ void menu_turma(void){
         switch (opc){
             case 1:
                 t=cadastrar_turma();
+                //condição realizada para quando o cadastrado do aluno não quiser ser feito
+                //ou por não atender alguma opção do usuário
+                if(t==NULL){
+                    break;
+                }
                 gravar_turma(t);
                 break;
             case 2:
@@ -59,40 +64,61 @@ void tela_turma(void){
     printf("Digite primeiramente se é I-F-M e após essas letras digite o número conforme mostrado\n");
     printf("No fim digite se é da turma A,B ou C\n\n");
 }
-
+//testar se está ocorrendo tudo bem
 Turma *cadastrar_turma(void){
     system("clear||cls");
-    int c;
+    char nome[100];
+    char escolha;
     Turma* t; //t-turm
     t = (Turma *)malloc(sizeof(Turma));
     printf("\n");
     printf("========================================================\n");
     printf("    ************* Cadastrar Turma *************     \n\n");
     tela_turma();
-    ler_turma(t->cod);
-    c=verificar_turma_existente(t->cod);
-    if(c==0){
-        printf("Turma já cadastrada!");
-        getchar();
-        return NULL;
-    }else{
-        printf("Escreva o nome da turma (Só escreva letras)\n");
-        ler_nome(t->nome);
-        t->status = 'A';
-        printf("                                                        \n");
-        printf("Dados da Turma cadastrada!\n");
-        printf("========================================================\n");
-        printf("\n");
-        printf("Digite enter para continuar...");
-        getchar();
-        return t;
-        free(t);
-    }
+    do{
+        ler_turma(t->cod);
+        if(!verificar_turma_existente(t->cod)){
+            printf("Turma já cadastrada!\n");
+            do{
+                printf("Deseja tentar novamente (S/N)? ");
+                scanf(" %c", &escolha);  
+                letra_maiuscula(&escolha); 
+                getchar();
+                //validar a resposta 
+                if (!valida_s_ou_n(escolha)) {
+                    printf("Digite algo válido (S/N)!\n");
+                }
+                //enquanto o usário digitar "N" o laço continuará
+            } while (escolha != 'S' && escolha != 'N'); 
+            //Caso ele digite algo diferente de "S" no caso "N"
+            //quer dizer que ele não quer mais digitar o cpf e irá retornar NULL
+            if (escolha == 'N') {
+                return NULL;  
+            }
+        //Caso a turma em questão não estiver cadastrado o loop se encerará
+        }else{
+            break;  
+        }
+    }while (1);
+    printf("Escreva o nome da turma (Só escreva letras)\n");
+    ler_nome(nome);
+    //utilzado essa função par na hora que armazenar o arquivo não inserir lixo de memória
+    //com os caracteres que não foram usados será colocado \0 no lugar
+    strncpy(t->nome,nome,sizeof(t->nome));
+    t->status = 'A';
+    printf("                                                        \n");
+    printf("Dados da Turma cadastrada!\n");
+    printf("========================================================\n");
+    printf("\n");
+    printf("Digite enter para continuar...");
+    getchar();
+    return t;
+    free(t);
 }
 
 void buscar_turma(void){
     system("clear||cls");
-    char cod[6];
+    char cod[4];
     printf("\n");  
     printf("========================================================\n");
     printf("    *************** Pesquisar Turma *************     \n\n");
@@ -108,7 +134,7 @@ void buscar_turma(void){
 
 void atualizar_turma(void){
     system("clear||cls");
-    char cod[6];
+    char cod[4];
     printf("\n");
     printf("========================================================\n");
     printf("    *************** Atualizar Turma *************     \n\n");
@@ -116,7 +142,6 @@ void atualizar_turma(void){
     printf("      Informe o código da Turma que será atualizada     \n");
     printf("                                                        \n");
     ler_turma(cod);
-    printf("                                                        \n");
     att_turma(cod);
     printf("                                                        \n");
     printf("========================================================\n");
@@ -127,7 +152,7 @@ void atualizar_turma(void){
 
 void excluir_turma(){
     system("clear||cls");
-    char cod[6];
+    char cod[4];
     printf("\n");
     printf("========================================================\n");
     printf("    *************** Excluir Turma *************       \n\n");
@@ -209,12 +234,9 @@ void listar_todas_turma(void){
 void procura_turma(char *cod){
     FILE *ft;
     Turma *t;
+    int cont=0;
     t = (Turma *)malloc(sizeof(Turma));
     ft = fopen("Turma.dat", "rb");
-    if (t == NULL){
-        printf("\tTurma não encontrada!\n");
-        return;
-    }
     if (ft == NULL){
         printf("\nNenhuma Turma cadastrada!\n");
         return;
@@ -223,17 +245,18 @@ void procura_turma(char *cod){
         if ((strcmp(t->cod, cod) == 0) && (t->status == 'A')){
             exibicao_turma(t);
         }
+    }if(!cont){
+        printf("\nEssa turma não existe no sistema ou ainda não foi cadastrado!\n");
     }
     fclose(ft);
     free(t);
 }
 
 // feito com a ajuda de marlison silva chat gpt e adapatada por matheus diniz
-
 void remover_turma(char *cod){
     FILE *ft;
     Turma *t;
-    int encontra = 0;
+    int cont = 0;
     t = (Turma *)malloc(sizeof(Turma));
     ft = fopen("Turma.dat", "r+b");
     if (ft == NULL){
@@ -242,7 +265,7 @@ void remover_turma(char *cod){
     }
     while (fread(t, sizeof(Turma), 1, ft)){
         if ((strcmp(t->cod, cod) == 0) && (t->status == 'A')){
-            encontra = 1;
+            cont++;
             t->status = 'I';
             fseek(ft, -1 * (long)sizeof(Turma), SEEK_CUR);
             fwrite(t, sizeof(Turma), 1, ft);
@@ -250,10 +273,11 @@ void remover_turma(char *cod){
             break; // Encerre o loop após a exclusão
         }
     }
-    if (!encontra){
+    if (!cont){
         printf("\nTurma não encontrada!\n");
     }
     fclose(ft);
+    free(t);
 }
 
 void att_turma(char *cod){
@@ -271,6 +295,7 @@ void att_turma(char *cod){
         if ((strcmp(t->cod, cod) == 0) && (t->status == 'A')){
             encontra = 1;
             do{
+                esc=-1;
                 system("clear||cls");
                 printf("========================================================\n");
                 printf("   *************** Atualizar Turma ***************      \n");
