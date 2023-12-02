@@ -1,12 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "aluno.h"
-#include "horario.h"
-#include "professor.h"
-#include "diciplina.h"
 #include "relatorio.h"
-#include "turma.h"
-#include "matricula.h"
+
 
 // Assinatura das funções
 void menu_principal(void);
@@ -58,6 +53,7 @@ int main(void){
             default:
                 printf("\nOpção Inválida!\n");
                 printf("Digite enter para continuar...");
+                getchar();
                 getchar();
                 break;
         }
