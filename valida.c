@@ -395,3 +395,11 @@ int valida_turma(char* turma){
     }
     return 0;
 }
+
+int valida_s_ou_n(char escolha) {
+    letra_maiuscula(&escolha);
+    if (escolha!='S' && escolha!='N'){
+        return 0;
+    }
+    return 1;
+}
