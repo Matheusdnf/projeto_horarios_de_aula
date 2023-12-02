@@ -26,6 +26,9 @@ void menu_aluno(void){
         switch (opc){
             case 1:
                 std = cadastrar_aluno();
+                if(std==NULL){
+                    break;
+                }
                 gravar_aluno(std);
                 break;
             case 2:
@@ -54,24 +57,48 @@ void menu_aluno(void){
 Aluno *cadastrar_aluno(void){
     system("clear||cls");
     Aluno *std;
-    bool v = true, f = false;
-    char c;
+    char nome[100];
+    char email[225];
+    char escolha;
     std = (Aluno *)malloc(sizeof(Aluno));
     printf("\n");
     printf("========================================================\n");
     printf("    ************* Cadastrar Aluno *************     \n\n");
-    while (v){
+    do {
+        // Ler o CPF
         ler_cpf(std->cpf);
-        c = verifica_existe_aluno(std->cpf); // problema linux
-        if (c == 1){
-            v = f;
+        // Verificar se o aluno já está cadastrado 
+        if (!verifica_existe_aluno(std->cpf)) {
+            printf("Aluno já cadastrado com esse CPF!\n");
+            //caso já o usuário vai ter a chance de tentar novamente
+            do {
+                printf("Deseja tentar novamente (S/N)? ");
+                scanf(" %c", &escolha);  
+                getchar();
+                //validar a resposta 
+                if (!valida_s_ou_n(escolha)) {
+                    printf("Digite algo válido (S/N)!\n");
+                }
+                //enquanto o usário digitar "N" o laço continuará
+            } while (escolha == 'N'); 
+            //Caso ele digite algo diferente de "S" no caso "N"
+            //quer dizer que ele não quer mais digitar o cpf e irá retornar NULL
+            if (escolha != 'S') {
+                return NULL;  
+            }
+            //Caso o aluno com o cpf em questão não estiver cadastrado o loop se encerará
+        } else {
+            break;  
         }
-        else{
-            printf("Aluno já cadastrado com esse cpf\n");
-        }
-    }
-    ler_nome(std->nome);
-    ler_email(std->email);
+    } while (escolha == 'S');
+    ler_nome(nome);
+    //utilzado essa função par na hora que armazenar o arquivo não inserir lixo de memória
+    //com os caracteres que não foram usados será colocado \0 no lugar
+    strncpy(std->nome,nome,sizeof(std->nome));
+    ler_email(email);
+    //utilzado essa função par na hora que armazenar o arquivo não inserir lixo de memória
+    //com os caracteres que não foram usados será colocado \0 no lugar
+    strncpy(std->email,email,sizeof(std->email));
     ler_telefone(std->telefone);
     std->status = 'M';
     printf("                                                        \n");
@@ -86,7 +113,7 @@ Aluno *cadastrar_aluno(void){
 
 void buscar_aluno(void){
     system("clear||cls");
-    char cpf[15];
+    char cpf[12];
     printf("\n"); // quando o usuário informar o cpf do aluno irá mostrar os dados atrelados a aquelas pessoa,planejo implementar um menu que de outras opções de procura
     printf("========================================================\n");
     printf("    *************** Pesquisar Aluno *************     \n\n");
@@ -102,7 +129,7 @@ void buscar_aluno(void){
 
 void atualizar_aluno(void){
     system("clear||cls");
-    char cpf[15];
+    char cpf[12];
     printf("\n");
     printf("========================================================\n");
     printf("    *************** Atualizar Aluno *************     \n\n");
@@ -121,7 +148,7 @@ void atualizar_aluno(void){
 
 void excluir_aluno(){
     system("clear||cls");
-    char cpf[15];
+    char cpf[12];
     printf("\n");
     printf("========================================================\n");
     printf("    *************** Excluir Aluno *************       \n\n");
@@ -284,7 +311,6 @@ void att_aluno(char cpf[]){
                 fflush(stdin);
                 scanf("%d", &esc);
                 fflush(stdin);
-                getchar();
                 switch (esc){
                     case 1:
                         ler_telefone(std->telefone);
