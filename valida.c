@@ -397,7 +397,6 @@ int valida_turma(char* turma){
 }
 
 int valida_s_ou_n(char escolha) {
-    letra_maiuscula(&escolha);
     if (escolha!='S' && escolha!='N'){
         return 0;
     }

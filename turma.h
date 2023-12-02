@@ -2,7 +2,7 @@
 #define turma_h
 //definição estrutura da turma
 typedef struct turma{
-    char cod [7];
+    char cod [4];
     char nome[100];
     char status;
 }Turma;

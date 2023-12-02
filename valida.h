@@ -21,3 +21,4 @@ void letra_maiuscula(char* algo);
 //validação de turma
 void ler_turma(char *turma);
 int valida_turma(char* turma);
+int valida_s_ou_n(char escolha);

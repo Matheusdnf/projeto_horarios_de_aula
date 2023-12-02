@@ -8,6 +8,7 @@ typedef struct horario {
     char tempo[3];
     char diciplina[3];
     char status;           //A-Ativo I-Inexistente N-Não encontrado
+    //adicionar campo e turma
 } Horario;
 //telas horário de aula
 void menu_horario(void);

@@ -10,6 +10,7 @@ typedef struct aluno {
 } Aluno;
 //telas do módulo aluno
 void menu_aluno(void);
+//cadastro do módulo aluno
 Aluno* cadastrar_aluno(void);
 void buscar_aluno(void);
 void atualizar_aluno(void);
