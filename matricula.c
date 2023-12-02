@@ -29,6 +29,8 @@ void menu_matricula(void){
         switch (opc){
             case 1:
                 matri=cadastrar_matricula();
+                //condição realizada para quando o cadastrado do aluno não quiser ser feito
+                //ou por não atender alguma opção do usuário
                 if(matri==NULL){
                     break;
                 }
@@ -59,6 +61,7 @@ void menu_matricula(void){
 
 Matricula *cadastrar_matricula(void){
     system("clear||cls");
+    char escolha;
     Matricula* matri; //t-turm
     matri = (Matricula *)malloc(sizeof(Matricula));
     printf("========================================================\n");
@@ -69,6 +72,7 @@ Matricula *cadastrar_matricula(void){
     fa=fopen("Alunos.dat","rb");
     FILE *ft;
     ft = fopen("Turma.dat", "rb");
+    //verificar se os arquivos em questão existem
     if ((fa == NULL) || (ft==NULL)){
         printf("\nNenhuma Turma ou aluno cadastrado no sistema!\n");
         getchar();
@@ -77,35 +81,76 @@ Matricula *cadastrar_matricula(void){
         fclose(ft);
         return NULL;
     }
-    ler_cpf(matri->cpf);
-    if((verifica_existe_aluno(matri->cpf)) || (!verifica_aluno_matriculado(matri->cpf))){
-        printf("Aluno não cadastrado ou sua matrícula já foi realizada!");
-        getchar();
-        return NULL;
-    }
+    do{
+        ler_cpf(matri->cpf);
+        //verificação se o aluno com o cpf digitado já existe 
+        //verifica se o aluno com o cpf digitado já foi realizada a matrícula
+        if((verifica_existe_aluno(matri->cpf)) || (!verifica_aluno_matriculado(matri->cpf))){
+            printf("Aluno não cadastrado ou sua matrícula já foi realizada!");
+            do{
+                printf("\nDeseja tentar novamente (S/N)? ");
+                scanf(" %c", &escolha); 
+                letra_maiuscula(&escolha); 
+                fflush(stdin); 
+                //validar a resposta 
+                if (!valida_s_ou_n(escolha)) {
+                    printf("Digite algo válido (S/N)!\n");
+                }
+                //enquanto o usário digitar "N" o laço continuará
+            } while ((escolha != 'S' && escolha != 'N'));
+            //Caso ele digite algo diferente de "S" no caso "N"
+            //quer dizer que ele não quer mais digitar o cpf e irá retornar NULL
+            if (escolha == 'N') {
+                return NULL;  
+            }
+            //Caso o aluno com o cpf em questão não estiver cadastrado o loop se encerará
+        } else {
+            break;  
+        }
+    }while (1);
+    //lista todas as turmas cadastradas
     listar_turma_cadastradas_alt();
-    ler_turma(matri->cod);
-    if(verificar_turma_existente(matri->cod)){
-        printf("Turma não cadastrada!");
-        getchar();
-        return NULL;
-    }else{
-        matri->status = 'A';
-        printf("                                                        \n");
-        printf("Dados da matricula cadastrada!\n");
-        printf("========================================================\n");
-        printf("\n");
-        printf("Digite enter para continuar...");
-        getchar(); 
-        return matri;
-        free(matri);
-    }
+    do{
+        ler_turma(matri->cod);
+        //verificação se a turma existe
+        if(verificar_turma_existente(matri->cod)){
+            printf("Turma não cadastrada!");
+            do{
+                printf("\nDeseja tentar novamente (S/N)? ");
+                scanf(" %c", &escolha); 
+                letra_maiuscula(&escolha); 
+                fflush(stdin); 
+                //validar a resposta 
+                if (!valida_s_ou_n(escolha)) {
+                    printf("Digite algo válido (S/N)!\n");
+                }
+                //enquanto o usário digitar "N" o laço continuará
+            } while ((escolha != 'S' && escolha != 'N'));
+            //Caso ele digite algo diferente de "S" no caso "N"
+            //quer dizer que ele não quer mais digitar o cpf e irá retornar NULL
+            if (escolha == 'N') {
+                return NULL;  
+            }
+            //Caso o aluno com o cpf em questão não estiver cadastrado o loop se encerará
+        } else {
+            break;  
+        }
+    }while (1);
+    matri->status = 'A';
+    printf("                                                        \n");
+    printf("Dados da matricula cadastrada!\n");
+    printf("========================================================\n");
+    printf("\n");
+    printf("Digite enter para continuar...");
+    getchar(); 
+    return matri;
+    free(matri);
 }
+
 
 void buscar_matricula(void){
     system("clear||cls");
-    char cpf[15]; //buscar o cpf do aluno para exibir em que turma está
-    printf("\n");  
+    char cpf[12]; //buscar o cpf do aluno para exibir em que turma está
     printf("========================================================\n");
     printf("    *************** Pesquisar Matricula *************     \n\n");
     printf("                                                        \n");
@@ -120,8 +165,7 @@ void buscar_matricula(void){
 
 void atualizar_matricula(void){
     system("clear||cls");
-    char cpf[15];
-    printf("\n");
+    char cpf[12];
     printf("========================================================\n");
     printf("    *************** Atualizar Matricula *************     \n\n");
     printf("                                                        \n");
@@ -139,8 +183,7 @@ void atualizar_matricula(void){
 
 void excluir_matricula(){
     system("clear||cls");
-    char cpf[15];
-    printf("\n");
+    char cpf[12];
     printf("========================================================\n");
     printf("    *************** Excluir Matricula *************       \n\n");
     printf("                                                        \n");
@@ -155,7 +198,6 @@ void excluir_matricula(){
 
 void relatorio_matricula(void){
     system("clear||cls");
-    printf("\n");
     printf("========================================================\n");
     printf("    *************** Relatório Matricula *************       \n\n");
     printf("                                                        \n");
@@ -217,14 +259,11 @@ void listar_todas_matricula(void){
 }
 
 void procura_matricula(char *cpf){
-    FILE *fm;     //utilizar cpf ou a matrícula
+    FILE *fm;     
     Matricula *matri;
+    int cont=0;
     matri = (Matricula *)malloc(sizeof(Matricula));
     fm = fopen("Matricula.dat", "rb");
-    if (matri == NULL){
-        printf("\tMatricula não encontrada!\n");
-        return;
-    }
     if (fm == NULL){
         printf("\nNenhuma Matricula cadastrada!\n");
         return;
@@ -232,7 +271,10 @@ void procura_matricula(char *cpf){
     while (fread(matri, sizeof(Matricula), 1, fm)){
         if ((strcmp(matri->cpf, cpf) == 0) && (matri->status == 'A')){
             exibicao_matricula(matri);
+            cont++;
         }
+    }if(!cont){
+        printf("\nEsse aluno não existe no sistema ou ainda não foi realizada sua matrícula!\n");
     }
     fclose(fm);
     free(matri);
@@ -242,7 +284,7 @@ void procura_matricula(char *cpf){
 void remover_matricula(char *cpf){
     FILE *fm;        // usar matrícula ou cpf
     Matricula *matri;
-    int encontra = 0;
+    int cont=0;
     matri = (Matricula *)malloc(sizeof(Matricula));
     fm = fopen("Matricula.dat", "r+b");
     if (fm == NULL){
@@ -251,7 +293,7 @@ void remover_matricula(char *cpf){
     }
     while (fread(matri, sizeof(Matricula), 1, fm)){
         if ((strcmp(matri->cpf, cpf) == 0) && (matri->status == 'A')){
-            encontra = 1;
+            cont++;
             matri->status = 'I';
             fseek(fm, -1 * (long)sizeof(Matricula), SEEK_CUR);
             fwrite(matri, sizeof(Matricula), 1, fm);
@@ -259,16 +301,17 @@ void remover_matricula(char *cpf){
             break; // Encerre o loop após a exclusão
         }
     }
-    if (!encontra){
+    if (!cont){
         printf("\nMatricula não encontrada!\n");
     }
     fclose(fm);
+    free(matri);
 }
 
 void att_matricula(char *cpf){
     FILE *fm;
     Matricula *matri;
-    int encontra = 0;
+    int cont = 0;
     int esc=-1;
     matri = (Matricula *)malloc(sizeof(Matricula));
     fm = fopen("Matricula.dat", "r+b");
@@ -278,8 +321,9 @@ void att_matricula(char *cpf){
     }
     while (fread(matri, sizeof(Matricula), 1, fm)){
         if ((strcmp(matri->cpf, cpf) == 0) && (matri->status == 'A')){
-            encontra = 1;
+            cont++;
             do{
+                esc=-1;
                 system("clear||cls");
                 printf("========================================================\n");
                 printf("   *************** Atualizar Matricula ***************      \n");
@@ -318,7 +362,7 @@ void att_matricula(char *cpf){
             } while (esc != 0);
         }
     }
-    if (!encontra){
+    if (!cont){
         printf("Turma não encontrada!\n");
     }
     fclose(fm);
