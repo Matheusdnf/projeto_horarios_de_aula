@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "relatorio.h"
+#include "valida.h"
 //futuramente fazer um que exiba tanto os dados apagados como cadastrados
 //utilizar o switch case
 //adicionar uma varíaveu na função que escolhe o tipo
@@ -107,6 +108,8 @@ void relatorio_filtro(void){
                 filtro_diasemana_horario();
             case 4:
                 filtro_periodo_horario();
+            case 5:
+                teste();
             case 0:
                 break;
             default:
@@ -589,7 +592,43 @@ void filtro_periodo_horario(void){
     getchar();
     getchar();
 }
+
+void relatorio_tabela_aluno_por_turma(char *turma){
+    FILE *fa;
+    Aluno *std;
+    std = (Aluno *)malloc(sizeof(Aluno));
+    fa = fopen("Alunos.dat", "rb");
+    FILE* fm;
+    Matricula *matri;
+    matri=(Matricula*)malloc(sizeof(Matricula));
+    fm=fopen("Matricula.dat","rb");
+    if ((fa == NULL) || (fm==NULL)){
+        printf("\nNenhum aluno ou turma cadastrada!\n");
+        return;
+    }
+        printf("|%-39s","\x1B[31mNome Do Aluno\x1B[0m");
+        printf("|%-9s", "\x1B[31mTurma\x1B[0m");
+        printf("\n");
+    while (fread(std, sizeof(Aluno), 1, fa) && (fread(matri,sizeof(Matricula),1,fm))){
+        if ((std->status != 'I') && (matri->status!='I') && (strncmp(matri->cod,turma, strlen(turma)) == 0)) {
+            printf("|%-30s|%-30s\n",std->nome,matri->cod);
+        }
+    }
+    fclose(fa);
+    fclose(fm);
+    free(matri);
+    free(std);
+}
+
+void teste(void){
+    char turma[7];
+    ler_turma(turma);
+    relatorio_tabela_aluno_por_turma(turma);
+    getchar();
+    getchar();
+}
 //relatorio relacionando diciplina e professor
 
 //fazer filtro que mostra todos os alunos cadastrados em determinada turma
 //fazer filtro que mostre os horário de uma determinada turma 
+//filtro que mostre as aulas do professor
