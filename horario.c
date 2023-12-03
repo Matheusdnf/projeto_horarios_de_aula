@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+//caso não exista turma não cadastrar
 void menu_horario(void){
     int opc=-1;
     do{
@@ -69,15 +70,8 @@ Horario *cadastrar_horario(void){
     printf("========================================================\n");
     printf(" **************** Cadastrar Horário ******************  \n\n");
     printf("                                                        \n");
-    if (dic == NULL){
-        printf("\tNão foi possível abrir o arquivo!\n");
-        getchar();
-        printf("Digite enter para continuar...");
-        getchar();
-        return NULL;
-    }
     if (fd == NULL){
-        printf("Nenhuma diciplina cadastrada!\n");
+        printf("Nenhum professor atrelado a uma diciplina cadastrada!\n");
         getchar();
         printf("\nDigite enter para continuar...");
         getchar();
