@@ -15,6 +15,8 @@ void tela_filtro_relatorio(void);
 void escolha_relatorio(void);
 void tela_relatorio_ordenado(void);
 void relatorio_ordenado(void);
+void teste(void);
+void relatorio_tabela_aluno_por_turma(char *turma);
 //relatório tabela
 void formato_exibido_a(Aluno *std);
 void relatorio_tabela_aluno(void);
