@@ -8,10 +8,11 @@ BSI - Bacharelado em Sistemas de Informação.\
 DCT1106 - Programação - Flavius Gorgônio.\
 Desenvolvido por @matheusdnf
 
-# Para compilar o projeto Bastar executar
+## Para compilar o projeto Bastar executar
+``` PowerShell
 gcc *.c -o projeto -Wall\
 ./projeto
-
+```
 
 <!--gcc *.c -o projeto -Wall-->
 
