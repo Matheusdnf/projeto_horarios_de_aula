@@ -159,7 +159,13 @@ void excluir_aluno(){
     printf("    *************** Excluir Aluno *************       \n\n");
     printf("                                                        \n");
     ler_cpf(cpf);
-    remover_aluno(cpf);
+    procura_aluno(cpf);
+    if(decidir_excluir()){
+        remover_aluno(cpf);
+    }
+    else{
+        return;
+    }
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
@@ -191,7 +197,6 @@ void gravar_aluno(Aluno *std){
     //escrever os dados digitados no arquivo
     fwrite(std, sizeof(Aluno), 1, fa);
     fclose(fa);
-    free(std);
 }
 
 void exibicao_alunos(Aluno *std){

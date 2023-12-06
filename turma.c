@@ -158,7 +158,13 @@ void excluir_turma(){
     printf("    *************** Excluir Turma *************       \n\n");
     printf("                                                        \n");
     ler_turma(cod);
-    remover_turma(cod);
+    procura_turma(cod);
+    if(decidir_excluir()){
+        remover_turma(cod);
+    }
+    else{
+        return;
+    }
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");

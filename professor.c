@@ -154,7 +154,13 @@ void excluir_professor(void){
     printf("    *************** Excluir Professor *************     \n\n");
     printf("                                                        \n");
     ler_cpf(cpf);
-    remover_Professor(cpf);
+    procura_professor(cpf);
+    if(decidir_excluir()){
+        remover_Professor(cpf);
+    }
+    else{
+        return;
+    }
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
