@@ -235,29 +235,14 @@ void relatorio_tudo(void){
         }
     } while (opc != 0);
 }
-
-void formato_exibido_a(Aluno *std){
-    char estado[17];
-    if ((std == NULL) || (std->status == 'I')){
-        printf("\nEste Aluno não existe no sistema!\n");
-    }
-    else{
-        printf("|%-30s|%-11s|%-36s|%-11s|\n",std->nome,std->cpf,std->email,std->telefone);
-        if (std->status == 'M'){
-            strcpy(estado, "Matriculado");
-        }
-        else if (std->status == 'I'){
-            strcpy(estado, "Fechado");
-        }
-    }
-}
-
+//relatório com tabelas
 void relatorio_tabela_aluno(void){
     FILE *fa;
     Aluno *std;
+    char estado[17];
     std = (Aluno *)malloc(sizeof(Aluno));
     fa = fopen("Alunos.dat", "rb");
-    if (fa == NULL){
+    if ((fa == NULL) || (std==NULL)){
         printf("\nNenhum aluno cadastrado!\n");
         return;
     }
@@ -268,35 +253,27 @@ void relatorio_tabela_aluno(void){
         printf("\n");
     while (fread(std, sizeof(Aluno), 1, fa)){
         if (std->status != 'I'){
-            formato_exibido_a(std);
+            printf("|%-30s|%-11s|%-36s|%-11s|\n",std->nome,std->cpf,std->email,std->telefone);
+            if (std->status == 'M'){
+                strcpy(estado, "Matriculado");
+            }
+            else if (std->status == 'I'){
+                strcpy(estado, "Fechado");
+            }
         }
     }
     fclose(fa);
     free(std);
 }
 
-void formato_exibido_p(Professor *prof){
-    char estado[17];
-    if ((prof == NULL) || (prof->status == 'I')){
-        printf("\nEste Professor não existe no sistema!\n");
-    }
-    else{
-        printf("|%-30s|%-11s|%-36s|%-11s|\n",prof->nome,prof->cpf,prof->email,prof->telefone);
-        if (prof->status == 'A'){
-            strcpy(estado, "Ativo");
-        }
-        else if (prof->status == 'I'){
-            strcpy(estado, "Fechado");
-        }
-    }
-}
 
 void relatorio_tabela_professor(void){
     FILE *fp;
     Professor *prof;
+    char estado[17];
     prof = (Professor *)malloc(sizeof(Professor));
     fp = fopen("Professor.dat", "rb");
-    if (fp == NULL){
+    if ((fp == NULL) || (prof==NULL)){
         printf("\nNenhum professor cadastrado!\n");
         return;
     }
@@ -307,36 +284,55 @@ void relatorio_tabela_professor(void){
         printf("\n");
     while (fread(prof, sizeof(Professor), 1, fp)){
         if (prof->status != 'I'){
-            formato_exibido_p(prof);
+            printf("|%-30s|%-11s|%-36s|%-11s|\n",prof->nome,prof->cpf,prof->email,prof->telefone);
+            if (prof->status == 'A'){
+                strcpy(estado, "Ativo");
+            }
+            else if (prof->status == 'I'){
+                strcpy(estado, "Fechado");
+            }
         }
     }
     fclose(fp);
     free(prof);
 }
 
-void formato_exibido_diciplinas(Diciplina *dic){
-    char estado[16];
-    if ((dic == NULL) || (dic->status == 'I')){
-        printf("\nEsta Diciplinas não foi cadastrada no sistema!\n");
-        printf("\n");
+void relatorio_tabela_turmas(void){
+    FILE * ft;
+    Turma *t;
+    char estado[20];
+    t = (Turma *)malloc(sizeof(Turma));
+    ft= fopen("Turma.dat", "rb");
+    if ((ft == NULL) || (t==NULL)){
+        printf("\nNenhuma Turma cadastrada!\n");
+        return;
     }
-    else{
-        printf("|%-11s|%-9s|",dic->cpf,dic->diciplina);
+        printf("|%-39s", "\x1B[31mnome\x1B[0m");
+        printf("|%-10s","turma");
         printf("\n");
-        if (dic->status == 'A'){
-            strcpy(estado, "Diciplina Ativa");
-        }
-        else if (dic->status == 'I'){
-            strcpy(estado, "Fechada");
+    while (fread(t, sizeof(Turma), 1, ft)){
+        if (t->status != 'I'){
+            printf("|%-30s|%-8s|\n",t->nome,t->cod);
+            printf("\n");
+            if (t->status == 'A'){
+                strcpy(estado, "Turma Ativa");
+            }
+            else if (t->status == 'I'){
+                strcpy(estado, "Fechada");
+            }
         }
     }
+    fclose(ft);
+    free(t);
 }
+
 void relatorio_tabela_diciplinas(void){
     FILE *fd;
     Diciplina *dic;
+    char estado[16];
     dic = (Diciplina *)malloc(sizeof(Diciplina));
     fd = fopen("Diciplina.dat", "rb");
-    if (fd == NULL){
+    if ((fd == NULL) || (dic==NULL)){
         printf("\nNenhuma Diciplina cadastrada!\n");
         return;
     }
@@ -345,35 +341,27 @@ void relatorio_tabela_diciplinas(void){
         printf("\n");
     while (fread(dic, sizeof(Diciplina), 1, fd)){
         if (dic->status != 'I'){
-            formato_exibido_diciplinas(dic);
+            printf("|%-11s|%-9s|",dic->cpf,dic->diciplina);
+            printf("\n");
+            if (dic->status == 'A'){
+                strcpy(estado, "Diciplina Ativa");
+            }
+            else if (dic->status == 'I'){
+                strcpy(estado, "Fechada");
+            }
         }
     }
     fclose(fd);
     free(dic);
 }
 
-void formato_exibido_h(Horario *h){
-    char estado[16];
-    if ((h == NULL) || (h->status == 'I')){
-        printf("\nEste horário não foi cadastrada no sistema!\n");
-    }
-    else{
-        printf("|%-7s|%-9s|%-13s|%-12s|\n",h->periodo,h->diciplina,h->dia,h->tempo);
-        printf("\n");
-        if (h->status == 'A'){
-            strcpy(estado, "Horário Ativo");
-        }
-        else if (h->status == 'I'){
-            strcpy(estado, "Fechada");
-        }
-    }
-}
 void relatorio_tabela_h(void){
     FILE *fh;
     Horario *h;
+    char estado[16];
     h = (Horario *)malloc(sizeof(Horario));
     fh = fopen("Horario.dat", "rb");
-    if (fh == NULL){
+    if ((fh == NULL) || (h==NULL)){
         printf("\nNenhum horario cadastrada!\n");
         return;
     }
@@ -384,35 +372,27 @@ void relatorio_tabela_h(void){
         printf("\n");
     while (fread(h, sizeof(Horario), 1, fh)){
         if (h->status != 'I'){
-            formato_exibido_h(h);
+            printf("|%-7s|%-9s|%-13s|%-12s|\n",h->periodo,h->diciplina,h->dia,h->tempo);
+            printf("\n");
+            if (h->status == 'A'){
+                strcpy(estado, "Horário Ativo");
+            }
+            else if (h->status == 'I'){
+                strcpy(estado, "Fechada");
+            }
         }
     }
     fclose(fh);
     free(h);
 }
 
-void formato_exibido_matricula(Matricula *matri){
-    char estado[20];
-    if ((matri == NULL) || (matri->status == 'I')){
-        printf("\nEsta matricula não foi cadastrada no sistema!\n");
-    }
-    else{
-        printf("|%-11s|%-8s|\n",matri->cpf,matri->cod);
-        printf("\n");
-        if (matri->status == 'A'){
-            strcpy(estado, "Matrícula Ativa");
-        }
-        else if (matri->status == 'I'){
-            strcpy(estado, "Fechada");
-        }
-    }
-}
 void relatorio_tabela_matricula(void){
     FILE * fm;
     Matricula *matri;
+    char estado[20];
     matri = (Matricula *)malloc(sizeof(Matricula));
     fm= fopen("Matricula.dat", "rb");
-    if (fm == NULL){
+    if ((fm == NULL) || (matri==NULL)){
         printf("\nNenhuma Matricula cadastrada!\n");
         return;
     }
@@ -421,50 +401,203 @@ void relatorio_tabela_matricula(void){
         printf("\n");
     while (fread(matri, sizeof(Matricula), 1, fm)){
         if (matri->status != 'I'){
-            formato_exibido_matricula(matri);
+            printf("|%-11s|%-8s|\n",matri->cpf,matri->cod);
+            printf("\n");
+            if (matri->status == 'A'){
+                strcpy(estado, "Matrícula Ativa");
+            }
+            else if (matri->status == 'I'){
+                strcpy(estado, "Fechada");
+            }
         }
     }
     fclose(fm);
     free(matri);
 }
 
-void formato_exibido_turmas(Turma *t){
+//filtro dos dados desativados
+void alunos_desativados(void){
+    FILE *fa;
     char estado[20];
-    if ((t == NULL) || (t->status == 'I')){
-        printf("\nEste aluno não foi manitruculado no sistema!\n");
+    Aluno *std;
+    std = (Aluno *)malloc(sizeof(Aluno));
+    fa = fopen("Alunos.dat", "rb");
+    //verifica se existe o arquivo alunos
+    if (fa == NULL){
+        printf("\nNenhum aluno cadastrado!\n");
+        return;
     }
-    else{
-        printf("|%-30s|%-8s|\n",t->nome,t->cod);
+        printf("|%-39s","\x1B[31mNome\x1B[0m");
+        printf("|%-20s", "\x1B[31mCPF\x1B[0m");
+        printf("|%-45s", "\x1B[31mEmail\x1B[0m");
+        printf("|%-15s", "\x1B[31mTelefone\x1B[0m");
         printf("\n");
-        if (t->status == 'A'){
-            strcpy(estado, "Turma Ativa");
-        }
-        else if (t->status == 'I'){
-            strcpy(estado, "Fechada");
+    while (fread(std, sizeof(Aluno), 1, fa)){
+        if (std->status == 'I'){
+            printf("|%-30s|%-11s|%-36s|%-11s|\n",std->nome,std->cpf,std->email,std->telefone);
+            if (std->status == 'M'){
+                strcpy(estado, "Matriculado");
+            }
+            else if (std->status == 'I'){
+                strcpy(estado, "Fechado");
+            }
         }
     }
+    fclose(fa);
+    free(std);
 }
-void relatorio_tabela_turmas(void){
-    FILE * ft;
+
+void professores_desativados(void){
+    FILE *fp;
+    char estado[20];
+    Professor *prof;
+    prof = (Professor *)malloc(sizeof(Professor));
+    fp = fopen("Professor.dat", "rb");
+    //verifica se existe o arquivo alunos
+    if (fp == NULL){
+        printf("\nNenhum aluno cadastrado!\n");
+        return;
+    }
+        printf("|%-39s","\x1B[31mNome\x1B[0m");
+        printf("|%-20s", "\x1B[31mCPF\x1B[0m");
+        printf("|%-45s", "\x1B[31mEmail\x1B[0m");
+        printf("|%-15s", "\x1B[31mTelefone\x1B[0m");
+        printf("\n");
+    while (fread(prof, sizeof(Professor), 1, fp)){
+        if (prof->status == 'I'){
+            printf("|%-30s|%-11s|%-36s|%-11s|\n",prof->nome,prof->cpf,prof->email,prof->telefone);
+            if (prof->status == 'A'){
+                strcpy(estado, "Professor ativo");
+            }
+            else if (prof->status == 'I'){
+                strcpy(estado, "Fechado");
+            }
+        }
+    }
+    fclose(fp);
+    free(prof);
+}
+
+void turmas_desativadas(void){
+    FILE *ft;
+    char estado[20];
     Turma *t;
     t = (Turma *)malloc(sizeof(Turma));
-    ft= fopen("Turma.dat", "rb");
+    ft = fopen("Turma.dat", "rb");
+    //verifica se existe o arquivo alunos
     if (ft == NULL){
-        printf("\nNenhuma Turma cadastrada!\n");
+        printf("\nNenhuma turma cadastrada!\n");
         return;
     }
         printf("|%-39s", "\x1B[31mnome\x1B[0m");
         printf("|%-10s","turma");
         printf("\n");
     while (fread(t, sizeof(Turma), 1, ft)){
-        if (t->status != 'I'){
-            formato_exibido_turmas(t);
+        if (t->status == 'I'){
+            printf("|%-30s|%-8s|\n",t->nome,t->cod);
+            if (t->status == 'A'){
+                strcpy(estado, "Turma ativa");
+            }
+            else if (t->status == 'I'){
+                strcpy(estado, "Fechado");
+            }
         }
     }
     fclose(ft);
     free(t);
 }
 
+void diciplinas_desativadas(void){
+    FILE *fd;
+    char estado[20];
+    Diciplina *dic;
+    dic = (Diciplina *)malloc(sizeof(Diciplina));
+    fd = fopen("Diciplina.dat", "rb");
+    //verifica se existe o arquivo alunos
+    if (fd == NULL){
+        printf("\nNenhuma Diciplina cadastrada!\n");
+        return;
+    }
+        printf("|%-20s", "\x1B[31mCPF\x1B[0m");
+        printf("|%-1s|", "\x1B[31mDiciplina\x1B[0m");
+        printf("\n");
+    while (fread(dic, sizeof(Diciplina), 1, fd)){
+        if (dic->status == 'I'){
+            printf("|%-11s|%-9s|",dic->cpf,dic->diciplina);
+            printf("\n");
+            if (dic->status == 'A'){
+                strcpy(estado, "Diciplina Ativa");
+            }
+            else if (dic->status == 'I'){
+                strcpy(estado, "Fechada");
+            }
+        }
+    }
+    fclose(fd);
+    free(dic);
+}
+
+void h_desativadas(void){
+       FILE *fh;
+    Horario *h;
+    char estado[16];
+    h = (Horario *)malloc(sizeof(Horario));
+    fh = fopen("Horario.dat", "rb");
+    if ((fh == NULL) || (h==NULL)){
+        printf("\nNenhum horario cadastrada!\n");
+        return;
+    }
+        printf("|%-15s","\x1B[31mPeriodo\x1B[0m");
+        printf("|%-15s", "\x1B[31mDiciplina\x1B[0m");
+        printf("|%-15s", "\x1B[31mDia da semana\x1B[0m");
+        printf("|%-1s|", "\x1B[31mTempo(M,T,D)\x1B[0m");
+        printf("\n");
+    while (fread(h, sizeof(Horario), 1, fh)){
+        if (h->status == 'I'){
+            printf("|%-7s|%-9s|%-13s|%-12s|\n",h->periodo,h->diciplina,h->dia,h->tempo);
+            printf("\n");
+            if (h->status == 'A'){
+                strcpy(estado, "Horário Ativo");
+            }
+            else if (h->status == 'I'){
+                strcpy(estado, "Fechada");
+            }
+        }
+    }
+    fclose(fh);
+    free(h);
+}
+
+void matriculas_desativadas(void){
+    FILE * fm;
+    Matricula *matri;
+    char estado[20];
+    matri = (Matricula *)malloc(sizeof(Matricula));
+    fm= fopen("Matricula.dat", "rb");
+    if ((fm == NULL) || (matri==NULL)){
+        printf("\nNenhuma Matricula cadastrada!\n");
+        return;
+    }
+        printf("|%-20s", "\x1B[31mCPF\x1B[0m");
+        printf("|%-10s","turma");
+        printf("\n");
+    while (fread(matri, sizeof(Matricula), 1, fm)){
+        if (matri->status == 'I'){
+            printf("|%-11s|%-8s|\n",matri->cpf,matri->cod);
+            printf("\n");
+            if (matri->status == 'A'){
+                strcpy(estado, "Matrícula Ativa");
+            }
+            else if (matri->status == 'I'){
+                strcpy(estado, "Fechada");
+            }
+        }
+    }
+    fclose(fm);
+    free(matri);
+}
+
+//relatório com filtro
 void listar_professor_por_disciplina(char *diciplina) {
     FILE* fd;
     Diciplina *dic;
@@ -627,8 +760,8 @@ void teste(void){
     getchar();
     getchar();
 }
+
 //relatorio relacionando diciplina e professor
 
-//fazer filtro que mostra todos os alunos cadastrados em determinada turma
 //fazer filtro que mostre os horário de uma determinada turma 
 //filtro que mostre as aulas do professor
