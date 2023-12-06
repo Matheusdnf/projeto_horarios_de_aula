@@ -33,10 +33,11 @@ int main(void){
                 menu_matricula();
                 break;
             case 5:
+                menu_diciplinas();
                 menu_horario();
                 break;
             case 6:
-                menu_diciplinas();
+                menu_horario();
                 break;
             case 7:
                 escolha_relatorio();
@@ -79,8 +80,8 @@ void menu_principal(){
     printf("            2 - Gestão de Professores              \n");
     printf("            3 - Gestão de Turmas                  \n");
     printf("            4 - Gestão de Matrículas              \n");
-    printf("            5 - Gestão de Horários                 \n");
-    printf("            6 - Gestão de Diciplinas              \n");
+    printf("            5 - Gestão de Diciplinas              \n");
+    printf("            6 - Gestão de Horários                 \n");
     printf("            7 - Menu Relatório                    \n");
     printf("            8 - Sobre a Equipe                    \n");
     printf("            9 - Sobre o Projeto                   \n");
