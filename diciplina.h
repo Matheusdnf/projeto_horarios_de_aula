@@ -1,12 +1,12 @@
 #ifndef diciplina_h
 #define diciplina_h
+#include "professor.h"
 //struct diciplina
 typedef struct diciplina {
-    int id;
-    char cpf[12]; //referente ao nome do professor
+    char id;
+    char cpf[12]; //referente ao cpf do professor
     char diciplina[4];
     char status;           //A-Ativo I-Inexistente 
-    //char status;
 } Diciplina;
 //tela do módulo diciplina
 void menu_diciplinas(void);
@@ -24,7 +24,7 @@ int criar_id_d(void);
 //gravação e exibição de dados
 void gravardiciplinas(Diciplina* dic);
 //funções do crud
-void exibir_diciplinas(Diciplina* dic);
+void exibir_diciplinas(Diciplina* dic,Professor* prof);
 void listar_todas_diciplinas(void);
 void procura_diciplinas(int id);
 void remover_diciplinas(int id);

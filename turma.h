@@ -12,7 +12,7 @@ void tela_turma(void);
 Turma *cadastrar_turma(void);
 void buscar_turma(void);
 void atualizar_turma(void);
-void excluir_turma();
+void excluir_turma(void);
 void relatorio_turma(void);
 //funções de ação dos crud
 void gravar_turma(Turma *t);

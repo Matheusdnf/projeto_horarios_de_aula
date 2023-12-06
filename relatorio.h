@@ -18,18 +18,12 @@ void relatorio_ordenado(void);
 void teste(void);
 void relatorio_tabela_aluno_por_turma(char *turma);
 //relatório tabela
-void formato_exibido_a(Aluno *std);
 void relatorio_tabela_aluno(void);
-void formato_exibido_p(Professor *prof);
 void relatorio_tabela_professor(void);
-void formato_exibido_diciplinas(Diciplina *dic);
 void relatorio_tabela_diciplinas(void);
-void formato_exibido_h(Horario *h);
 void relatorio_tabela_h(void);
 void relatorio_tabela_matricula(void);
-void formato_exibido_matricula(Matricula *matri);
 void relatorio_tabela_turmas(void);
-void formato_exibido_turmas(Turma *t);
 //relatório com filtro 
 void filtro_diciplina(void);
 void filtro_diciplina(void);
