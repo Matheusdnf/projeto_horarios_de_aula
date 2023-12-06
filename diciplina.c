@@ -2,6 +2,7 @@
 #include "valida.h"
 #include "professor.h"
 #include "checagem.h"
+#include "relatorio.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -80,14 +81,12 @@ Diciplina *cadastrar_diciplinas(void){
         fclose(fp);
         return NULL;
     }
-    printf("Pode ser 1 ou 2 diciplinas\n");
-    diciplinas();
-    ler_diciplinas(dic->diciplina);
+    //fazer validação que verifica se já existe cpf no de diciplina
     listar_todos_professor_alt();
      do{
         ler_cpf(dic->cpf);
-        if(!verifica_existe_prof(dic->cpf)){
-            printf("Esse professor não foi cadastrado no sistem!");
+        if((!verifica_existe_prof(dic->cpf))){
+            printf("Esse professor não foi cadastrado no sistema de professoures ou já foi atrelado alguma diciplina a ele!\n");
          //caso já o usuário vai ter a chance de tentar novamente
             do {
                 printf("Deseja tentar novamente (S/N)? ");
@@ -112,16 +111,20 @@ Diciplina *cadastrar_diciplinas(void){
             break;  
         }
     } while (1);
-    dic->id = criar_id_d();
+    printf("Pode ser 1 ou 2 diciplinas\n");
+    diciplinas();
+    ler_diciplinas(dic->diciplina);
     dic->status = 'A';
+    dic->id = criar_id_d();
     printf("                                                        \n");
     printf("Diciplina cadastrada!\n");
     printf("========================================================\n");
     printf("\n");
     printf("Digite enter para continuar...");
     getchar(); // para aparecer o menu e ele não sair rapidamente
-    free(dic);
+    fclose(fp);
     return dic;
+    free(dic);
 }
 
 void buscar_diciplinas(void){
@@ -132,6 +135,7 @@ void buscar_diciplinas(void){
     printf("                                                        \n");
     printf("Informe o id da diciplina:");
     scanf("%d", &id);
+    limpar_buffer();
     procura_diciplinas(id);
     printf("                                                        \n");
     printf("========================================================\n");
@@ -148,6 +152,7 @@ void atualizar_diciplinas(void){
     printf("                                                        \n");
     printf("Informe o id da diciplina:");
     scanf("%d", &id);
+    limpar_buffer();
     att_diciplinas(id);
     printf("                                                        \n");
     printf("========================================================\n");
@@ -165,11 +170,17 @@ void excluir_diciplinas(void){
     printf("                                                        \n");
     printf("Informe o id da diciplina:");
     scanf("%d", &id);
-    remover_diciplinas(id);
+    limpar_buffer();
+    procura_diciplinas(id);
+    if (decidir_excluir()){
+        remover_diciplinas(id);
+    }
+    else{
+        return;
+    }
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    getchar();
     printf("Digite enter para continuar...");
     getchar();
 }
@@ -181,8 +192,6 @@ void relatorio_diciplinas(void){
     printf("                                                        \n");
     printf("(informar todas as diciplinas cadastrado)               \n");
     printf("                                                        \n");
-    listar_todos_professor_alt();
-    printf("\n");
     listar_todas_diciplinas();
     printf("========================================================\n");
     printf("\n");
@@ -236,10 +245,11 @@ int valida_diciplinas(char *diciplina){
     else if (tam == 2 && diciplina[0] == diciplina[1]){
         return 0;
     }
+    letra_maiuscula(diciplina);
     int cont = 0;
     // permitir que o usuário digite a letra da maneira que preferir
     // apos isso chamara essa função que tratara os dados
-    letra_maiuscula(diciplina);
+    
     // um array com as iniciais das letras das matérias
     char materia[] = "PIEAHGLOSMBQF";
     // caso o usuário digitar só uma letra cairá nesse if
@@ -277,7 +287,7 @@ int valida_diciplinas(char *diciplina){
             return 0;
         }
     }
-    return 1;
+    return 0;
 }
 
 // Criar Id de forma nativa
@@ -328,14 +338,15 @@ void gravardiciplinas(Diciplina *dic){
     fclose(fd);
 }
 
-void exibir_diciplinas(Diciplina *dic){
+void exibir_diciplinas(Diciplina *dic,Professor* prof){
     char estado[16];
     if ((dic == NULL) || (dic->status == 'I')){
         printf("\nEsta Diciplinas não foi cadastrada no sistema!\n");
     }
     else{
         printf("\n ********Informações da diciplina********");
-        printf("\nCPF do Professor:%s\n", dic->cpf);
+        printf("\nNome do professor:%s\n",prof->nome);
+        printf("CPF do Professor:%s\n", dic->cpf);
         printf("Nome da diciplina:%s\n", dic->diciplina);
         printf("Id da diciplina:%d\n", dic->id);
         printf("\n");
@@ -350,69 +361,87 @@ void exibir_diciplinas(Diciplina *dic){
 
 void listar_todas_diciplinas(void){
     FILE *fd;
+    FILE *fp;
     Diciplina *dic;
+    Professor *prof;
+    prof=(Professor*)malloc(sizeof(Professor));
     dic = (Diciplina *)malloc(sizeof(Diciplina));
     fd = fopen("Diciplina.dat", "rb");
-    if (fd == NULL){
-        printf("Nenhuma diciplina cadastrada!\n");
+    fp=fopen("Professor.dat","rb");
+    if ((fd == NULL) || (fp==NULL)){
+        printf("Nenhuma diciplina ou professor cadastrado!\n");
         return;
     }
     while (fread(dic, sizeof(Diciplina), 1, fd)){
-        if (dic->status != 'I'){
-            exibir_diciplinas(dic);
+        if ((dic->status != 'I')){
+            rewind(fp);
+            while(fread(prof, sizeof(Professor), 1, fp)){
+                if (((strcmp(prof->cpf,dic->cpf)==0))){
+                    exibir_diciplinas(dic,prof);
+                }
+            }
         }
     }
     fclose(fd);
     free(dic);
+    fclose(fp);
+    free(prof);
 }
 
-// feito com a ajuda de marlison silva chat
+//feito com a ajuda de marlison silva chat
 
 void procura_diciplinas(int id){
     FILE *fd;
+    FILE *fp;
     Diciplina *dic;
-    int cont=0;
+    Professor *prof;
+    prof=(Professor*)malloc(sizeof(Professor));
     dic = (Diciplina *)malloc(sizeof(Diciplina));
     fd = fopen("Diciplina.dat", "rb");
-    if (dic == NULL){
-        printf("\nDiciplina não encontrada!\n");
+    fp=fopen("Professor.dat","rb");
+    int cont=0;
+    if ((fd == NULL) || (fp==NULL)){
+        printf("\nNenhuma diciplina cadastrada ou nenhum professor no sistema!\n");
         return;
     }
-    if (fd == NULL){
-        printf("\nNenhuma diciplina cadastrado!\n");
-        return;
-    }
+    //irá realizar a leitura de ambos os arquivos
     while (fread(dic, sizeof(Diciplina), 1, fd)){
-        if ((dic->id == id) && (dic->status)){
-            exibir_diciplinas(dic);
-            cont++;
+        if ((dic->status != 'I') && (dic->id==id)){
+            while(fread(prof, sizeof(Professor), 1, fp)){
+                if (((strcmp(prof->cpf,dic->cpf)==0))){
+                    exibir_diciplinas(dic,prof);
+                    cont++;
+                }
+            }
         }
     }if(!cont){
         printf("\nEssa diciplina não existe no sistema ou ainda não foi cadastrado!\n");
     }
     fclose(fd);
     free(dic);
+    free(prof);
+    fclose(fp);
 }
 
 // feito com a ajuda de marlison silva chat gpt e adapatada por matheus diniz
 void remover_diciplinas(int id){
     FILE *fd;
     Diciplina *dic;
-    int cont=0;
     dic = (Diciplina *)malloc(sizeof(Diciplina));
     fd = fopen("Diciplina.dat", "r+b");
+    int cont=0;
     if (fd == NULL){
         printf("\nNenhuma diciplina cadastrada!\n");
         return;
     }
     while (fread(dic, sizeof(Diciplina), 1, fd)){
-        if ((dic->id == id) && dic->status == 'A'){
+        if ((dic->id == id) && (dic->status == 'A')){
             cont++;
             dic->status = 'I';
             fseek(fd, -1 * (long)sizeof(Diciplina), SEEK_CUR);
             fwrite(dic, sizeof(Diciplina), 1, fd);
             printf("\nDiciplina excluída!\n");
-            break; // Encerre o loop após a exclusão
+            break;
         }
     }
     if (!cont){
@@ -423,68 +452,72 @@ void remover_diciplinas(int id){
 }
 void att_diciplinas(int id){
     FILE *fd;
+    FILE *fp;
     Diciplina *dic;
-    int cont=0;
-    int esc=-1;
+    Professor *prof;
+    prof=(Professor*)malloc(sizeof(Professor));
     dic = (Diciplina *)malloc(sizeof(Diciplina));
-    fd = fopen("Diciplina.dat", "r+b");
-    if (fd == NULL){
-        printf("\nNenhuma diciplina cadastrada!\n");
+    fd = fopen("Diciplina.dat", "rb");
+    fp=fopen("Professor.dat","rb");
+    int esc=-1;
+    int cont=0;
+    if ((fd == NULL) || (fp==NULL)){
+        printf("\nNenhuma diciplina cadastrada ou nenhum professor cadastrado no sistema!\n");
         return;
     }
     while (fread(dic, sizeof(Diciplina), 1, fd)){
         if ((dic->id == id) && dic->status == 'A'){
-            cont++;
-            do{
-                esc=-1;
-                system("clear||cls");
-                printf("========================================================\n");
-                printf("   *************** Atualizar Diciplina ***************      \n");
-                printf("                                                        \n");
-                printf("               o que deseja atualizar?                  \n");
-                printf("        Professor[\033[31m1\033[0m] - Diciplina[\033[31m2\033[0m] - Voltar[\033[31m0\033[0m]\n");
-                printf("                                                        \n");
-                printf("Dados cadastrados no sistema:\n");
-                printf("\nCPF do professor:%s\n", dic->cpf);
-                printf("\nNome da(s) Diciplina(s):%s\n", dic->diciplina);
-                printf("========================================================\n");
-                printf("\n");
-                printf("Qual opção deseja atualizar:");
-                fflush(stdin);
-                scanf("%d", &esc);
-                getchar();
-                fflush(stdin);
-                switch (esc){
-                    case 1:
-                        ler_nome(dic->cpf);
-                        printf("Alteração realizada!\n");
-                        printf("\nDigite enter para continuar...");
+            while(fread(prof, sizeof(Professor), 1, fp)){
+                if (((strcmp(prof->cpf,dic->cpf)==0))){
+                    cont++;
+                    do{
+                        esc=-1;
+                        system("clear||cls");
+                        printf("========================================================\n");
+                        printf("   *************** Atualizar Diciplina ***************      \n");
+                        printf("                                                        \n");
+                        printf("               o que deseja atualizar?                  \n");
+                        printf("              Diciplina[\033[31m1\033[0m] - Voltar[\033[31m0\033[0m]\n");
+                        printf("                                                        \n");
+                        printf("Dados cadastrados no sistema:\n");
+                        printf("Nome do professor:%s",prof->nome);
+                        printf("\nCPF do professor:%s", dic->cpf);
+                        printf("\nNome da(s) Diciplina(s):%s\n", dic->diciplina);
+                        printf("========================================================\n");
+                        printf("\n");
+                        printf("Qual opção deseja atualizar:");
+                        fflush(stdin);
+                        scanf("%d", &esc);
                         getchar();
-                        break;
-                    case 2:
-                        diciplinas();
-                        ler_diciplinas(dic->diciplina);
-                        printf("Alteração realizada!\n");
-                        printf("\nDigite enter para continuar...");
-                        getchar();
-                        break;
-                    case 0:
-                        break;
-                    default:
-                        printf("\nOpção Inválida!\n");
-                        printf("Digite enter para continuar...");
-                        getchar();
-                        break;
+                        fflush(stdin);
+                        switch (esc){
+                            case 1:
+                                diciplinas();
+                                ler_diciplinas(dic->diciplina);
+                                printf("Alteração realizada!\n");
+                                printf("\nDigite enter para continuar...");
+                                getchar();
+                                break;
+                            case 0:
+                                break;
+                            default:
+                                printf("\nOpção Inválida!\n");
+                                printf("Digite enter para continuar...");
+                                getchar();
+                                break;
+                        }
+                        fseek(fd, -1 * (long)sizeof(Diciplina), SEEK_CUR);
+                        fwrite(dic, sizeof(Diciplina), 1, fd);
+                        fclose(fd);
+                    } while (esc != 0);
                 }
-                fseek(fd, -1 * (long)sizeof(Diciplina), SEEK_CUR);
-                fwrite(dic, sizeof(Diciplina), 1, fd);
-                fclose(fd);
-            } while (esc != 0);
+            }if (!cont){
+                printf("Diciplina não encontrado!\n");
+            }
         }
-    }
-    if (!cont){
-        printf("Diciplina não encontrado!\n");
     }
     fclose(fd);
     free(dic);
+    fclose(fp);
+    free(prof);
 }
