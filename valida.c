@@ -178,7 +178,7 @@ void ler_cpf(char cpf[]) {
     //função reutilizável para realizar a leitura do cpf
     int c;
     do{
-        printf("Digite o seu CPF: ");
+        printf("Digite o CPF: ");
         scanf("%s", cpf);
         //função utilizada para limpar o buffer
         limpar_buffer();
@@ -401,4 +401,18 @@ int valida_s_ou_n(char escolha) {
         return 0;
     }
     return 1;
+}
+
+int decidir_excluir(void){
+    char delete;
+    do{
+        printf("\nCerteza que deseja excluir? (S/N)");
+        scanf("%c", &delete);
+        letra_maiuscula(&delete);
+        getchar();
+        if (!valida_s_ou_n(delete)) {
+            printf("Digite algo válido (S/N)!\n");
+        }
+    }while (delete != 'S' && delete != 'N'); 
+    return (delete == 'S');
 }
