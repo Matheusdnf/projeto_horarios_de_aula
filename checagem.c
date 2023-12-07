@@ -72,30 +72,31 @@ void listar_turma_cadastradas_alt(void){
 
 // verifica se existe algum professor cadastrado no sistema
 // evitar cpf iguais no sistema
-int verifica_existe_prof_d(char cpf[]){
-    FILE *fp;
-    Professor *prof;
-    int encontrado = 0;
-    prof = (Professor *)malloc(sizeof(Professor));
-    fp = fopen("Professor.dat", "rb");
-    if (fp == NULL){
-        printf("Nenhum professor cadastrado!\n");
-        return 1;
-    }
-    while (!feof(fp)){
-        fread(prof, sizeof(Professor), 1, fp);
-        if ((strcmp(prof->cpf, cpf) == 0) && (prof->status == 'A')){
-            encontrado = 1;
-            return 1;
-        }
-    }
-    if (!encontrado){
-        return 0;
-    }
-    fclose(fp);
-    free(prof);
-    return 0;
-}
+//verificar se ainda será útil
+// int verifica_existe_prof_d(char cpf[]){
+//     FILE *fp;
+//     Professor *prof;
+//     int encontrado = 0;
+//     prof = (Professor *)malloc(sizeof(Professor));
+//     fp = fopen("Professor.dat", "rb");
+//     if (fp == NULL){
+//         printf("Nenhum professor cadastrado!\n");
+//         return 1;
+//     }
+//     while (!feof(fp)){
+//         fread(prof, sizeof(Professor), 1, fp);
+//         if ((strcmp(prof->cpf, cpf) == 0) && (prof->status == 'A')){
+//             encontrado = 1;
+//             return 1;
+//         }
+//     }
+//     if (!encontrado){
+//         return 0;
+//     }
+//     fclose(fp);
+//     free(prof);
+//     return 0;
+// }
 
 // verificar se o aluno já existe no sistema
 // evitar cpf iguais
@@ -108,7 +109,7 @@ int verifica_existe_aluno(char cpf[]){
         return 1;
     }
     while (fread(std, sizeof(Aluno), 1, fa)){
-        if ((strcmp(std->cpf, cpf) == 0)){
+        if ((std->status!='I') && (strcmp(std->cpf, cpf) == 0)){
             return 0;
         }
     }
@@ -144,10 +145,6 @@ int verifica_existe_d(char diciplina[]){
     int encontrado = 0;
     dic = (Diciplina *)malloc(sizeof(Diciplina));
     fd = fopen("Diciplina.dat", "rb");
-    if (fd == NULL){
-        printf("Erro ao abrir o arquivo!\n");
-        return 1;
-    }
     while (!feof(fd)){
         fread(dic, sizeof(Diciplina), 1, fd);
         if ((strcmp(dic->diciplina, diciplina) == 0) && (dic->status == 'A')){
@@ -169,16 +166,28 @@ int verifica_existe_prof(char cpf[]){
     Professor *prof;
     prof = (Professor *)malloc(sizeof(Professor));
     fp = fopen("Professor.dat", "rb");
-    if (fp == NULL){
-        return 1;
-    }
     while (fread(prof, sizeof(Professor), 1, fp)){
-        if ((strcmp(prof->cpf, cpf) == 0)){
+        if ( (prof->status !='I') && (strcmp(prof->cpf, cpf) == 0)){
             return 0;
         }
     }
     fclose(fp);
     free(prof);
+    return 1;
+}
+
+int verifica_existe_prof_diciplina(char cpf[]){
+    FILE *fd;
+    Diciplina *dic;
+    dic = (Diciplina *)malloc(sizeof(Diciplina));
+    fd = fopen("Diciplina.dat", "rb");
+    while (fread(dic, sizeof(Professor), 1, fd)){
+        if ((strcmp(dic->cpf, cpf) == 0)){
+            return 0;
+        }
+    }
+    fclose(fd);
+    free(dic);
     return 1;
 }
 
@@ -194,10 +203,8 @@ void exibicao_professores_alt(Professor *prof){
         printf("\nEste Professor não existe no sistema!\n");
     }
     else{
-        printf("Dados do professores cadastrados:\n");
         printf("\nNome:%s", prof->nome);
-        printf("\nCPF:%s\n", prof->cpf);
-        printf("\n");
+        printf("\nCPF:%s\n\n", prof->cpf);
         if (prof->status == 'A'){
             strcpy(estado, "Professor Ativo");
         }
@@ -219,6 +226,7 @@ void listar_todos_professor_alt(void){
     }
     while (fread(prof, sizeof(Professor), 1, fp)){
         if (prof->status != 'I'){
+            printf("Dados do professores já cadastrados:\n");
             exibicao_professores_alt(prof);
         }
     }
@@ -232,7 +240,7 @@ int verificar_turma_existente(char cod[]){
     t = (Turma *)malloc(sizeof(Turma));
     ft = fopen("Turma.dat", "rb");
     while (fread(t, sizeof(Turma), 1, ft)){
-        if ((strcmp(t->cod,cod)==0)){
+        if ((t->status!='I') && (strcmp(t->cod,cod)==0)){
             return 0;
         }
     }
