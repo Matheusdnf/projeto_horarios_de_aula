@@ -510,6 +510,7 @@ void att_diciplinas(int id){
                         fwrite(dic, sizeof(Diciplina), 1, fd);
                         fclose(fd);
                     } while (esc != 0);
+                    break;
                 }
             }if (!cont){
                 printf("Diciplina não encontrado!\n");

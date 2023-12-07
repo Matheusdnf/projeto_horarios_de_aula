@@ -335,8 +335,8 @@ void att_turma(char *cod){
                 }
                 fseek(ft, -1 * (long)sizeof(Turma), SEEK_CUR);
                 fwrite(t, sizeof(Turma), 1, ft);
-                fclose(ft);
             } while (esc != 0);
+            break;
         }
     }
     if (!encontra){

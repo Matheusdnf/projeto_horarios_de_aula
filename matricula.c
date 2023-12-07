@@ -350,54 +350,55 @@ void att_matricula(char *cpf){
             while(fread(std,sizeof(Aluno),1,fa)){
                 if(((strcmp(matri->cpf,std->cpf)==0))){
                     cont++;
-                do{
-                    esc=-1;
-                    system("clear||cls");
-                    printf("========================================================\n");
-                    printf("   *************** Atualizar Matricula ***************      \n");
-                    printf("                                                        \n");
-                    printf("               o que deseja atualizar?                  \n");
-                    printf(" Atualizar turma[\033[31m1\033[0m] - Voltar[\033[31m0\033[0m]    \n");
-                    printf("                                                        \n");
-                    printf("Nome do aluno:%s",std->nome);
-                    printf("Dados cadastrados no sistema:\n");
-                    printf("Código da Turma:%s\n", matri->cod);
-                    printf("CPF do aluno:%s\n", matri->cpf);
-                    printf("========================================================\n");
-                    printf("\n");
-                    printf("Qual opção deseja atualizar:");
-                    fflush(stdin);
-                    scanf("%d", &esc);
-                    fflush(stdin);
-                    switch (esc){
-                        case 1:
-                            ler_turma(matri->cod);
-                            printf("\nAlteração realizada!\n");
-                            printf("\nDigite enter para continuar...");
-                            getchar();
-                            break;
-                        case 0:
-                            break;
-                        default:
-                            printf("\nOpção Inválida!\n");
-                            printf("Digite enter para continuar...");
-                            getchar();
-                            break;
-                    }
-                    fseek(fm, -1 * (long)sizeof(Matricula), SEEK_CUR);
-                    fwrite(matri, sizeof(Matricula), 1, fm);
-                    fclose(fm);
-                } while (esc != 0);
+                    do{
+                        esc=-1;
+                        system("clear||cls");
+                        printf("========================================================\n");
+                        printf("   *************** Atualizar Matricula ***************      \n");
+                        printf("                                                        \n");
+                        printf("               o que deseja atualizar?                  \n");
+                        printf(" Atualizar turma[\033[31m1\033[0m] - Voltar[\033[31m0\033[0m]    \n");
+                        printf("                                                        \n");
+                        printf("Dados cadastrados no sistema:\n");
+                        printf("Nome do aluno:%s\n",std->nome);
+                        printf("Código da Turma:%s\n", matri->cod);
+                        printf("CPF do aluno:%s\n", matri->cpf);
+                        printf("========================================================\n");
+                        printf("\n");
+                        printf("Qual opção deseja atualizar:");
+                        fflush(stdin);
+                        scanf("%d", &esc);
+                        fflush(stdin);
+                        switch (esc){
+                            case 1:
+                                ler_turma(matri->cod);
+                                printf("\nAlteração realizada!\n");
+                                printf("\nDigite enter para continuar...");
+                                getchar();
+                                break;
+                            case 0:
+                                break;
+                            default:
+                                printf("\nOpção Inválida!\n");
+                                printf("Digite enter para continuar...");
+                                getchar();
+                                break;
+                        }
+                        fseek(fm, -1 * (long)sizeof(Matricula), SEEK_CUR);
+                        fwrite(matri, sizeof(Matricula), 1, fm);
+                    } while (esc != 0);
+                    break;
+                }
+            }if (!cont){
+                printf("Turma não encontrada!\n");
             }
-        }if (!cont){
-            printf("Turma não encontrada!\n");
         }
+    
     }
     fclose(fm);
     free(matri);
     fclose(fa);
     free(std);    
-}
 }
 
 

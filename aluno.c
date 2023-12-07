@@ -358,8 +358,8 @@ void att_aluno(char cpf[]){
                 }
                 fseek(fa, -1 * (long)sizeof(Aluno), SEEK_CUR);
                 fwrite(std, sizeof(Aluno), 1, fa);
-                fclose(fa);
             } while (esc != 0);
+            break;
         }
     }
     if (!cont){
