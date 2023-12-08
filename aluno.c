@@ -63,7 +63,6 @@ Aluno *cadastrar_aluno(void){
     Aluno *std;
     char nome[100];
     char email[225];
-    char escolha;
     std = (Aluno *)malloc(sizeof(Aluno));
     printf("\n");
     printf("========================================================\n");
@@ -75,22 +74,10 @@ Aluno *cadastrar_aluno(void){
         if (!verifica_existe_aluno(std->cpf)) {
             printf("Aluno já cadastrado com esse CPF!\n");
             //caso já o usuário vai ter a chance de tentar novamente
-            do {
-                printf("Deseja tentar novamente (S/N)? ");
-                scanf(" %c", &escolha);  
-                letra_maiuscula(&escolha); 
-                getchar();
-                //validar a resposta 
-                if (!valida_s_ou_n(escolha)) {
-                    printf("Digite algo válido (S/N)!\n");
-                }
-                //enquanto o usário digitar "N" o laço continuará
-            //desenvolvido com o auxílio do chat gpt
-            //permitir o usuário digitar novamente ou sair do loop
-            } while (escolha != 'S' && escolha != 'N'); 
+            char resposta=obter_resposta();
             //Caso ele digite algo diferente de "S" no caso "N"
             //quer dizer que ele não quer mais digitar o cpf e irá retornar NULL
-            if (escolha == 'N') {
+            if (resposta == 'N') {
                 return NULL;  
             }
             //Caso o aluno com o cpf em questão não estiver cadastrado o loop se encerará
@@ -121,7 +108,7 @@ Aluno *cadastrar_aluno(void){
 
 void buscar_aluno(void){
     system("clear||cls");
-    char cpf[12];
+    char cpf[15];
     printf("========================================================\n");
     printf("    *************** Pesquisar Aluno *************     \n\n");
     printf("                                                        \n");
@@ -136,7 +123,7 @@ void buscar_aluno(void){
 
 void atualizar_aluno(void){
     system("clear||cls");
-    char cpf[12];
+    char cpf[15];
     printf("========================================================\n");
     printf("    *************** Atualizar Aluno *************     \n\n");
     printf("                                                        \n");
@@ -154,7 +141,7 @@ void atualizar_aluno(void){
 
 void excluir_aluno(){
     system("clear||cls");
-    char cpf[12];
+    char cpf[15];
     printf("========================================================\n");
     printf("    *************** Excluir Aluno *************       \n\n");
     printf("                                                        \n");
@@ -334,18 +321,18 @@ void att_aluno(char cpf[]){
                 printf("Qual opção deseja atualizar:");
                 fflush(stdin);
                 scanf("%d", &esc);
-                fflush(stdin);
+                limpar_buffer();
                 switch (esc){
                     case 1:
                         ler_telefone(std->telefone);
-                        printf("\nAlteração realizada!\n");
-                        printf("\nDigite enter para continuar...");
+                        printf("Alteração realizada!\n");
+                        printf("Digite enter para continuar...");
                         getchar();
                         break;
                     case 2:
                         ler_email(std->email);
-                        printf("\nAlteração realizada!\n");
-                        printf("\nDigite enter para continuar...");
+                        printf("Alteração realizada!\n");
+                        printf("Digite enter para continuar...");
                         getchar();
                         break;
                     case 0:
@@ -353,7 +340,6 @@ void att_aluno(char cpf[]){
                     default:
                         printf("\nOpção Inválida!\n");
                         printf("Digite enter para continuar...");
-                        getchar();
                         break;
                 }
                 fseek(fa, -1 * (long)sizeof(Aluno), SEEK_CUR);

@@ -1,6 +1,6 @@
 #include "professor.h"
 #include "valida.h"
-#include "diciplina.h"
+#include "disciplina.h"
 #include "checagem.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -64,30 +64,20 @@ Professor *cadastrar_professor(void){
     Professor *prof;
     char nome[100];
     char email[225];
-    char escolha;
     prof = (Professor*)malloc(sizeof(Professor));
     printf("\n");
     printf("========================================================\n\n");
     printf("   *************** Cadastrar Professor ***************  \n\n");
     do{
+        //leitura do cpf
         ler_cpf(prof->cpf);
         if(!verifica_existe_prof(prof->cpf)){
             printf("Professor já cadastrado com esse cpf!\n");
             //caso já o usuário vai ter a chance de tentar novamente
-            do {
-                printf("Deseja tentar novamente (S/N)? ");
-                scanf(" %c", &escolha); 
-                letra_maiuscula(&escolha); 
-                getchar();
-                //validar a resposta 
-                if (!valida_s_ou_n(escolha)) {
-                    printf("Digite algo válido (S/N)!\n");
-                }
-                //enquanto o usário digitar "N" o laço continuará
-            } while (escolha != 'S' && escolha != 'N'); 
+            char resposta=obter_resposta();
             //Caso ele digite algo diferente de "S" no caso "N"
             //quer dizer que ele não quer mais digitar o cpf e irá retornar NULL
-            if (escolha == 'N') {
+            if (resposta == 'N') {
                 return NULL;  
             }
             //Caso o aluno com o cpf em questão não estiver cadastrado o loop se encerará
@@ -117,7 +107,7 @@ Professor *cadastrar_professor(void){
 
 void buscar_professor(void){
     system("clear||cls");
-    char cpf[12];
+    char cpf[15];
     printf("========================================================\n");
     printf("    *************** Buscar Professor *************    \n\n");
     printf("                                                        \n");
@@ -131,7 +121,7 @@ void buscar_professor(void){
 
 void atualizar_professor(void){
     system("clear||cls");
-    char cpf[12];
+    char cpf[15];
     printf("========================================================\n");
     printf("   *************** Atualizar Professor *************   \n\n");
     printf("                                                        \n");
@@ -142,14 +132,13 @@ void atualizar_professor(void){
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    getchar();
     printf("Digite enter para continuar...");
     getchar();
 }
 
 void excluir_professor(void){
     system("clear||cls");
-    char cpf[12];
+    char cpf[15];
     printf("========================================================\n");
     printf("    *************** Excluir Professor *************     \n\n");
     printf("                                                        \n");

@@ -61,8 +61,8 @@ void menu_matricula(void){
 
 Matricula *cadastrar_matricula(void){
     system("clear||cls");
-    char escolha;
     Matricula* matri; //t-turm
+    char resposta;
     matri = (Matricula *)malloc(sizeof(Matricula));
     printf("========================================================\n");
     printf("    ************* Cadastrar matricula *************     \n\n");
@@ -77,8 +77,6 @@ Matricula *cadastrar_matricula(void){
         printf("\nNenhuma Turma ou aluno cadastrado no sistema!\n");
         getchar();
         getchar();
-        fclose(fa);
-        fclose(ft);
         return NULL;
     }
     do{
@@ -87,20 +85,10 @@ Matricula *cadastrar_matricula(void){
         //verifica se o aluno com o cpf digitado já foi realizada a matrícula
         if((verifica_existe_aluno(matri->cpf)) || (!verifica_aluno_matriculado(matri->cpf))){
             printf("Aluno não cadastrado ou sua matrícula já foi realizada!");
-            do{
-                printf("\nDeseja tentar novamente (S/N)? ");
-                scanf(" %c", &escolha); 
-                letra_maiuscula(&escolha); 
-                fflush(stdin); 
-                //validar a resposta 
-                if (!valida_s_ou_n(escolha)) {
-                    printf("Digite algo válido (S/N)!\n");
-                }
-                //enquanto o usário digitar "N" o laço continuará
-            } while ((escolha != 'S' && escolha != 'N'));
+            resposta=obter_resposta();
             //Caso ele digite algo diferente de "S" no caso "N"
             //quer dizer que ele não quer mais digitar o cpf e irá retornar NULL
-            if (escolha == 'N') {
+            if (resposta == 'N') {
                 return NULL;  
             }
             //Caso o aluno com o cpf em questão não estiver cadastrado o loop se encerará
@@ -109,26 +97,16 @@ Matricula *cadastrar_matricula(void){
         }
     }while (1);
     //lista todas as turmas cadastradas
+    printf("Turmas cadastradas!\n");
+    tela_turma();
     listar_turma_cadastradas_alt();
     do{
         ler_turma(matri->cod);
         //verificação se a turma existe
         if(verificar_turma_existente(matri->cod)){
             printf("Turma não cadastrada!");
-            do{
-                printf("\nDeseja tentar novamente (S/N)? ");
-                scanf(" %c", &escolha); 
-                letra_maiuscula(&escolha); 
-                fflush(stdin); 
-                //validar a resposta 
-                if (!valida_s_ou_n(escolha)) {
-                    printf("Digite algo válido (S/N)!\n");
-                }
-                //enquanto o usário digitar "N" o laço continuará
-            } while ((escolha != 'S' && escolha != 'N'));
-            //Caso ele digite algo diferente de "S" no caso "N"
-            //quer dizer que ele não quer mais digitar o cpf e irá retornar NULL
-            if (escolha == 'N') {
+            resposta=obter_resposta();
+            if (resposta == 'N') {
                 return NULL;  
             }
             //Caso o aluno com o cpf em questão não estiver cadastrado o loop se encerará
@@ -150,7 +128,7 @@ Matricula *cadastrar_matricula(void){
 
 void buscar_matricula(void){
     system("clear||cls");
-    char cpf[12]; //buscar o cpf do aluno para exibir em que turma está
+    char cpf[15]; //buscar o cpf do aluno para exibir em que turma está
     printf("========================================================\n");
     printf("    *************** Pesquisar Matricula *************     \n\n");
     printf("                                                        \n");
@@ -165,7 +143,7 @@ void buscar_matricula(void){
 
 void atualizar_matricula(void){
     system("clear||cls");
-    char cpf[12];
+    char cpf[15];
     printf("========================================================\n");
     printf("    *************** Atualizar Matricula *************     \n\n");
     printf("                                                        \n");
@@ -182,7 +160,7 @@ void atualizar_matricula(void){
 
 void excluir_matricula(void){
     system("clear||cls");
-    char cpf[12];
+    char cpf[15];
     printf("========================================================\n");
     printf("    *************** Excluir Matricula *************       \n\n");
     printf("                                                        \n");
@@ -389,11 +367,10 @@ void att_matricula(char *cpf){
                     } while (esc != 0);
                     break;
                 }
-            }if (!cont){
-                printf("Turma não encontrada!\n");
             }
         }
-    
+    }if (!cont){
+        printf("Turma não encontrada!\n");
     }
     fclose(fm);
     free(matri);

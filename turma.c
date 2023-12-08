@@ -68,7 +68,6 @@ void tela_turma(void){
 Turma *cadastrar_turma(void){
     system("clear||cls");
     char nome[100];
-    char escolha;
     Turma* t; //t-turm
     t = (Turma *)malloc(sizeof(Turma));
     printf("\n");
@@ -79,20 +78,10 @@ Turma *cadastrar_turma(void){
         ler_turma(t->cod);
         if(!verificar_turma_existente(t->cod)){
             printf("Turma já cadastrada!\n");
-            do{
-                printf("Deseja tentar novamente (S/N)? ");
-                scanf(" %c", &escolha);  
-                letra_maiuscula(&escolha); 
-                getchar();
-                //validar a resposta 
-                if (!valida_s_ou_n(escolha)) {
-                    printf("Digite algo válido (S/N)!\n");
-                }
-                //enquanto o usário digitar "N" o laço continuará
-            } while (escolha != 'S' && escolha != 'N'); 
+            char resposta=obter_resposta();
             //Caso ele digite algo diferente de "S" no caso "N"
             //quer dizer que ele não quer mais digitar o cpf e irá retornar NULL
-            if (escolha == 'N') {
+            if (resposta == 'N') {
                 return NULL;  
             }
         //Caso a turma em questão não estiver cadastrado o loop se encerará
@@ -123,6 +112,7 @@ void buscar_turma(void){
     printf("========================================================\n");
     printf("    *************** Pesquisar Turma *************     \n\n");
     printf("                                                        \n");
+    tela_turma();
     ler_turma(cod);
     procura_turma(cod);
     printf("                                                        \n");
@@ -141,6 +131,7 @@ void atualizar_turma(void){
     printf("                                                        \n");
     printf("      Informe o código da Turma que será atualizada     \n");
     printf("                                                        \n");
+    tela_turma();
     ler_turma(cod);
     att_turma(cod);
     printf("                                                        \n");
@@ -157,6 +148,7 @@ void excluir_turma(){
     printf("========================================================\n");
     printf("    *************** Excluir Turma *************       \n\n");
     printf("                                                        \n");
+    tela_turma();
     ler_turma(cod);
     procura_turma(cod);
     if(decidir_excluir()){
