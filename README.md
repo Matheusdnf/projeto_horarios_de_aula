@@ -1,3 +1,5 @@
+![projeto2](https://github.com/Matheusdnf/projeto_horarios_de_aula/assets/142422460/ad07d984-9941-4a9e-bc32-38a912675a1e)
+
 # Projeto_horarios_de_aula
 Tratá-se de um sitesma de gestão de horário de aula\
 Desenvolvido em linguagem C
