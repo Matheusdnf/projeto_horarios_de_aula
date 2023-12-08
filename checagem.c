@@ -1,6 +1,6 @@
 #include "aluno.h"
 #include "professor.h"
-#include "diciplina.h"
+#include "disciplina.h"
 #include "horario.h"
 #include "valida.h"
 #include "turma.h"
@@ -10,45 +10,6 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
-
-// exibir infomações cadastras no módulo diciplina
-void exibir_diciplinas_alt(Diciplina *dic){
-    char estado[16];
-    if ((dic == NULL) || (dic->status == 'I')){
-        printf("\nEsta Diciplinas não foi cadastrada no sistema!\n");
-    }
-    else{
-        printf("Informações da diciplina:");
-        printf("\nCPF do Professor:%s\n", dic->cpf);
-        printf("Nome da diciplina:%s\n", dic->diciplina);
-        printf("\n");
-        if (dic->status == 'A'){
-            strcpy(estado, "Diciplina Ativa");
-        }
-        else if (dic->status == 'I'){
-            strcpy(estado, "Fechada");
-        }
-    }
-}
-
-// listar todas as diciplinas
-void listar_todos_diciplina_alt(void){
-    FILE *fd;
-    Diciplina *dic;
-    dic = (Diciplina *)malloc(sizeof(Diciplina));
-    fd = fopen("Diciplina.dat", "rb");
-    if (fd == NULL){
-        printf("\nNenhuma diciplina cadastrada!\n");
-        return;
-    }
-    while (fread(dic, sizeof(Diciplina), 1, fd)){
-        if (dic->status != 'I'){
-            exibir_diciplinas_alt(dic);
-        }
-    }
-    fclose(fd);
-    free(dic);
-}
 
 void listar_turma_cadastradas_alt(void){
     FILE *ft;
@@ -63,137 +24,11 @@ void listar_turma_cadastradas_alt(void){
     printf("Informação da turma:\n");
     while (fread(t, sizeof(Turma), 1, ft)){
         if (t->status == 'A'){
-            printf("\nNome da turma:%s|Turma:%s\n", t->nome,t->cod);
+            printf("Nome da turma:%s|Turma:%s\n", t->nome,t->cod);
         }
     }
     fclose(ft);
     free(t);
-}
-
-// verifica se existe algum professor cadastrado no sistema
-// evitar cpf iguais no sistema
-//verificar se ainda será útil
-// int verifica_existe_prof_d(char cpf[]){
-//     FILE *fp;
-//     Professor *prof;
-//     int encontrado = 0;
-//     prof = (Professor *)malloc(sizeof(Professor));
-//     fp = fopen("Professor.dat", "rb");
-//     if (fp == NULL){
-//         printf("Nenhum professor cadastrado!\n");
-//         return 1;
-//     }
-//     while (!feof(fp)){
-//         fread(prof, sizeof(Professor), 1, fp);
-//         if ((strcmp(prof->cpf, cpf) == 0) && (prof->status == 'A')){
-//             encontrado = 1;
-//             return 1;
-//         }
-//     }
-//     if (!encontrado){
-//         return 0;
-//     }
-//     fclose(fp);
-//     free(prof);
-//     return 0;
-// }
-
-// verificar se o aluno já existe no sistema
-// evitar cpf iguais
-int verifica_existe_aluno(char cpf[]){
-    FILE *fa;
-    Aluno *std;
-    std = (Aluno *)malloc(sizeof(Aluno));
-    fa = fopen("Alunos.dat", "rb");
-    if (fa == NULL){
-        return 1;
-    }
-    while (fread(std, sizeof(Aluno), 1, fa)){
-        if ((std->status!='I') && (strcmp(std->cpf, cpf) == 0)){
-            return 0;
-        }
-    }
-    fclose(fa);
-    free(std);
-    return 1;
-}
-
-int verifica_aluno_matriculado(char cpf[]){
-    FILE *fm;
-    Matricula *matri;
-    matri = (Matricula *)malloc(sizeof(Matricula));
-    fm = fopen("Matricula.dat", "rb");
-    if (fm == NULL){
-        return 1;
-    }
-    while (fread(matri, sizeof(Matricula), 1, fm)){
-        if ((strcmp(matri->cpf, cpf) == 0)){
-            return 0;
-        }
-    }
-    fclose(fm);
-    free(matri);
-    return 1;
-}
-
-
-// verificar se existe alguma diciplina já cadastrada
-// evitar repetição e informações não válidas
-int verifica_existe_d(char diciplina[]){
-    FILE *fd;
-    Diciplina *dic;
-    int encontrado = 0;
-    dic = (Diciplina *)malloc(sizeof(Diciplina));
-    fd = fopen("Diciplina.dat", "rb");
-    while (!feof(fd)){
-        fread(dic, sizeof(Diciplina), 1, fd);
-        if ((strcmp(dic->diciplina, diciplina) == 0) && (dic->status == 'A')){
-            encontrado = 1;
-            return 1;
-        }
-    }
-    if (!encontrado){
-        return 0;
-    }
-    fclose(fd);
-    free(dic);
-    return 0;
-}
-
-// verificar se o problemas já existe no sistema
-int verifica_existe_prof(char cpf[]){
-    FILE *fp;
-    Professor *prof;
-    prof = (Professor *)malloc(sizeof(Professor));
-    fp = fopen("Professor.dat", "rb");
-    while (fread(prof, sizeof(Professor), 1, fp)){
-        if ( (prof->status !='I') && (strcmp(prof->cpf, cpf) == 0)){
-            return 0;
-        }
-    }
-    fclose(fp);
-    free(prof);
-    return 1;
-}
-
-int verifica_existe_prof_diciplina(char cpf[]){
-    FILE *fd;
-    Diciplina *dic;
-    dic = (Diciplina *)malloc(sizeof(Diciplina));
-    fd = fopen("Diciplina.dat", "rb");
-    while (fread(dic, sizeof(Professor), 1, fd)){
-        if ((strcmp(dic->cpf, cpf) == 0)){
-            return 0;
-        }
-    }
-    fclose(fd);
-    free(dic);
-    return 1;
-}
-
-// explicação ilustrativa dos horários
-void explicacao(void){
-    printf("\x1B[31mperiodo\x1B[0m/\x1B[31mdia da semana\x1B[0m/\x1B[31mtempo(M,T,N)\x1B[0m/\x1B[31mDisciplina\x1B[0m\n");
 }
 
 // exibição de informações específicas do professor
@@ -234,11 +69,72 @@ void listar_todos_professor_alt(void){
     free(prof);
 }
 
+//verificar se existe i cpf do aluno repetido
+int verifica_existe_aluno(char cpf[]){
+    FILE *fa;
+    Aluno *std;
+    std = (Aluno *)malloc(sizeof(Aluno));
+    fa = fopen("Alunos.dat", "rb");
+    if (fa == NULL){
+        return 1;
+    }
+    while (fread(std, sizeof(Aluno), 1, fa)){
+        if ((std->status!='I') && (strcmp(std->cpf, cpf) == 0)){
+            return 0;
+        }
+    }
+    fclose(fa);
+    free(std);
+    return 1;
+}
+
+//verificar se existe professor com o cpf repetido
+int verifica_existe_prof(char cpf[]){
+    FILE *fp;
+    Professor *prof;
+    prof = (Professor *)malloc(sizeof(Professor));
+    fp = fopen("Professor.dat", "rb");
+    if(fp==NULL){
+        return 1;
+    }
+    while (fread(prof, sizeof(Professor), 1, fp)){
+        if ((prof->status !='I') && (strcmp(prof->cpf, cpf) == 0)){
+            return 0;
+        }
+    }
+    fclose(fp);
+    free(prof);
+    return 1;
+}
+
+//verificar se existe algum cpf igual já cadastrado
+int verifica_aluno_matriculado(char cpf[]){
+    FILE *fm;
+    Matricula *matri;
+    matri = (Matricula *)malloc(sizeof(Matricula));
+    fm = fopen("Matricula.dat", "rb");
+    if (fm == NULL){
+        return 1;
+    }
+    while (fread(matri, sizeof(Matricula), 1, fm)){
+        if ((strcmp(matri->cpf, cpf) == 0)){
+            return 0;
+        }
+    }
+    fclose(fm);
+    free(matri);
+    return 1;
+}
+
+//verificar se a turma existe
 int verificar_turma_existente(char cod[]){
     FILE *ft;
     Turma *t; //t-turm
     t = (Turma *)malloc(sizeof(Turma));
     ft = fopen("Turma.dat", "rb");
+    if(ft==NULL){
+        return 1;
+    }
     while (fread(t, sizeof(Turma), 1, ft)){
         if ((t->status!='I') && (strcmp(t->cod,cod)==0)){
             return 0;
@@ -246,5 +142,44 @@ int verificar_turma_existente(char cod[]){
     }
     fclose(ft);
     free(t);
+    return 1;
+}
+
+void disciplina_por_professor(char cpf[]){
+    // validar se no cpf do professor tem a diciplina correspondente exibir um printf
+    FILE *fd;
+    Disciplina *dic;
+    fd=fopen("Disciplina.dat","rb");
+    dic=(Disciplina*)malloc(sizeof(Disciplina));
+    if(fd==NULL){
+        printf("Nenhuma diciplina foi atrelada a um professor");
+        return ;
+    }
+    while(fread(dic,sizeof(Disciplina),1,fd)){
+        if ((dic->status!='I') && (strcmp(dic->cpf,cpf)==0)){
+            printf("\n\033[1;34mDisciplinas lecionada(s) por este professor:\033[0m%s\n",dic->disciplina); 
+        }
+    }
+    fclose(fd);
+    free(dic);
+}
+
+int valida_diciplina_professor(char *disciplina,char cpf[]){
+    // validar se no cpf do professor tem a diciplina correspondente exibir um printf
+    FILE *fd;
+    Disciplina *dic;
+    fd=fopen("Disciplina.dat","rb");
+    dic=(Disciplina*)malloc(sizeof(Disciplina));
+    if(fd==NULL){
+        printf("Nenhuma diciplina foi atrelada a um professor");
+        return 1;
+    }
+    while(fread(dic,sizeof(Disciplina),1,fd)){
+        if ((dic->status!='I') && (strncmp(dic->disciplina,disciplina, strlen(disciplina)) == 0) && (strcmp(dic->cpf,cpf)==0)){
+            return 0;
+        }
+    }
+    fclose(fd);
+    free(dic);
     return 1;
 }
