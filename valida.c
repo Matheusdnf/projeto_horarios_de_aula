@@ -337,7 +337,6 @@ void letra_maiuscula(char* algo) {
 void ler_turma(char *turma){
     int t;
     do{
-        fflush(stdin);
         printf("Digite sua turma:");
         fgets(turma,5,stdin);
         //remover o \n
@@ -415,4 +414,20 @@ int decidir_excluir(void){
         }
     }while (delete != 'S' && delete != 'N'); 
     return (delete == 'S');
+}
+
+char obter_resposta() {
+    char escolha;
+    do {
+        printf("Deseja tentar novamente (S/N)? ");
+        scanf(" %c", &escolha);
+        letra_maiuscula(&escolha);
+        getchar();
+        // validar a resposta
+        if (!valida_s_ou_n(escolha)) {
+            printf("Digite algo válido (S/N)!\n");
+        }
+        
+    } while (escolha != 'S' && escolha != 'N');
+    return escolha;
 }
