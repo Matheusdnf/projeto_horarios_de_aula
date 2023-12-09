@@ -42,11 +42,8 @@ O projeto irá dispor de um make file, essas são algumas alternativas para cons
 gcc *.c -o projeto -Wall
 ./projeto
 ```
-```powershell
-LINUX
-make ou makefile
-```
-```powershell
-WINDOWS
-mingw32-make
-```
+
+<!--gcc *.c -o projeto -Wall-->
+
+<!--//break (nome da função)
+next-próxima linha-->

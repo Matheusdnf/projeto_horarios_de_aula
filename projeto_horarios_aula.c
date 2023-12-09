@@ -33,8 +33,7 @@ int main(void){
                 menu_matricula();
                 break;
             case 5:
-                menu_diciplinas();
-                menu_horario();
+                menu_disciplinas();
                 break;
             case 6:
                 menu_horario();
@@ -105,7 +104,7 @@ void menu_sobre(void){
     printf("                                                                                 \n");
     printf("  Projeto realizado para a diciplina de programação a qual buscar incoporar      \n");
     printf("  os principais módulos para uma gestão de horário de aula, sendo eles alunos,   \n");
-    printf("  professores e horários de aula.                                                \n");
+    printf("  professores,horários de aula...                                                \n");
     printf("                                                                                 \n");
     printf("=================================================================================\n");
     printf("Digite enter para continuar...");
@@ -119,7 +118,7 @@ void menu_equipe(void){
     printf("\n");
     printf("===========================================================================\n");
     printf("                                                                         \n");
-    printf("            ********* Sistema de Gestão Escolar **********               \n");
+    printf("            ********* Gestão de Horários De Aula **********               \n");
     printf("                                                                         \n");
     printf("            Este projeto foi desenvolvido por;                           \n");
     printf("                                                                         \n");
