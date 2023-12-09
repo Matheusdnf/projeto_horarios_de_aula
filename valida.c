@@ -337,9 +337,9 @@ void letra_maiuscula(char* algo) {
 void ler_turma(char *turma){
     int t;
     do{
+        fflush(stdin);
         printf("Digite sua turma:");
         fgets(turma,5,stdin);
-        //remover o \n
         turma[strlen(turma)-1]=0;
         t = valida_turma(turma);
         if (t == 0){
@@ -385,7 +385,7 @@ int valida_turma(char* turma){
             }
         }
     }
-    else if (turma[0] == 'M'){
+    else if (turma[0] == 'A'){
         for (int i = 1; i < 4; i++){
             if ((atoi(&turma[1])== i)){
                 return 1;
@@ -408,7 +408,7 @@ int decidir_excluir(void){
         printf("\nCerteza que deseja excluir? (S/N)");
         scanf("%c", &delete);
         letra_maiuscula(&delete);
-        getchar();
+        limpar_buffer();
         if (!valida_s_ou_n(delete)) {
             printf("Digite algo válido (S/N)!\n");
         }
@@ -416,13 +416,12 @@ int decidir_excluir(void){
     return (delete == 'S');
 }
 
-char obter_resposta() {
+char obter_resposta(void) {
     char escolha;
     do {
         printf("Deseja tentar novamente (S/N)? ");
         scanf(" %c", &escolha);
         letra_maiuscula(&escolha);
-        getchar();
         // validar a resposta
         if (!valida_s_ou_n(escolha)) {
             printf("Digite algo válido (S/N)!\n");
@@ -431,3 +430,20 @@ char obter_resposta() {
     } while (escolha != 'S' && escolha != 'N');
     return escolha;
 }
+
+char escolher_filtro(void){
+    char situ;
+    do{
+        printf("Digite qual situação deseja ver (A-Ativo|I-Inativos):");
+        scanf(" %c",&situ);
+        letra_maiuscula(&situ);
+        if(situ!='A' && situ!='I'){
+            printf("Digite algo válido\n");
+        }
+        else{
+        limpar_buffer();
+        }
+    }while (situ != 'A' && situ != 'I');
+    return situ;
+}
+
