@@ -129,7 +129,7 @@ void atualizar_turma(void){
     printf("========================================================\n");
     printf("    *************** Atualizar Turma *************     \n\n");
     printf("                                                        \n");
-    printf("      Informe o código da Turma que será atualizada     \n");
+    printf("\033[34mInforme o código da truma que será atualizada\033[0m\n");
     printf("                                                        \n");
     tela_turma();
     ler_turma(cod);
@@ -193,7 +193,6 @@ void gravar_turma(Turma *t){
 
 
 void exibicao_turma(Turma *t){
-    char estado[17];
     if ((t == NULL) || (t->status == 'I')){
         printf("\nEsta Turma não existe no sistema!\n");
     }
@@ -201,12 +200,6 @@ void exibicao_turma(Turma *t){
         printf("\n********Dados Da Turma********");
         printf("\nSérie da Turma:%s", t->cod);
         printf("\nNome da Turma:%s\n", t->nome);
-        if (t->status == 'A'){
-            strcpy(estado, "Turma ativa");
-        }
-        else if (t->status == 'I'){
-            strcpy(estado, "Turma Fechada");
-        }
     }
 }
 
@@ -241,6 +234,7 @@ void procura_turma(char *cod){
     }
     while (fread(t, sizeof(Turma), 1, ft)){
         if ((strcmp(t->cod, cod) == 0) && (t->status == 'A')){
+            cont++;
             exibicao_turma(t);
         }
     }if(!cont){
@@ -299,7 +293,7 @@ void att_turma(char *cod){
                 printf("   *************** Atualizar Turma ***************      \n");
                 printf("                                                        \n");
                 printf("               o que deseja atualizar?                  \n");
-                printf(" Nome da turma[\033[31m1\033[0m] - Voltar[\033[31m0\033[0m]    \n");
+                printf("           Nome da turma[\033[34m1\033[0m] - Voltar[\033[34m1\033[0m]    \n");
                 printf("                                                        \n");
                 printf("Dados cadastrados no sistema:\n");
                 printf("Código da Turma:%s\n", t->cod);

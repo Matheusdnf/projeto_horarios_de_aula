@@ -125,7 +125,7 @@ void atualizar_professor(void){
     printf("========================================================\n");
     printf("   *************** Atualizar Professor *************   \n\n");
     printf("                                                        \n");
-    printf("      Informe o cpf do Professor que será atualizado        \n");
+    printf(" \033[34mInforme o cpf do professor que será atualizado\033[0m\n");
     printf("                                                        \n");
     ler_cpf(cpf);
     att_professor(cpf);
@@ -162,7 +162,7 @@ void relatorio_professor(void){
     printf("========================================================\n");
     printf("   *************** Relatório Professor *************  \n\n");
     printf("                                                        \n");
-    printf("(Todos os Professores cadastrado)                       \n");
+    printf("\x1B[34m(informar todos os professores cadastrados)\x1B[0m \n");
     listar_todos_professor();
     printf("========================================================\n");
     printf("\n");
@@ -183,7 +183,6 @@ void gravar_professor(Professor *prof){
 }
 
 void exibicao_professor(Professor *prof){
-    char estado[16];
     if ((prof == NULL) || (prof->status == 'I')){
         printf("\nEste Professor não existe no sistema!\n");
     }
@@ -193,12 +192,6 @@ void exibicao_professor(Professor *prof){
         printf("CPF:%s\n", prof->cpf);
         printf("Email:%s\n", prof->email);
         printf("Telefone:%s\n", prof->telefone);
-        if (prof->status == 'A'){
-            strcpy(estado, "Professor Ativo");
-        }
-        else if (prof->status == 'I'){
-            strcpy(estado, "Não Encontrado");
-        }
     }
 }
 
@@ -304,10 +297,10 @@ void att_professor(char cpf[]){
                 printf("   *************** Atualizar Professor ***************      \n");
                 printf("                                                        \n");
                 printf("               o que deseja atualizar?                  \n");
-                printf("          Telefone[\033[34m1\033[0m] - Email[\033[34m2\033[0m] - Voltar[\033[34m0\033[0m]\n");// feito com ajuda do chat openIA(Gpt)
+                printf("         Telefone[\033[34m1\033[0m] - Email[\033[34m2\033[0m] - Voltar[\033[34m0\033[0m]\n");// feito com ajuda do chat openIA(Gpt)
                 printf("                                                        \n");
                 printf("Dados cadastrados no sistema:\n");
-                printf("\nNome do Professor:%s", prof->nome);
+                printf("\nNome do Professor:%s\n", prof->nome);
                 printf("CPF Do Professor:%s\n", prof->cpf);
                 printf("Email:%s\n", prof->email);
                 printf("Telefone:%s\n", prof->telefone);
@@ -346,7 +339,7 @@ void att_professor(char cpf[]){
         }
     }
     if (!cont){
-        printf("Professor não encontrado!\n");
+        printf("\nProfessor não encontrado!\n");
     }
     fclose(fp);
     free(prof);

@@ -95,7 +95,7 @@ Aluno *cadastrar_aluno(void){
     //com os caracteres que não foram usados será colocado \0 no lugar
     strncpy(std->email,email,sizeof(std->email));
     ler_telefone(std->telefone);
-    std->status = 'M';
+    std->status = 'A';
     printf("                                                        \n");
     printf("Dados do Aluno cadastrados!\n");
     printf("========================================================\n");
@@ -127,7 +127,7 @@ void atualizar_aluno(void){
     printf("========================================================\n");
     printf("    *************** Atualizar Aluno *************     \n\n");
     printf("                                                        \n");
-    printf("      Informe o cpf do aluno que será atualizado        \n");
+    printf("\033[34mInforme o cpf do aluno que será atualizado\033[0m\n");
     printf("                                                        \n");
     ler_cpf(cpf);
     printf("                                                        \n");
@@ -165,7 +165,7 @@ void relatorio_aluno(void){
     printf("========================================================\n");
     printf("    *************** Relatório Aluno *************       \n\n");
     printf("                                                        \n");
-    printf("(informar todos os alunos cadastrado)                   \n");
+    printf("\x1B[34m(informar todos os alunos cadastrados)\x1B[0m \n");
     listar_todos_aluno();
     printf("========================================================\n");
     printf("\n");
@@ -187,7 +187,6 @@ void gravar_aluno(Aluno *std){
 }
 
 void exibicao_alunos(Aluno *std){
-    char estado[17];
     if ((std == NULL) || (std->status == 'I')){
         printf("\nFalha na procura!\n");
     }
@@ -197,12 +196,6 @@ void exibicao_alunos(Aluno *std){
         printf("\nCPF:%s\n", std->cpf);
         printf("Email:%s\n", std->email);
         printf("Telefone:%s\n", std->telefone);
-        if (std->status == 'M'){
-            strcpy(estado, "Matriculado");
-        }
-        else if (std->status == 'I'){
-            strcpy(estado, "Fechado");
-        }
     }
 }
 
@@ -239,7 +232,7 @@ void procura_aluno(char cpf[]){
         return;
     }
     while (fread(std, sizeof(Aluno), 1, fa)){
-        if ((strcmp(std->cpf, cpf) == 0) && (std->status == 'M')){
+        if ((strcmp(std->cpf, cpf) == 0) && (std->status == 'A')){
             exibicao_alunos(std);
             cont++;
         }
@@ -269,7 +262,7 @@ void remover_aluno(char cpf[]){
     //irá ler o arquivdo 
     while (fread(std, sizeof(Aluno), 1, fa)){
         //irá comparar o cpf digitado com os disponíveis no sistema
-        if ((strcmp(std->cpf, cpf) == 0) && (std->status == 'M')){
+        if ((strcmp(std->cpf, cpf) == 0) && (std->status == 'A')){
             //encontrando irá contar 1
             cont++;
             //irá mudar o campo para I que significa inativo
@@ -300,7 +293,7 @@ void att_aluno(char cpf[]){
     }
     while (fread(std, sizeof(Aluno), 1, fa)){
         //irá procurar o cpf do aluno procurado
-        if ((strcmp(std->cpf, cpf) == 0) && (std->status == 'M')){
+        if ((strcmp(std->cpf, cpf) == 0) && (std->status == 'A')){
             cont++;
             //essa tela serve para dar a opção de atualizar o que desejas
             do{
@@ -309,7 +302,7 @@ void att_aluno(char cpf[]){
                 printf("   *************** Atualizar Aluno ***************      \n");
                 printf("                                                        \n");
                 printf("               o que deseja atualizar?                  \n");
-                printf("          Telefone[\033[34m1\033[0m] - Email[\033[34m2\033[0m] - Voltar[\033[34m0\033[0m]\n");// feito com ajuda do chat openIA(Gpt)
+                printf("         Telefone[\033[34m1\033[0m] - Email[\033[34m2\033[0m] - Voltar[\033[34m0\033[0m]\n");
                 printf("                                                        \n");
                 printf("Dados cadastrados no sistema:\n");
                 printf("\nNome do aluno:%s\n", std->nome);

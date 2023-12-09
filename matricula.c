@@ -1,5 +1,3 @@
-//conectar o aluno a turma
-//cpf e código da turma
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,6 +6,7 @@
 #include "aluno.h"
 #include "checagem.h"
 #include "turma.h"
+#include "relatorio.h"
 void menu_matricula(void){
     int opc=-1;
     do{
@@ -79,6 +78,8 @@ Matricula *cadastrar_matricula(void){
         getchar();
         return NULL;
     }
+    listar_alunos_cadastrados_alt();
+    printf("\n");
     do{
         ler_cpf(matri->cpf);
         //verificação se o aluno com o cpf digitado já existe 
@@ -147,7 +148,7 @@ void atualizar_matricula(void){
     printf("========================================================\n");
     printf("    *************** Atualizar Matricula *************     \n\n");
     printf("                                                        \n");
-    printf("   Informe o cpf do aluno que será atualizada           \n");
+    printf("\033[34mInforme o cpf do aluno que será atualizado\033[0m\n");
     printf("                                                        \n");
     ler_cpf(cpf);
     printf("                                                        \n");
@@ -178,7 +179,7 @@ void relatorio_matricula(void){
     printf("========================================================\n");
     printf("    *************** Relatório Matricula *************       \n\n");
     printf("                                                        \n");
-    printf("(informar todas as Matriculas realizadas)                   \n");
+    printf("\x1B[34m(informar todos as matrículas cadastradas)\x1B[0m \n");
     listar_todas_matricula();
     printf("========================================================\n");
     printf("\n");
@@ -200,7 +201,6 @@ void gravar_matricula(Matricula *matri){
 
 
 void exibicao_matricula(Matricula *matri, Aluno* std){
-    char estado[20];
     if ((matri == NULL) || (matri->status == 'I')){
         printf("\nEsta Matricula não existe no sistema!\n");
     }
@@ -209,12 +209,6 @@ void exibicao_matricula(Matricula *matri, Aluno* std){
         printf("\nNome do aluno:%s",std->nome);
         printf("\nTurma:%s", matri->cod);
         printf("\nCpf do aluno:%s\n", matri->cpf);
-        if (matri->status == 'A'){
-            strcpy(estado, "Matricula ativa");
-        }
-        else if (matri->status == 'I'){
-            strcpy(estado, "Matricula Fechada");
-        }
     }
 }
 
@@ -315,7 +309,7 @@ void att_matricula(char *cpf){
     Aluno *std;
     matri = (Matricula*)malloc(sizeof(Matricula));
     std=(Aluno*)malloc(sizeof(Aluno));
-    fm = fopen("Matricula.dat", "rb");
+    fm = fopen("Matricula.dat", "r+b");
     fa=fopen("Alunos.dat","rb");
     int cont=0;
     int esc=-1;
@@ -335,7 +329,7 @@ void att_matricula(char *cpf){
                         printf("   *************** Atualizar Matricula ***************      \n");
                         printf("                                                        \n");
                         printf("               o que deseja atualizar?                  \n");
-                        printf(" Atualizar turma[\033[31m1\033[0m] - Voltar[\033[31m0\033[0m]    \n");
+                        printf("            Atualizar turma[\033[34m1\033[0m] - Voltar[\033[34m0\033[0m]    \n");
                         printf("                                                        \n");
                         printf("Dados cadastrados no sistema:\n");
                         printf("Nome do aluno:%s\n",std->nome);
@@ -349,7 +343,23 @@ void att_matricula(char *cpf){
                         fflush(stdin);
                         switch (esc){
                             case 1:
-                                ler_turma(matri->cod);
+                            printf("Turmas cadastradas!\n");
+                            tela_turma();
+                            listar_turma_cadastradas_alt();
+                                do{
+                                    ler_turma(matri->cod);
+                                    //verificação se a turma existe
+                                    if(verificar_turma_existente(matri->cod)){
+                                        printf("Turma não cadastrada!");
+                                        char resposta=obter_resposta();
+                                        if (resposta == 'N') {
+                                            break;  
+                                        }
+                                        //Caso o aluno com o cpf em questão não estiver cadastrado o loop se encerará
+                                    } else {
+                                        break;  
+                                    }
+                                }while (1);
                                 printf("\nAlteração realizada!\n");
                                 printf("\nDigite enter para continuar...");
                                 getchar();
