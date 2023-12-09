@@ -1,12 +1,7 @@
-#include "disciplina.h"
-#include "valida.h"
-#include "professor.h"
-#include "checagem.h"
 #include "relatorio.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 #include <ctype.h>
 
 void menu_disciplinas(void){
@@ -80,12 +75,15 @@ Disciplina *cadastrar_disciplinas(void){
         return NULL;
     }
     //fazer validação que verifica se já existe cpf no de disciplina
+    printf("Dados do professores já cadastrados:\n");
     listar_todos_professor_alt();
+    printf("\n\n");
      do{
+        //leitura do cpf
         ler_cpf(dic->cpf);
-        if((verifica_existe_prof(dic->cpf))){
-            printf("Esse professor não foi cadastrado no sistema de professoures ou já foi atrelado alguma disciplina a ele!\n");
-         //caso já o usuário vai ter a chance de tentar novamente
+        if(verifica_existe_prof(dic->cpf) || !verifica_professor_com_disciplina(dic->cpf)){
+            printf("Esse professor não foi cadastrado no sistema ou já tem alguma disciplina atrelada!\n");
+            //caso já o usuário vai ter a chance de tentar novamente
             char resposta=obter_resposta();
             //Caso ele digite algo diferente de "S" no caso "N"
             //quer dizer que ele não quer mais digitar o cpf e irá retornar NULL
@@ -142,7 +140,6 @@ void atualizar_disciplinas(void){
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    getchar();
     printf("Digite enter para continuar...");
     getchar();
 }
@@ -175,7 +172,7 @@ void relatorio_disciplinas(void){
     printf("========================================================\n");
     printf(" *************** Relatório Das Disciplinas ************* \n\n");
     printf("                                                        \n");
-    printf("(informar todas as Disciplinas cadastrado)               \n");
+    printf("\x1B[34m(informar todos as disciplinas cadastradas)\x1B[0m \n");
     printf("                                                        \n");
     listar_todas_disciplinas();
     printf("========================================================\n");
@@ -324,7 +321,6 @@ void gravardisciplinas(Disciplina *dic){
 }
 
 void exibir_disciplinas(Disciplina *dic,Professor* prof){
-    char estado[20];
     if ((dic == NULL) || (dic->status == 'I')){
         printf("\nEsta Disciplinas não foi cadastrada no sistema!\n");
     }
@@ -335,12 +331,6 @@ void exibir_disciplinas(Disciplina *dic,Professor* prof){
         printf("Nome da Disciplina:%s\n", dic->disciplina);
         printf("Id da Disciplina:%d\n", dic->id);
         printf("\n");
-        if (dic->status == 'A'){
-            strcpy(estado, "Disciplina Ativa");
-        }
-        else if (dic->status == 'I'){
-            strcpy(estado, "Fechada");
-        }
     }
 }
 
@@ -400,7 +390,7 @@ void procura_disciplinas(int id){
             }
         }
     }if(!cont){
-        printf("\nEssa disciplina não existe no sistema ou ainda não foi cadastrado!\n");
+        printf("\nEssa disciplina não existe no sistema ou ainda não foi cadastrada!\n");
     }
     fclose(fd);
     free(dic);
@@ -442,7 +432,7 @@ void att_disciplinas(int id){
     Professor *prof;
     prof=(Professor*)malloc(sizeof(Professor));
     dic = (Disciplina *)malloc(sizeof(Disciplina));
-    fd = fopen("Disciplina.dat", "rb");
+    fd = fopen("Disciplina.dat", "r+b");
     fp=fopen("Professor.dat","rb");
     int esc=-1;
     int cont=0;
@@ -462,7 +452,7 @@ void att_disciplinas(int id){
                         printf("   *************** Atualizar Disciplina ***************      \n");
                         printf("                                                        \n");
                         printf("               o que deseja atualizar?                  \n");
-                        printf("              Disciplina[\033[31m1\033[0m] - Voltar[\033[31m0\033[0m]\n");
+                        printf("              Disciplina[\033[34m1\033[0m] - Voltar[\033[34m0\033[0m]\n");
                         printf("                                                        \n");
                         printf("Dados cadastrados no sistema:\n");
                         printf("Nome do professor:%s",prof->nome);
@@ -497,8 +487,9 @@ void att_disciplinas(int id){
                     break;
                 }
             }
-        }if (!cont){
-            printf("Disciplina não encontrado!\n"); 
+        }
+    }if (!cont){
+        printf("\nEssa disciplina não existe no sistema ou ainda não foi cadastrado!\n"); 
     }
     fclose(fd);
     free(dic);

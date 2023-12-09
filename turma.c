@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "valida.h"
-#include "turma.h"
-#include "checagem.h"
+#include "relatorio.h"
 //código turma  6A
 //nome da turma pequenas pragas
 

@@ -1,10 +1,7 @@
-#include "professor.h"
-#include "valida.h"
-#include "disciplina.h"
-#include "checagem.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <relatorio.h>
 
 void menu_professor(void){
     //opc -1 para ela poder ser atualiza pelo usuário quando vai navegando

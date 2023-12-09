@@ -1,11 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "matricula.h"
 #include "valida.h"
-#include "aluno.h"
-#include "checagem.h"
-#include "turma.h"
 #include "relatorio.h"
 void menu_matricula(void){
     int opc=-1;
