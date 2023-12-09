@@ -3,7 +3,7 @@
 #include "aluno.h"
 #include "horario.h"
 #include "professor.h"
-#include "diciplina.h"
+#include "disciplina.h"
 #include "checagem.h"
 #include "matricula.h"
 #include "turma.h"
@@ -15,23 +15,30 @@ void tela_filtro_relatorio(void);
 void escolha_relatorio(void);
 void tela_relatorio_ordenado(void);
 void relatorio_ordenado(void);
-void teste(void);
-void relatorio_tabela_aluno_por_turma(char *turma);
-//relatório tabela
-void relatorio_tabela_aluno(void);
-void relatorio_tabela_professor(void);
-void relatorio_tabela_diciplinas(void);
-void relatorio_tabela_h(void);
-void relatorio_tabela_matricula(void);
-void relatorio_tabela_turmas(void);
+//relatório tabela com filtro de situação
+void relatorio_tabela_aluno(char situ);
+void relatorio_tabela_professor(char situ);
+void relatorio_tabela_disciplinas(char situ);
+void relatorio_tabela_h(char situ);
+void relatorio_tabela_matricula(char situ);
+void relatorio_tabela_turmas(char situ);
 //relatório com filtro 
-void filtro_diciplina(void);
-void filtro_diciplina(void);
+void filtro_disciplina_atrelada_professor(void);
 void listar_professor_por_disciplina(char *diciplina);
-void filtro_tempo_horario(void);
-void listar_h_por_periodo(char *tempo);
+void filtro_turno_horario(void);
+void listar_h_por_turno(char *turno);
 void filtro_diasemana_horario(void);
 void listar_h_pelo_diasemana(char *dia);
-void listar_h_pelo_periodo(char *periodo);
-void filtro_periodo_horario(void);
+void filtro_turno_horario(void);
+void filtro_alunos_turma(void);
+void relatorio_tabela_aluno_por_turma(char *turma);
+void filtro_horario_turmas(void);
+void listar_h_turma(char *turma);
+void filtro_professores_turmas(void);
+void professores_por_turma(char *turma);
+//relatórios/listagens personalizadas
+void listar_todos_professor_alt(void);
+void listar_turma_cadastradas_alt(void);
+void listar_alunos_cadastrados_alt(void);
+
 #endif  

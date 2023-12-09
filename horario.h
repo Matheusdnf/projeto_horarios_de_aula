@@ -1,16 +1,19 @@
 #ifndef horario_h
 #define horario_h
+#include "professor.h"
 //struct horário
 typedef struct horario {
     char id;
     char periodo[7];
     char dia[7];
-    char tempo[3];
-    char diciplina[3];
+    char turno[3];
+    char disciplina[3];
     char status;           //A-Ativo I-Inexistente
-    //adicionar campo e turma
+    char cpf[12];
+    char turma[4];
 } Horario;
 //telas horário de aula
+void explicacao(void);
 void menu_horario(void);
 Horario* cadastrar_horario(void);
 void buscar_horario(void);
@@ -19,17 +22,17 @@ void excluir_horario(void);
 void relatorio_horario(void);
 //validação dos horários
 void ler_periodo(char* periodo); 
-void ler_tempo(char* tempo);
+void ler_turno(char* turno);
 void ler_dia(char* dia);
 int valida_periodo(char* periodo); 
-int valida_tempo(char* tempo);
+int valida_turno(char* turno);
 int valida_dia(char* dia);
 //criação de id
 int criar_id_h(void);
 //gravar em arquivo
 void gravar_h(Horario* h);
 //função crud
-void exibir_h(Horario* h);
+void exibir_h(Horario* h,Professor *prof);
 void lista_todos_h(void);
 void procura_h(int id);
 void remover_h(int id);

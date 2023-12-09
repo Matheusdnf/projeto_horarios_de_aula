@@ -23,4 +23,5 @@ void ler_turma(char *turma);
 int valida_turma(char* turma);
 int valida_s_ou_n(char escolha);
 int decidir_excluir(void);
-char obter_resposta();
+char obter_resposta(void);
+char escolher_filtro(void);
