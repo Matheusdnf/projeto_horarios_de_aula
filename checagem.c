@@ -1,73 +1,9 @@
-#include "aluno.h"
-#include "professor.h"
-#include "disciplina.h"
-#include "horario.h"
+#include "relatorio.h"
 #include "valida.h"
-#include "turma.h"
-#include "matricula.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <stdbool.h>
-
-void listar_turma_cadastradas_alt(void){
-    FILE *ft;
-    Turma *t;
-    t = (Turma*)malloc(sizeof(Turma));
-    ft = fopen("Turma.dat", "rb");
-    if ((ft == NULL) || (t==NULL)){
-        printf("\nNenhuma Turma cadastrada cadastrada!\n");
-        return;
-    }
-    //listagem simples para mostrar para o usuário o nome da turma e a respectiva série dela
-    printf("Informação da turma:\n");
-    while (fread(t, sizeof(Turma), 1, ft)){
-        if (t->status == 'A'){
-            printf("Nome da turma:%s|Turma:%s\n", t->nome,t->cod);
-        }
-    }
-    fclose(ft);
-    free(t);
-}
-
-// exibição de informações específicas do professor
-void exibicao_professores_alt(Professor *prof){
-    char estado[16];
-    if ((prof == NULL) || (prof->status == 'I')){
-        printf("\nEste Professor não existe no sistema!\n");
-    }
-    else{
-        printf("\nNome:%s", prof->nome);
-        printf("\nCPF:%s\n\n", prof->cpf);
-        if (prof->status == 'A'){
-            strcpy(estado, "Professor Ativo");
-        }
-        else if (prof->status == 'I'){
-            strcpy(estado, "Não Encontrado");
-        }
-    }
-}
-
-// listar todos os professores cadastrados
-void listar_todos_professor_alt(void){
-    FILE *fp;
-    Professor *prof;
-    prof = (Professor *)malloc(sizeof(Professor));
-    fp = fopen("Professor.dat", "rb");
-    if (fp == NULL){
-        printf("\nNenhum professor cadastrado!\n");
-        return;
-    }
-    while (fread(prof, sizeof(Professor), 1, fp)){
-        if (prof->status != 'I'){
-            printf("Dados do professores já cadastrados:\n");
-            exibicao_professores_alt(prof);
-        }
-    }
-    fclose(fp);
-    free(prof);
-}
 
 //verificar se existe i cpf do aluno repetido
 int verifica_existe_aluno(char cpf[]){
@@ -126,6 +62,23 @@ int verifica_aluno_matriculado(char cpf[]){
     return 1;
 }
 
+int verifica_professor_com_disciplina(char cpf[]){
+    FILE *fd;
+    Disciplina *dic;
+    dic = (Disciplina *)malloc(sizeof(Disciplina));
+    fd = fopen("Disciplina.dat", "rb");
+    if (fd == NULL){
+        return 1;
+    }
+    while (fread(dic, sizeof(Disciplina), 1, fd)){
+        if ((strcmp(dic->cpf, cpf) == 0)){
+            return 0;
+        }
+    }
+    fclose(fd);
+    free(dic);
+    return 1;
+}
 //verificar se a turma existe
 int verificar_turma_existente(char cod[]){
     FILE *ft;
