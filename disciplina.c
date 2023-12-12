@@ -89,6 +89,8 @@ Disciplina *cadastrar_disciplinas(void){
             //Caso ele digite algo diferente de "S" no caso "N"
             //quer dizer que ele não quer mais digitar o cpf e irá retornar NULL
             if (resposta == 'N') {
+                fclose(fp);
+                free(dic);
                 return NULL;  
             }
             //Caso o aluno com o cpf em questão não estiver cadastrado o loop se encerará
@@ -109,6 +111,7 @@ Disciplina *cadastrar_disciplinas(void){
     getchar(); // para aparecer o menu e ele não sair rapidamente
     return dic;
     free(dic);
+    fclose(fp);
 }
 
 void buscar_disciplinas(void){
@@ -464,7 +467,6 @@ void att_disciplinas(int id){
                         printf("Qual opção deseja atualizar:");
                         fflush(stdin);
                         scanf("%d", &esc);
-                        getchar();
                         limpar_buffer();
                         switch (esc){
                             case 1:
@@ -486,8 +488,8 @@ void att_disciplinas(int id){
                         fwrite(dic, sizeof(Disciplina), 1, fd);
                     } while (esc != 0);
                 }
-            }
-        }break;
+            }break;
+        }
     }if (!cont){
         printf("\nEssa disciplina não existe no sistema ou ainda não foi cadastrado!\n"); 
     }

@@ -84,9 +84,13 @@ Horario *cadastrar_horario(void){
             //caso já o usuário vai ter a chance de tentar novamente
             //tranformar em uma função
             resposta=obter_resposta();
+            fflush(stdin);
             //Caso ele digite algo diferente de "S" no caso "N"
             //quer dizer que ele não quer mais digitar o cpf e irá retornar NULL
             if (resposta == 'N') {
+                fclose(fd);
+                fclose(fm);
+                free(h);
                 return NULL;  
             }
             //Caso o aluno com o cpf em questão não estiver cadastrado o loop se encerará
@@ -102,9 +106,13 @@ Horario *cadastrar_horario(void){
         if(verificar_turma_existente(h->turma)){
             printf("Essa turma não foi cadastrada!\n");
             char resposta=obter_resposta();
+            fflush(stdin);
             //Caso ele digite algo diferente de "S" no caso "N"
             //quer dizer que ele não quer mais digitar o cpf e irá retornar NULL
             if (resposta == 'N') {
+                fclose(fd);
+                fclose(fm);
+                free(h);
                 return NULL;  
             }
         //Caso a turma em questão não estiver cadastrado o loop se encerará
@@ -119,8 +127,12 @@ Horario *cadastrar_horario(void){
         if(valida_diciplina_professor(h->disciplina,h->cpf)){
             printf("Esse professor não leciona essa disciplina!\n");
             resposta=obter_resposta();
+            fflush(stdin);
             if (resposta == 'N') {
-                    return NULL;  
+                fclose(fd);
+                fclose(fm);
+                free(h);
+                return NULL;  
             }
             //Caso o aluno com o cpf em questão não estiver cadastrado o loop se encerará
         } else {
@@ -144,6 +156,8 @@ Horario *cadastrar_horario(void){
     getchar(); // para aparecer o menu e ele não sair rapidamente
     return h;
     free(h);
+    fclose(fd);
+    fclose(fm);
 }
 
 void buscar_horario(void){
@@ -596,8 +610,8 @@ void att_h(int id) {
                         fwrite(h, sizeof(Horario), 1, fh);
                     } while (esc != 0);
                 }
-            }
-        }break;
+            }break;
+        }
     }if (!cont) {
         printf("Horario não encontrado!\n");
     }

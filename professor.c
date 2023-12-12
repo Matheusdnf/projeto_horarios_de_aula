@@ -73,9 +73,11 @@ Professor *cadastrar_professor(void){
             printf("Professor já cadastrado com esse cpf!\n");
             //caso já o usuário vai ter a chance de tentar novamente
             char resposta=obter_resposta();
+            fflush(stdin);
             //Caso ele digite algo diferente de "S" no caso "N"
             //quer dizer que ele não quer mais digitar o cpf e irá retornar NULL
             if (resposta == 'N') {
+                free(prof);
                 return NULL;  
             }
             //Caso o aluno com o cpf em questão não estiver cadastrado o loop se encerará
@@ -307,19 +309,18 @@ void att_professor(char cpf[]){
                 printf("Qual opção deseja atualizar:");
                 fflush(stdin);
                 scanf("%d", &esc);
-                getchar();
                 limpar_buffer();
                 switch (esc){
                     case 1:
                         ler_telefone(prof->telefone);
-                        printf("Alteração realizada!\n");
-                        printf("Digite enter para continuar...");
+                        printf("\nAlteração realizada!\n");
+                        printf("\nDigite enter para continuar...");
                         getchar();
                         break;
                     case 2:
                         ler_email(prof->email);
-                        printf("Alteração realizada!\n");
-                        printf("Digite enter para continuar...");
+                        printf("\nAlteração realizada!\n");
+                        printf("\nDigite enter para continuar...");
                         getchar();
                         break;
                     case 0:

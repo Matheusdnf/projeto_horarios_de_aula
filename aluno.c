@@ -75,9 +75,11 @@ Aluno *cadastrar_aluno(void){
             printf("Aluno já cadastrado com esse CPF!\n");
             //caso já o usuário vai ter a chance de tentar novamente
             char resposta=obter_resposta();
+            fflush(stdin);
             //Caso ele digite algo diferente de "S" no caso "N"
             //quer dizer que ele não quer mais digitar o cpf e irá retornar NULL
             if (resposta == 'N') {
+                free(std);
                 return NULL;  
             }
             //Caso o aluno com o cpf em questão não estiver cadastrado o loop se encerará
@@ -318,21 +320,22 @@ void att_aluno(char cpf[]){
                 switch (esc){
                     case 1:
                         ler_telefone(std->telefone);
-                        printf("Alteração realizada!\n");
-                        printf("Digite enter para continuar...");
+                        printf("\nAlteração realizada!\n");
+                        printf("\nDigite enter para continuar...");
                         getchar();
                         break;
                     case 2:
                         ler_email(std->email);
-                        printf("Alteração realizada!\n");
-                        printf("Digite enter para continuar...");
+                        printf("\nAlteração realizada!\n");
+                        printf("\nDigite enter para continuar...");
                         getchar();
                         break;
                     case 0:
                         break;
                     default:
-                        printf("\nOpção Inválida!\n");
-                        printf("Digite enter para continuar...");
+                        printf("\nOpção inválida!\n");
+                        printf("\nDigite enter para continuar...");
+                        getchar();
                         break;
                 }
                 fseek(fa, -1 * (long)sizeof(Aluno), SEEK_CUR);

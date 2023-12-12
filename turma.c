@@ -78,9 +78,11 @@ Turma *cadastrar_turma(void){
         if(!verificar_turma_existente(t->cod)){
             printf("Turma já cadastrada!\n");
             char resposta=obter_resposta();
+            fflush(stdin);
             //Caso ele digite algo diferente de "S" no caso "N"
             //quer dizer que ele não quer mais digitar o cpf e irá retornar NULL
             if (resposta == 'N') {
+                free(t);
                 return NULL;  
             }
         //Caso a turma em questão não estiver cadastrado o loop se encerará
@@ -292,7 +294,7 @@ void att_turma(char *cod){
                 printf("   *************** Atualizar Turma ***************      \n");
                 printf("                                                        \n");
                 printf("               o que deseja atualizar?                  \n");
-                printf("           Nome da turma[\033[34m1\033[0m] - Voltar[\033[34m1\033[0m]    \n");
+                printf("           Nome da turma[\033[34m1\033[0m] - Voltar[\033[34m0\033[0m]    \n");
                 printf("                                                        \n");
                 printf("Dados cadastrados no sistema:\n");
                 printf("Código da Turma:%s\n", t->cod);
@@ -313,8 +315,8 @@ void att_turma(char *cod){
                     case 0:
                         break;
                     default:
-                        printf("\nOpção Inválida!\n");
-                        printf("Digite enter para continuar...");
+                        printf("\nAlteração realizada!\n");
+                        printf("\nDigite enter para continuar...");
                         getchar();
                         break;
                 }

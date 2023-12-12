@@ -83,9 +83,13 @@ Matricula *cadastrar_matricula(void){
         if((verifica_existe_aluno(matri->cpf)) || (!verifica_aluno_matriculado(matri->cpf))){
             printf("Aluno não cadastrado ou sua matrícula já foi realizada!");
             resposta=obter_resposta();
+            fflush(stdin);
             //Caso ele digite algo diferente de "S" no caso "N"
             //quer dizer que ele não quer mais digitar o cpf e irá retornar NULL
             if (resposta == 'N') {
+                fclose(fa);
+                fclose(ft);
+                free(matri);
                 return NULL;  
             }
             //Caso o aluno com o cpf em questão não estiver cadastrado o loop se encerará
@@ -104,6 +108,9 @@ Matricula *cadastrar_matricula(void){
             printf("Turma não cadastrada!");
             resposta=obter_resposta();
             if (resposta == 'N') {
+                fclose(fa);
+                fclose(ft);
+                free(matri);
                 return NULL;  
             }
             //Caso o aluno com o cpf em questão não estiver cadastrado o loop se encerará
@@ -120,6 +127,8 @@ Matricula *cadastrar_matricula(void){
     getchar(); 
     return matri;
     free(matri);
+    fclose(fa);
+    fclose(ft);
 }
 
 
@@ -298,7 +307,7 @@ void remover_matricula(char *cpf){
     free(matri);
 }
 
-void att_matricula(char *cpf){
+void att_matricula(char cpf[]){
     FILE *fm;
     FILE *fa;
     Matricula *matri;
@@ -372,10 +381,10 @@ void att_matricula(char *cpf){
                         fwrite(matri, sizeof(Matricula), 1, fm);
                     } while (esc != 0);
                 }
-            }
-        }break;
+            }break;
+        }
     }if (!cont){
-        printf("Turma não encontrada!\n");
+        printf("Matrícula não encontrada!\n");
     }
     fclose(fm);
     free(matri);
