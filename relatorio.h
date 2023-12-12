@@ -40,5 +40,17 @@ void professores_por_turma(char *turma);
 void listar_todos_professor_alt(void);
 void listar_turma_cadastradas_alt(void);
 void listar_alunos_cadastrados_alt(void);
+void filtro_periodo_horario(void);
+void listar_h_pelo_periodo(char *periodo);
+void filtro_aulas_professor(void);
+void listar_h_professor(char cpf[]);
+void list_alf_aluno(void);
+void list_alf_professor(void);
+void gerar_lista_aluno(Aluno **list);
+void gerar_lista_professor(Professor **list);
+void apagar_lista_aluno(Aluno **list);
+void apagar_lista_professor(Professor **list);
+void exibir_lista_aluno(Aluno *aux);
+void exibir_lista_professor(Professor *aux);
 
 #endif  

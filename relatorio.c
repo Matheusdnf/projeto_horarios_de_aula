@@ -3,9 +3,6 @@
 #include <string.h>
 #include "relatorio.h"
 #include "valida.h"
-//futuramente fazer um que exiba tanto os dados apagados como cadastrados
-//utilizar o switch case
-//adicionar uma varíaveu na função que escolhe o tipo
 
 void escolha_relatorio(void){
     int opc=-1;
@@ -30,7 +27,7 @@ void escolha_relatorio(void){
                 relatorio_filtro();
                 break;
             case 3:
-                relatorio_filtro();
+                relatorio_ordenado();
             case 0:
                 break;
             default:
@@ -74,15 +71,14 @@ void tela_filtro_relatorio(void){
     system("clear||cls");
     printf("===================================================\n");
     printf("   ************* Relatório Filtro ***************    \n");
-    printf("       1 - Relatório de diciplina por professor      \n");
-    printf("       2 - Relatório dos turno dos horários          \n");
-    printf("       3 - Relatório dos dias da semana dos horários \n");
-    printf("       4 - Relatório alunos da turma                 \n");
+    printf("       1 - Filtro de diciplina por professor      \n");
+    printf("       2 - Filtro dos turno dos horários          \n");
+    printf("       3 - Filtro dos dias da semana dos horários \n");
+    printf("       4 - Filtro alunos da turma                 \n");
     printf("       5-  Horário de determinada Turma              \n");
     printf("       6-  Professores por turmas                    \n");
-    printf("       7-                                            \n");
-    printf("       8-                                            \n");
-    printf("       9-                                            \n");
+    printf("       7-  Filtro horário pelo periódo               \n");
+    printf("       8-  Filtro horário de um professor            \n");
     printf("       0 - Voltar                                    \n");
     printf("===================================================\n");
     printf("\nQual relatório deseja ver: ");
@@ -115,10 +111,10 @@ void relatorio_filtro(void){
                 filtro_professores_turmas();
                 break;
             case 7:
+                filtro_periodo_horario();
                 break;
             case 8:
-                break;
-            case 9:
+                filtro_aulas_professor();
                 break;
             case 0:
                 break;
@@ -136,21 +132,17 @@ void relatorio_ordenado(void){
     do{
         opc=-1;
         tela_relatorio_ordenado();
+        printf("\nQual relatório deseja ver: ");
         scanf("%d",&opc);
+        limpar_buffer();
         switch (opc){
             case 1:
-                printf("Em produção");
-                getchar();
-                getchar();
+                list_alf_aluno();
                 break;
             case 2:
-                printf("Em produção");
-                getchar();
-                getchar();
+                list_alf_professor();
             case 3:
-                printf("Em produção");
-                getchar();
-                getchar();
+                list_alf_turma();
             case 4:
                 printf("Em produção");
                 getchar();
@@ -298,6 +290,7 @@ void listar_todos_professor_alt(void){
     while (fread(prof, sizeof(Professor), 1, fp)){
         if (prof->status != 'I'){
             printf("\nNome:%s|CPF:%s", prof->nome, prof->cpf);
+            printf("\n");
         }
     }
     fclose(fp);
@@ -600,7 +593,7 @@ void filtro_turno_horario(void){
     char turno[3];
     ler_turno(turno);
     listar_h_por_turno(turno);
-    getchar();
+    printf("Digite enter para continuar...");
     getchar();
 }
 
@@ -646,7 +639,7 @@ void filtro_diasemana_horario(void){
     char dia[7];
     ler_dia(dia);
     listar_h_pelo_diasemana(dia);
-    getchar();
+    printf("Digite enter para continuar...");
     getchar();
 }
 
@@ -656,18 +649,25 @@ void listar_h_pelo_diasemana(char *dia){
     int cont=0;
     h = (Horario *)malloc(sizeof(Horario));
     fh = fopen("Horario.dat", "rb");
+    int diaEncontrado = 0;
     if (fh == NULL){
         printf("\nNenhum horario cadastrada!\n");
         return;
     }
-    printf("|%-15s","\x1B[31mturno\x1B[0m");
-    printf("|%-15s", "\x1B[31mDiciplina\x1B[0m");
-    printf("|%-15s", "\x1B[31mPeriodo\x1B[0m");
+    printf("|%-14s", "\x1B[34mTurno\x1B[0m");
+    printf("|%-15s", "\x1B[34mDiciplina\x1B[0m");
+    printf("|%-5s|", "\x1B[34mPeriodo\x1B[0m");
     printf("\n");
     while (fread(h, sizeof(Horario), 1, fh)){
-         if (((strncmp(h->dia,dia, strlen(dia)) == 0) || (strcmp(h->dia+1,dia)==0)) && (h->status != 'I')){
+        for (int i = 0; i < strlen(h->dia); i++) {
+            if (strstr(h->dia + i, dia) == h->dia + i) {
+                diaEncontrado = 1;
+                break;
+            }
+        }
+        if (diaEncontrado && (h->status != 'I')) {
             cont++;
-            printf("|%-7s|%-9s|%-13s|\n",h->turno,h->disciplina,h->periodo);
+            printf("|%-5s|%-9s|%-7s|\n", h->turno, h->disciplina, h->periodo);
         }
     }if (!cont){
         printf("Esse dia da semana não foi cadastrado!");
@@ -678,9 +678,11 @@ void listar_h_pelo_diasemana(char *dia){
 
 void filtro_alunos_turma(void){
     char turma[7];
-    ler_turma(turma);
+    printf("teste:");
+    scanf("%s",turma);
+    limpar_buffer();
     relatorio_tabela_aluno_por_turma(turma);
-    getchar();
+    printf("Digite enter para continuar...");
     getchar();
 }
 
@@ -693,17 +695,37 @@ void relatorio_tabela_aluno_por_turma(char *turma){
     Matricula *matri;
     matri=(Matricula*)malloc(sizeof(Matricula));
     fm=fopen("Matricula.dat","rb");
+    int cont=0;
     if ((fa == NULL) || (fm==NULL)){
         printf("\nNenhum aluno ou turma cadastrada!\n");
         return;
     }
-        printf("|%-39s","\x1B[31mNome Do Aluno\x1B[0m");
-        printf("|%-9s", "\x1B[31mTurma\x1B[0m");
-        printf("\n");
+    printf("|%-39s", "\x1B[34mNome Do Aluno\x1B[0m");
+    printf("|%-9s", "\x1B[34mTurma\x1B[0m");
+    printf("\n");
+    //feito com a ajuda do chat gpt
+    //realizará a leitura dos dois arquivos
     while (fread(std, sizeof(Aluno), 1, fa) && (fread(matri,sizeof(Matricula),1,fm))){
-        if ( (matri->status!='I') && (strncmp(matri->cod,turma, strlen(turma)) == 0)) {
+        //definição de variável ela começa como 0 pois n foi nada encontrado
+        int Encontrado=0;
+        //esse for irá começar do zero, irá ler a quantidade de caracter representados por 
+        //matri->cod que são por padrão 4 e irá i++
+        for (int i = 0; i < strlen(matri->cod); i++) {
+            //irá usar a função strstr que irá procurar uma sequencia de caracteres
+            //como parametro irá ser passado matri->cod + i que irá passar por cada caracter
+            // e irá procurar pelo carater que eu quero que seria o de turma
+            //caso seja ambos iguais ele ira ter encontraado oq eu desejo 
+            if (strstr(matri->cod + i, turma) == matri->cod + i) {
+                Encontrado = 1;
+                break;
+            }
+        }
+        if ((Encontrado && (matri->status != 'I') && (std->status!='I'))) {
+            cont++;
             printf("|%-30s|%-30s\n",std->nome,matri->cod);
         }
+    }if(!cont){
+        printf("Essa turma não foi cadastrada no sistema");
     }
     fclose(fa);
     fclose(fm);
@@ -717,7 +739,7 @@ void filtro_horario_turmas(void){
     relatorio_tabela_turmas(situ);
     ler_turma(turma);
     listar_h_turma(turma);
-    getchar();
+    printf("Digite enter para continuar...");
     getchar();
 }
 
@@ -736,7 +758,7 @@ void listar_h_turma(char *turma) {
         return;
     }
     printf("|%-39s", "\x1B[34mNome\x1B[0m");
-    printf("|%-15s", "\x1B[34mturno\x1B[0m");
+    printf("|%-12s", "\x1B[34mTurno\x1B[0m");
     printf("|%-15s", "\x1B[34mDisciplina\x1B[0m");
     printf("|%-15s", "\x1B[34mDia da semana\x1B[0m");
     printf("|%-1s|", "\x1B[34mTurno(M,T,D)\x1B[0m");
@@ -746,7 +768,7 @@ void listar_h_turma(char *turma) {
             rewind(fp);
             while(fread(prof, sizeof(Professor), 1, fp)){
                 if ((prof->status!='I' && strcmp(prof->cpf,h->cpf)==0)){
-                    printf("|%-30s|%-10s|%-13s|%-5s|%-10s|\n", prof->nome, h->disciplina, h->dia,h->turno,h->periodo);//pedir ajuda
+                    printf("|%-30s|%-10s|%-13s|%-5s|%-10s|\n", prof->nome, h->disciplina, h->dia,h->turno,h->periodo);
                     cont++;
                 }
             }
@@ -766,7 +788,7 @@ void filtro_professores_turmas(void){
     relatorio_tabela_turmas(situ);
     ler_turma(turma);
     professores_por_turma(turma);
-    getchar();
+    printf("Digite enter para continuar...");
     getchar();
 }
 
@@ -785,13 +807,14 @@ void professores_por_turma(char *turma) {
         return;
     }
     printf("|%-39s", "\x1B[34mNome do(s) professores\x1B[0m");
+    printf("|%-10s|", "\x1B[34mDisciplina\x1B[0m");
     printf("\n");
     while (fread(h, sizeof(Horario), 1, fh)){
         if ((strcmp (h->turma,turma)==0) && (h->status != 'I')) {
             rewind(fp);
             while(fread(prof, sizeof(Professor), 1, fp)){
                 if ((prof->status!='I' && strcmp(prof->cpf,h->cpf)==0)){
-                    printf("|%-30s|\n",prof->nome);//pedir ajuda
+                    printf("|%-30s|%-10s|\n",prof->nome,h->disciplina);//pedir ajuda
                     cont++;
                 }
             }
@@ -805,7 +828,257 @@ void professores_por_turma(char *turma) {
     free(prof);
 }
 
-//relatorio relacionando diciplina e professor
-//professores que dão aula em determinada turmas
-//fazer filtro que mostre os horário de uma determinada turma 
-//filtro que mostre as aulas do professor
+void filtro_periodo_horario(void){
+    char periodo[7];
+    ler_periodo(periodo);
+    listar_h_pelo_diasemana(periodo);
+    printf("Digite enter para continuar...");
+    getchar();
+}
+
+void listar_h_pelo_periodo(char *periodo){
+    FILE *fh;
+    Horario *h;
+    int cont=0;
+    h = (Horario *)malloc(sizeof(Horario));
+    fh = fopen("Horario.dat", "rb");
+    if (fh == NULL){
+        printf("\nNenhum horario cadastrada!\n");
+        return;
+    }
+    printf("|%-14s", "\x1B[34mTurno\x1B[0m");
+    printf("|%-15s", "\x1B[34mDiciplina\x1B[0m");
+    printf("|%-5s|", "\x1B[34mPeriodo\x1B[0m");
+    printf("\n");
+    while (fread(h, sizeof(Horario), 1, fh)){
+        int diaEncontrado = 0;
+        //feito com a ajuda do chat gpt
+        for (int i = 0; i < strlen(h->dia); i++) {
+            if (strstr(h->periodo + i, periodo) == h->periodo + i) {
+                diaEncontrado = 1;
+                break;
+            }
+        }
+        if (diaEncontrado && (h->status != 'I')) {
+            cont++;
+            printf("|%-5s|%-9s|%-7s|\n", h->turno, h->disciplina, h->dia);
+        }
+    }if (!cont){
+        printf("Esse dia da semana não foi cadastrado!");
+    }
+    fclose(fh);
+    free(h);
+}
+
+
+void filtro_aulas_professor(void){
+    char cpf[15];
+    listar_todos_professor_alt();
+    ler_cpf(cpf);
+    listar_h_professor(cpf);
+    printf("Digite enter para continuar...");
+    getchar();
+}
+
+void listar_h_professor(char cpf[]){
+    FILE *fh;
+    FILE *fp;
+    Horario *h;
+    Professor *prof;
+    prof=(Professor*)malloc(sizeof(Professor));
+    h = (Horario *)malloc(sizeof(Horario));
+    fp=fopen("Professor.dat","rb");
+    fh = fopen("Horario.dat", "rb");
+    int cont=0;
+    if ((fh == NULL) || (fp==NULL)) {
+        printf("Nenhum horário cadastrado ou professor!\n");
+        return;
+    }
+    printf("|%-15s", "\x1B[34mturno\x1B[0m");
+    printf("|%-15s", "\x1B[34mDisciplina\x1B[0m");
+    printf("|%-15s", "\x1B[34mDia da semana\x1B[0m");
+    printf("|%-1s|", "\x1B[34mTurno(M,T,D)\x1B[0m");
+    printf("\n");
+    while (fread(h, sizeof(Horario), 1, fh)){
+        if ((strcmp (h->cpf,cpf)==0) && (h->status != 'I')) {
+            rewind(fp);
+            while(fread(prof, sizeof(Professor), 1, fp)){
+                if ((prof->status!='I' && strcmp(prof->cpf,h->cpf)==0)){
+                    printf("|%-10s|%-13s|%-5s|%-10s|\n", h->disciplina, h->dia,h->turno,h->periodo);//pedir ajuda
+                    cont++;
+                }
+            }
+        }
+    }if(!cont){
+        printf("Esse professor não foi cadastrado no sistema ou não tem nenhum aula!");
+    }
+    fclose(fh);
+    free(h);
+    fclose(fp);
+    free(prof);
+}
+
+
+void list_alf_aluno(void){
+    Aluno *list;
+    list = NULL;
+    gerar_lista_aluno(&list);
+    exibir_lista_aluno(list);
+    apagar_lista_aluno(&list);
+}
+void list_alf_professor(void){
+    Professor *list;
+    list = NULL;
+    gerar_lista_professor(&list);
+    exibir_lista_professor(list);
+    apagar_lista_professor(&list);
+}
+void list_alf_turma(void){
+    Turma *list;
+    list = NULL;
+    gerar_lista_turma(&list);
+    exibir_lista_turma(list);
+    apagar_lista_turma(&list);
+}
+void gerar_lista_aluno(Aluno **list){
+    FILE *fa;
+    Aluno *std;
+    apagar_lista_aluno(&(*list));
+    *list = NULL;
+    fa = fopen("Alunos.dat","rb");
+    if (fa == NULL) {
+        printf("Erro na abertura do arquivo... \n");
+        return;
+    } else {
+        std = (Aluno *) malloc(sizeof(Aluno));
+        while (fread(std, sizeof(Aluno), 1, fa)) {
+            if ((*list == NULL) || (strcmp(std->nome, (*list)->nome) < 0)) {
+                std->prox = *list;
+                *list = std;
+            } else {
+                Aluno* ant = *list;
+                Aluno* at = (*list)->prox;
+                while ((at != NULL) && (strcmp(at->nome, std->nome) < 0)) {
+                    ant = at;
+                    at = at->prox;
+                }
+                ant->prox = std;
+                std->prox = at;
+            }
+            std = (Aluno*) malloc(sizeof(Aluno));
+        }
+        free(std);
+        fclose(fa);
+    } 
+}
+
+void gerar_lista_professor(Professor **list){
+    FILE *fp;
+    Professor *prof;
+    apagar_lista_professor(&(*list));
+    *list = NULL;
+    fp = fopen("Professors.dat","rb");
+    if (fp == NULL) {
+        printf("Erro na abertura do arquivo... \n");
+        return;
+    } else {
+        prof = (Professor *) malloc(sizeof(Professor));
+        while (fread(prof, sizeof(Professor), 1, fp)) {
+            if ((*list == NULL) || (strcmp(prof->nome, (*list)->nome) < 0)) {
+                prof->prox = *list;
+                *list = prof;
+            } else {
+                Professor* ant = *list;
+                Professor* at = (*list)->prox;
+                while ((at != NULL) && (strcmp(at->nome, prof->nome) < 0)) {
+                    ant = at;
+                    at = at->prox;
+                }
+                ant->prox = prof;
+                prof->prox = at;
+            }
+            prof = (Professor*) malloc(sizeof(Professor));
+        }
+        free(prof);
+        fclose(fp);
+    } 
+}
+
+void gerar_lista_turma(Turma **list){
+    FILE *ft;
+    Turma *t;
+    apagar_lista_Turma(&(*list));
+    *list = NULL;
+    ft = fopen("Turma.dat","rb");
+    if (ft == NULL) {
+        printf("Erro na abertura do arquivo... \n");
+        return;
+    } else {
+        t = (Turma *) malloc(sizeof(Turma));
+        while (fread(t, sizeof(Turma), 1, ft)) {
+            if ((*list == NULL) || (strcmp(t->nome, (*list)->nome) < 0)) {
+                t->prox = *list;
+                *list = t;
+            } else {
+                Turma* ant = *list;
+                Turma* at = (*list)->prox;
+                while ((at != NULL) && (strcmp(at->nome, t->nome) < 0)) {
+                    ant = at;
+                    at = at->prox;
+                }
+                ant->prox = t;
+                t->prox = at;
+            }
+            t = (Turma*) malloc(sizeof(Turma));
+        }
+        free(t);
+        fclose(ft);
+    } 
+}
+void apagar_lista_aluno(Aluno **list) {
+  Aluno *al;
+  while (*list != NULL) {
+    al = *list;
+    *list = (*list)->prox;
+    free(al);
+  }  
+}
+void apagar_lista_professor(Professor **list) {
+  Professor *al;
+  while (*list != NULL) {
+    al = *list;
+    *list = (*list)->prox;
+    free(al);
+  }  
+}
+void apagar_lista_turma(Turma **list) {
+  Turma *al;
+  while (*list != NULL) {
+    al = *list;
+    *list = (*list)->prox;
+    free(al);
+  }  
+}
+void exibir_lista_aluno(Aluno *aux) {
+    while (aux != NULL) {
+        printf("| %-39s - %-10s        -%-12s      |   \n", aux->nome, aux->email ,aux->cpf);
+        aux =aux->prox;
+	}
+    getchar();
+}
+
+void exibir_lista_professor(Professor *aux) {
+    while (aux != NULL) {
+        printf("| %-39s - %-10s        -%-12s      |   \n", aux->nome, aux->email ,aux->cpf);
+        aux =aux->prox;
+	}
+    getchar();
+}
+
+void exibir_lista_turma(Turma *aux) {
+    while (aux != NULL) {
+        printf("| %-39s - %-10s  |   \n", aux->nome, aux->cod);
+        aux =aux->prox;
+	}
+    getchar();
+}
