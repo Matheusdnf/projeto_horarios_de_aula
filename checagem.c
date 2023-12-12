@@ -120,19 +120,39 @@ void disciplina_por_professor(char cpf[]){
 int valida_diciplina_professor(char *disciplina,char cpf[]){
     // validar se no cpf do professor tem a diciplina correspondente exibir um printf
     FILE *fd;
+    FILE *fp;
     Disciplina *dic;
-    fd=fopen("Disciplina.dat","rb");
-    dic=(Disciplina*)malloc(sizeof(Disciplina));
-    if(fd==NULL){
-        printf("Nenhuma diciplina foi atrelada a um professor");
+    Professor *prof;
+    prof=(Professor*)malloc(sizeof(Professor));
+    dic = (Disciplina *)malloc(sizeof(Disciplina));
+    fd = fopen("Disciplina.dat", "rb");
+    fp=fopen("Professor.dat","rb");
+    if ((fd == NULL) || (fp==NULL)){
+        printf("Nenhuma Disciplina ou professor cadastrado!\n");
         return 1;
     }
-    while(fread(dic,sizeof(Disciplina),1,fd)){
-        if ((dic->status!='I') && (strncmp(dic->disciplina,disciplina, strlen(disciplina)) == 0) && (strcmp(dic->cpf,cpf)==0)){
+    while (fread(dic, sizeof(Disciplina), 1, fd) && (fread(prof, sizeof(Professor), 1, fp) )) {
+        int Encontrado=0;
+        //esse for irá começar do zero, irá ler a quantidade de caracter representados por 
+        //matri->cod que são por padrão 4 e irá i++
+        for (int i = 0; i < strlen(dic->disciplina); i++) {
+            //irá usar a função strstr que irá procurar uma sequencia de caracteres
+            //como parametro irá ser passado matri->cod + i que irá passar por cada caracter
+            // e irá procurar pelo carater que eu quero que seria o de turma
+            //caso seja ambos iguais ele ira ter encontraado oq eu desejo 
+            if (strstr(dic->disciplina + i, disciplina) == dic->disciplina + i) {
+                Encontrado = 1;
+                break;
+            }
+        }
+        if ((Encontrado && (dic->status != 'I') && (prof->status!='I'))) {
             return 0;
         }
     }
     fclose(fd);
     free(dic);
+    free(prof);
+    fclose(fp);
     return 1;
 }
+
