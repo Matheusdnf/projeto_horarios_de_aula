@@ -44,13 +44,30 @@ void filtro_periodo_horario(void);
 void listar_h_pelo_periodo(char *periodo);
 void filtro_aulas_professor(void);
 void listar_h_professor(char cpf[]);
+//ordenação
 void list_alf_aluno(void);
 void list_alf_professor(void);
+void list_alf_turma(void);
+void list_alf_disciplina(void);
+void list_alf_matricula(void);
+void list_alf_h(void);
 void gerar_lista_aluno(Aluno **list);
 void gerar_lista_professor(Professor **list);
+void gerar_lista_turma(Turma **list);
+void gerar_lista_disciplina(Disciplina **list);
+void gerar_lista_matricula(Matricula **list);
+void gerar_lista_h(Horario **list);
 void apagar_lista_aluno(Aluno **list);
 void apagar_lista_professor(Professor **list);
+void apagar_lista_turma(Turma **list);
+void apagar_lista_disciplina(Disciplina **list);
+void apagar_lista_matricula(Matricula **list);
+void apagar_lista_h(Horario **list);
 void exibir_lista_aluno(Aluno *aux);
 void exibir_lista_professor(Professor *aux);
+void exibir_lista_turma(Turma *aux);
+void exibir_lista_disciplina(Disciplina *aux);
+void exibir_lista_matricula(Matricula *aux);
+void exibir_lista_h(Horario *aux);
 
 #endif  

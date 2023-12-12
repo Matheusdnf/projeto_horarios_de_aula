@@ -46,7 +46,7 @@ void tela_relatorio_ordenado(void){
     printf(" 1 - Alunos organziados alfabeticamente        \n");
     printf(" 2 - Professores organziados alfabeticamente   \n");
     printf(" 3 - Turmas organziados alfabeticamente        \n");
-    printf(" 4 - Matrículas organizadas Numericamente      \n");
+    printf(" 4 - Matrículas organizadas pelas turmas       \n");
     printf(" 5 - Disciplinas organizadas alfabeticamente   \n");
     printf(" 6 - Diciplina dos horário organizados alfabenticamente\n");
     printf(" 0 - Voltar                                    \n");
@@ -141,12 +141,19 @@ void relatorio_ordenado(void){
                 break;
             case 2:
                 list_alf_professor();
+                break;
             case 3:
                 list_alf_turma();
+                break;
             case 4:
-                printf("Em produção");
-                getchar();
-                getchar();
+                list_alf_matricula();
+                break;
+            case 5:
+                list_alf_disciplina();
+                break;
+            case 6:
+                list_alf_h();
+                break;
             case 0:
                 break;
             default:
@@ -484,7 +491,7 @@ void relatorio_tabela_h(char situ){
                     else if (h->status == 'I'){
                         strcpy(estado, "Inativo");
                     }
-                    printf("|%-30s|%-11s|%-7s|%-10s|%-13s|%-12s|%-10s|", prof->nome, prof->cpf, h->turno, h->disciplina, h->dia, h->turno, estado);
+                    printf("|%-30s|%-11s|%-6s|%-10s|%-13s|%-12s|%-10s|", prof->nome, prof->cpf, h->periodo, h->disciplina, h->dia, h->turno, estado);
                     printf("\n");
                 }
             }
@@ -520,7 +527,7 @@ void relatorio_tabela_matricula(char situ){
     printf("%-9s|", "\x1B[34mSituação\x1B[0m");
     printf("\n");
     while (fread(matri, sizeof(Matricula), 1, fm)){
-        if (matri->status == 'I'){
+        if (matri->status == situ ){
             cont++;
             rewind(fa);
             while(fread(std,sizeof(Aluno),1,fa)){
@@ -531,8 +538,7 @@ void relatorio_tabela_matricula(char situ){
                     else if (matri->status == 'I'){
                         strcpy(estado, "Inativa");
                     }
-                    printf("|%-30s|%-11s|%-5s|%2s|\n",std->nome,matri->cpf,matri->cod,estado);
-                    printf("\n");
+                    printf("|%-30s|%-11s|%-5s|%-10s|\n",std->nome,matri->cpf,matri->cod,estado);
                 }    
             }
         }
@@ -570,14 +576,23 @@ void listar_professor_por_disciplina(char *disciplina) {
     }
     printf("|%-39s|", "\x1B[34mNome Do Professor\x1B[0m");
     printf("\n");
-    while (fread(dic, sizeof(Disciplina), 1, fd)) {
-        if (((strncmp(dic->disciplina, disciplina, strlen(disciplina)) == 0) || (strcmp(dic->disciplina+1,disciplina)==0)) && (dic->status != 'I')) {
-            while(fread(prof, sizeof(Professor), 1, fp)){
-                if (((strcmp(prof->cpf,dic->cpf)==0))){
-                    printf("|%-30s|\n", prof->nome);
-                    cont++;
-                }
+    while (fread(dic, sizeof(Disciplina), 1, fd) && (fread(prof, sizeof(Professor), 1, fp) )) {
+        int Encontrado=0;
+        //esse for irá começar do zero, irá ler a quantidade de caracter representados por 
+        //matri->cod que são por padrão 4 e irá i++
+        for (int i = 0; i < strlen(dic->disciplina); i++) {
+            //irá usar a função strstr que irá procurar uma sequencia de caracteres
+            //como parametro irá ser passado matri->cod + i que irá passar por cada caracter
+            // e irá procurar pelo carater que eu quero que seria o de turma
+            //caso seja ambos iguais ele ira ter encontraado oq eu desejo 
+            if (strstr(dic->disciplina + i, disciplina) == dic->disciplina + i) {
+                Encontrado = 1;
+                break;
             }
+        }
+        if ((Encontrado && (dic->status != 'I') && (prof->status!='I'))) {
+            cont++;
+            printf("|%-30s|\n",prof->nome);
         }
     }if(!cont){
         printf("\nEssa diciplina não foi atrelada a nenhum professor!\n");
@@ -940,6 +955,27 @@ void list_alf_turma(void){
     exibir_lista_turma(list);
     apagar_lista_turma(&list);
 }
+void list_alf_disciplina(void){
+    Disciplina *list;
+    list = NULL;
+    gerar_lista_disciplina(&list);
+    exibir_lista_disciplina(list);
+    apagar_lista_disciplina(&list);
+}
+void list_alf_matricula(void){
+    Matricula *list;
+    list = NULL;
+    gerar_lista_matricula(&list);
+    exibir_lista_matricula(list);
+    apagar_lista_matricula(&list);
+}
+void list_alf_h(void){
+    Horario *list;
+    list = NULL;
+    gerar_lista_h(&list);
+    exibir_lista_h(list);
+    apagar_lista_h(&list);
+}
 void gerar_lista_aluno(Aluno **list){
     FILE *fa;
     Aluno *std;
@@ -977,7 +1013,7 @@ void gerar_lista_professor(Professor **list){
     Professor *prof;
     apagar_lista_professor(&(*list));
     *list = NULL;
-    fp = fopen("Professors.dat","rb");
+    fp = fopen("Professor.dat","rb");
     if (fp == NULL) {
         printf("Erro na abertura do arquivo... \n");
         return;
@@ -1007,7 +1043,7 @@ void gerar_lista_professor(Professor **list){
 void gerar_lista_turma(Turma **list){
     FILE *ft;
     Turma *t;
-    apagar_lista_Turma(&(*list));
+    apagar_lista_turma(&(*list));
     *list = NULL;
     ft = fopen("Turma.dat","rb");
     if (ft == NULL) {
@@ -1035,6 +1071,99 @@ void gerar_lista_turma(Turma **list){
         fclose(ft);
     } 
 }
+void gerar_lista_disciplina(Disciplina **list){
+    FILE *fd;
+    Disciplina *dic;
+    apagar_lista_disciplina(&(*list));
+    *list = NULL;
+    fd = fopen("Disciplina.dat","rb");
+    if (fd == NULL) {
+        printf("Erro na abertura do arquivo... \n");
+        return;
+    } else {
+        dic = (Disciplina *) malloc(sizeof(Disciplina));
+        while (fread(dic, sizeof(Disciplina), 1, fd)) {
+            if ((*list == NULL) || (strcmp(dic->disciplina, (*list)->disciplina) < 0)) {
+                dic->prox = *list;
+                *list = dic;
+            } else {
+                Disciplina* ant = *list;
+                Disciplina* at = (*list)->prox;
+                while ((at != NULL) && (strcmp(at->disciplina, dic->disciplina) < 0)) {
+                    ant = at;
+                    at = at->prox;
+                }
+                ant->prox = dic;
+                dic->prox = at;
+            }
+            dic = (Disciplina*) malloc(sizeof(Disciplina));
+        }
+        free(dic);
+        fclose(fd);
+    } 
+}
+void gerar_lista_matricula(Matricula **list){
+    FILE *fa;
+    Matricula *matri;
+    apagar_lista_matricula(&(*list));
+    *list = NULL;
+    fa = fopen("Matricula.dat","rb");
+    if (fa == NULL) {
+        printf("Erro na abertura do arquivo... \n");
+        return;
+    } else {
+        matri = (Matricula *) malloc(sizeof(Matricula));
+        while (fread(matri, sizeof(Matricula), 1, fa)) {
+            if ((*list == NULL) || (strcmp(matri->cod, (*list)->cod) < 0)) {
+                matri->prox = *list;
+                *list = matri;
+            } else {
+                Matricula* ant = *list;
+                Matricula* at = (*list)->prox;
+                while ((at != NULL) && (strcmp(at->cod, matri->cod) < 0)) {
+                    ant = at;
+                    at = at->prox;
+                }
+                ant->prox = matri;
+                matri->prox = at;
+            }
+            matri = (Matricula*) malloc(sizeof(Matricula));
+        }
+        free(matri);
+        fclose(fa);
+    } 
+}
+void gerar_lista_h(Horario **list){
+    FILE *fh;
+    Horario *h;
+    apagar_lista_h(&(*list));
+    *list = NULL;
+    fh = fopen("Horario.dat","rb");
+    if (fh == NULL) {
+        printf("Erro na abertura do arquivo... \n");
+        return;
+    } else {
+        h = (Horario *) malloc(sizeof(Horario));
+        while (fread(h, sizeof(Horario), 1, fh)) {
+            if ((*list == NULL) || (strcmp(h->disciplina, (*list)->disciplina) < 0)) {
+                h->prox = *list;
+                *list = h;
+            } else {
+                Horario* ant = *list;
+                Horario* at = (*list)->prox;
+                while ((at != NULL) && (strcmp(at->disciplina, h->disciplina) < 0)) {
+                    ant = at;
+                    at = at->prox;
+                }
+                ant->prox = h;
+                h->prox = at;
+            }
+            h = (Horario*) malloc(sizeof(Horario));
+        }
+        free(h);
+        fclose(fh);
+    } 
+}
 void apagar_lista_aluno(Aluno **list) {
   Aluno *al;
   while (*list != NULL) {
@@ -1059,9 +1188,34 @@ void apagar_lista_turma(Turma **list) {
     free(al);
   }  
 }
+void apagar_lista_h(Horario **list) {
+  Horario *al;
+  while (*list != NULL) {
+    al = *list;
+    *list = (*list)->prox;
+    free(al);
+  }  
+}
+void apagar_lista_disciplina(Disciplina **list) {
+  Disciplina *al;
+  while (*list != NULL) {
+    al = *list;
+    *list = (*list)->prox;
+    free(al);
+  }  
+}
+
+void apagar_lista_matricula(Matricula **list) {
+  Matricula *al;
+  while (*list != NULL) {
+    al = *list;
+    *list = (*list)->prox;
+    free(al);
+  }  
+}
 void exibir_lista_aluno(Aluno *aux) {
     while (aux != NULL) {
-        printf("| %-39s - %-10s        -%-12s      |   \n", aux->nome, aux->email ,aux->cpf);
+        printf("| %-39s - %-36s        -%-11s      |   \n", aux->nome, aux->email ,aux->telefone);
         aux =aux->prox;
 	}
     getchar();
@@ -1069,7 +1223,7 @@ void exibir_lista_aluno(Aluno *aux) {
 
 void exibir_lista_professor(Professor *aux) {
     while (aux != NULL) {
-        printf("| %-39s - %-10s        -%-12s      |   \n", aux->nome, aux->email ,aux->cpf);
+        printf("| %-39s - %-36s        -%-11s      |   \n", aux->nome, aux->email ,aux->telefone);
         aux =aux->prox;
 	}
     getchar();
@@ -1081,4 +1235,100 @@ void exibir_lista_turma(Turma *aux) {
         aux =aux->prox;
 	}
     getchar();
+}
+void exibir_lista_disciplina(Disciplina *aux) {
+    while (aux != NULL) {
+        FILE *fd;
+        FILE *fp;
+        Disciplina *dic;
+        Professor *prof;
+        dic = (Disciplina*)malloc(sizeof(Disciplina));
+        prof = (Professor*)malloc(sizeof(Professor));
+        fd = fopen("Disciplina.dat", "rb");
+        fp = fopen("Professor.dat", "rb");
+        if ((fd == NULL) || (fp == NULL)) {
+            printf("\nNenhuma Disciplina ou matriculada cadastrada!\n");
+            return;
+        }
+        while (fread(dic, sizeof(Disciplina), 1, fd)) {
+            if ((dic->status != 'I')) {
+                rewind(fp);
+                while (fread(prof, sizeof(Professor), 1, fp)) {
+                    if ((strcmp(dic->cpf, prof->cpf) == 0)) {
+                        printf("| %-5s - %-39s   |   \n", aux->disciplina, prof->nome);
+                        aux = aux->prox;
+                    }
+                }
+            }
+        }
+        fclose(fd);
+        free(dic);
+        fclose(fp);
+        free(prof);
+        getchar();
+    }
+}
+void exibir_lista_matricula(Matricula *aux) {
+    while (aux != NULL) {
+        FILE *fm;
+        FILE *fa;
+        Matricula *matri;
+        Aluno *std;
+        matri = (Matricula*)malloc(sizeof(Matricula));
+        std = (Aluno*)malloc(sizeof(Aluno));
+        fm = fopen("Matricula.dat", "rb");
+        fa = fopen("Alunos.dat", "rb");
+        if ((fm == NULL) || (fa == NULL)) {
+            printf("\nNenhuma Matricula ou aluno cadastrado!\n");
+            return;
+        }
+        while (fread(matri, sizeof(Matricula), 1, fm)) {
+            if ((matri->status != 'I')) {
+                rewind(fa);
+                while (fread(std, sizeof(Aluno), 1, fa)) {
+                    if ((strcmp(matri->cpf, std->cpf) == 0)) {
+                        printf("| %-5s - %-39s   |   \n", aux->cod, std->nome);
+                        aux = aux->prox;
+                    }
+                }
+            }
+        }
+        fclose(fm);
+        free(matri);
+        fclose(fa);
+        free(std);
+        getchar();
+    }
+}
+void exibir_lista_h(Horario *aux) {
+    while (aux != NULL) {
+        FILE *fd;
+        FILE *fp;
+        Horario *h;
+        Professor *prof;
+        h = (Horario*)malloc(sizeof(Horario));
+        prof = (Professor*)malloc(sizeof(Professor));
+        fd = fopen("Horario.dat", "rb");
+        fp = fopen("Professor.dat", "rb");
+        if ((fd == NULL) || (fp == NULL)) {
+            printf("\nNenhuma Horario ou matriculada cadastrada!\n");
+            return;
+        }
+        while (fread(h, sizeof(Horario), 1, fd)) {
+            if ((h->status != 'I')) {
+                rewind(fp);
+                while (fread(prof, sizeof(Professor), 1, fp)) {
+                    if ((strcmp(h->cpf, prof->cpf) == 0)) {
+                        printf("| %-5s - %-39s - %-6s - %-13s - %-12s |   \n", aux->disciplina, prof->nome,aux->turno,aux->periodo,aux->turma);
+                        aux = aux->prox;
+                    }
+                }
+            }
+        }
+        fclose(fd);
+        free(h);
+        fclose(fp);
+        free(prof);
+        getchar();
+    }
 }
