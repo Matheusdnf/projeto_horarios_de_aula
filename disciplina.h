@@ -7,6 +7,7 @@ typedef struct disciplina {
     char cpf[12]; //referente ao cpf do professor
     char disciplina[4];
     char status;           //A-Ativo I-Inexistente 
+    struct disciplina *prox;
 } Disciplina;
 //tela do módulo diciplina
 void menu_disciplinas(void);

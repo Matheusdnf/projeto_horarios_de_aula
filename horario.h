@@ -11,6 +11,7 @@ typedef struct horario {
     char status;           //A-Ativo I-Inexistente
     char cpf[12];
     char turma[4];
+    struct horario *prox;
 } Horario;
 //telas horário de aula
 void explicacao(void);

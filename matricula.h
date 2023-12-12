@@ -6,6 +6,7 @@ typedef struct matricula{
     char cpf [12];
     char cod [7];
     char status;
+    struct matricula *prox;
 }Matricula;
 //telas do módulo matrícula
 void menu_matricula(void);
@@ -20,5 +21,5 @@ void exibicao_matricula(Matricula *matri, Aluno* std);
 void listar_todas_matricula(void);
 void procura_matricula(char *cod);
 void remover_matricula(char *cod);
-void att_matricula(char *cod);
+void att_matricula(char cpf[]);
 #endif

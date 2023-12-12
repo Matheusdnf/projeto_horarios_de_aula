@@ -93,7 +93,7 @@ int valida_nome(char *nome) {
     int tam = strlen(nome);
     //só permite nome maiores que 2 letras 
     // é utilizado 3 para contar com o \n do teclado
-    if (tam<3){
+    if ((tam<3) && (tam>100)){
         return 0;
     }
     // Verificar se o usuário não digitou um espaço em branco,tanto no ínicio como no final
@@ -355,14 +355,6 @@ int valida_turma(char* turma){
     if(tam!=3){
         return 0;
     }
-    // if ((tam != 2) && (tam != 1)){
-    //     return 0;
-    // }
-    // // não permitir que o usuário digite duas letras iguais
-    // else if (tam == 2 && turma[0] == turma[1]){
-    //     return 0;
-    // };
-    //verificar se a última letra digitada será uma dessas duas
     char subsequente[]={'A','B','C'};
     //verifica a posição da string desejada
     if(strchr(subsequente,turma[2])==NULL){
@@ -422,6 +414,7 @@ char obter_resposta(void) {
         printf("Deseja tentar novamente (S/N)? ");
         scanf(" %c", &escolha);
         letra_maiuscula(&escolha);
+        getchar();
         // validar a resposta
         if (!valida_s_ou_n(escolha)) {
             printf("Digite algo válido (S/N)!\n");
@@ -436,12 +429,10 @@ char escolher_filtro(void){
     do{
         printf("Digite qual situação deseja ver (A-Ativo|I-Inativos):");
         scanf(" %c",&situ);
+        limpar_buffer();
         letra_maiuscula(&situ);
         if(situ!='A' && situ!='I'){
             printf("Digite algo válido\n");
-        }
-        else{
-        limpar_buffer();
         }
     }while (situ != 'A' && situ != 'I');
     return situ;
