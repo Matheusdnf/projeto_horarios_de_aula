@@ -7,7 +7,9 @@ typedef struct aluno {
     char telefone[15];
     char email[225];
     char status;    // M-Matriculado  I-inexistente
-} Aluno;
+    struct aluno *prox;
+}Aluno; 
+
 //telas do módulo aluno
 void menu_aluno(void);
 //cadastro do módulo aluno

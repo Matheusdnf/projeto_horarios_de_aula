@@ -4,6 +4,7 @@
 typedef struct turma{
     char cod [4];
     char nome[100];
+    struct turma *prox;
     char status;
 }Turma;
 void menu_turma(void);

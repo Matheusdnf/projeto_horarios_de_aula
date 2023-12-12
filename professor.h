@@ -7,6 +7,7 @@ typedef struct professor {
     char telefone[15];
     char email[225];
     char status;          //A-Ativo I-Inativo
+    struct professor *prox;
 } Professor;
 //telas módulo professores
 void menu_professor(void);
