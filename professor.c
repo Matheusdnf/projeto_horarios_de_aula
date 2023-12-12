@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <relatorio.h>
+#include "relatorio.h"
+#include "valida.h"
 
 void menu_professor(void){
     //opc -1 para ela poder ser atualiza pelo usuário quando vai navegando
@@ -307,7 +308,7 @@ void att_professor(char cpf[]){
                 fflush(stdin);
                 scanf("%d", &esc);
                 getchar();
-                fflush(stdin);
+                limpar_buffer();
                 switch (esc){
                     case 1:
                         ler_telefone(prof->telefone);

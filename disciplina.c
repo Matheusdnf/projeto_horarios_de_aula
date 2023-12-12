@@ -1,3 +1,4 @@
+#include "valida.h"
 #include "relatorio.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -464,7 +465,7 @@ void att_disciplinas(int id){
                         fflush(stdin);
                         scanf("%d", &esc);
                         getchar();
-                        fflush(stdin);
+                        limpar_buffer();
                         switch (esc){
                             case 1:
                                 disciplinas();
@@ -484,10 +485,9 @@ void att_disciplinas(int id){
                         fseek(fd, -1 * (long)sizeof(Disciplina), SEEK_CUR);
                         fwrite(dic, sizeof(Disciplina), 1, fd);
                     } while (esc != 0);
-                    break;
                 }
             }
-        }
+        }break;
     }if (!cont){
         printf("\nEssa disciplina não existe no sistema ou ainda não foi cadastrado!\n"); 
     }

@@ -302,7 +302,7 @@ void att_turma(char *cod){
                 printf("Qual opção deseja atualizar:");
                 fflush(stdin);
                 scanf("%d", &esc);
-                getchar();
+                limpar_buffer();
                 switch (esc){
                     case 1:
                         ler_nome(t->nome);

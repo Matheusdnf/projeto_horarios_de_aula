@@ -539,8 +539,7 @@ void att_h(int id) {
                         printf("Qual opção deseja atualizar: ");
                         fflush(stdin);
                         scanf("%d", &esc);
-                        fflush(stdin);
-                        getchar();
+                        limpar_buffer();
                         switch (esc) {
                             case 1:
                                 ler_turno(h->turno);
@@ -596,12 +595,10 @@ void att_h(int id) {
                         fseek(fh, -1 * (long)sizeof(Horario), SEEK_CUR);
                         fwrite(h, sizeof(Horario), 1, fh);
                     } while (esc != 0);
-                    break;
                 }
             }
-        }
-    }
-    if (!cont) {
+        }break;
+    }if (!cont) {
         printf("Horario não encontrado!\n");
     }
     fclose(fh);

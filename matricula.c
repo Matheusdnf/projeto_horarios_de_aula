@@ -336,7 +336,7 @@ void att_matricula(char *cpf){
                         printf("Qual opção deseja atualizar:");
                         fflush(stdin);
                         scanf("%d", &esc);
-                        fflush(stdin);
+                        limpar_buffer();
                         switch (esc){
                             case 1:
                             printf("Turmas cadastradas!\n");
@@ -371,10 +371,9 @@ void att_matricula(char *cpf){
                         fseek(fm, -1 * (long)sizeof(Matricula), SEEK_CUR);
                         fwrite(matri, sizeof(Matricula), 1, fm);
                     } while (esc != 0);
-                    break;
                 }
             }
-        }
+        }break;
     }if (!cont){
         printf("Turma não encontrada!\n");
     }
