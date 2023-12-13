@@ -337,9 +337,10 @@ void letra_maiuscula(char* algo) {
 void ler_turma(char *turma){
     int t;
     do{
-        fflush(stdin);
+        limpar_buffer();
         printf("Digite sua turma:");
         fgets(turma,5,stdin);
+        letra_maiuscula(turma);
         turma[strlen(turma)-1]=0;
         t = valida_turma(turma);
         if (t == 0){
