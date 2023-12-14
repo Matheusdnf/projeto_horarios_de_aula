@@ -331,7 +331,7 @@ void relatorio_tabela_aluno(char situ){
             else if (std->status == 'I'){
                 strcpy(estado, "Inativo");
             }
-            printf("|%-30s|%-11s|%-36s|%-11s|%-11s|\n",std->nome,std->cpf,std->email,std->telefone,estado);
+            printf("|%-30s|%-11s|%-36s|%-11s|%-8s|\n",std->nome,std->cpf,std->email,std->telefone,estado);
         }
     }if(!cont){
         printf("Não há nenhum usuário inativo no momento!\n");
@@ -367,7 +367,7 @@ void relatorio_tabela_professor(char situ){
             else if (prof->status == 'I'){
                 strcpy(estado, "Inativo");
             }
-            printf("|%-30s|%-11s|%-36s|%-11s|%-10s|\n",prof->nome,prof->cpf,prof->email,prof->telefone,estado);
+            printf("|%-30s|%-11s|%-36s|%-11s|%-8s|\n",prof->nome,prof->cpf,prof->email,prof->telefone,estado);
         }
     } if(!cont){
         printf("\nNão há nenhum usuário inativo no momento!\n");
@@ -400,7 +400,7 @@ void relatorio_tabela_turmas(char situ){
             else if (t->status == 'I'){
                 strcpy(estado, "Inativa");
             }
-            printf("|%-30s|%-5s|%-10s|",t->nome,t->cod,estado);
+            printf("|%-30s|%-5s|%-8s|",t->nome,t->cod,estado);
             printf("\n");
         }
     }if(!cont){
@@ -442,7 +442,7 @@ void relatorio_tabela_disciplinas(char situ){
                     else if (dic->status == 'I'){
                         strcpy(estado, "Inativa");
                     }
-                    printf("|%-30s|%-11s|%-10s|%-10s|",prof->nome,dic->cpf,dic->disciplina,estado);
+                    printf("|%-30s|%-11s|%-10s|%-8s|",prof->nome,dic->cpf,dic->disciplina,estado);
                     printf("\n");
                 }
             }
@@ -491,7 +491,7 @@ void relatorio_tabela_h(char situ){
                     else if (h->status == 'I'){
                         strcpy(estado, "Inativo");
                     }
-                    printf("|%-30s|%-11s|%-6s|%-10s|%-13s|%-12s|%-10s|", prof->nome, prof->cpf, h->periodo, h->disciplina, h->dia, h->turno, estado);
+                    printf("|%-30s|%-11s|%-6s|%-10s|%-13s|%-12s|%-8s|", prof->nome, prof->cpf, h->periodo, h->disciplina, h->dia, h->turno, estado);
                     printf("\n");
                 }
             }
@@ -538,7 +538,7 @@ void relatorio_tabela_matricula(char situ){
                     else if (matri->status == 'I'){
                         strcpy(estado, "Inativa");
                     }
-                    printf("|%-30s|%-11s|%-5s|%-10s|\n",std->nome,matri->cpf,matri->cod,estado);
+                    printf("|%-30s|%-11s|%-5s|%-8s|\n",std->nome,matri->cpf,matri->cod,estado);
                 }    
             }
         }
@@ -1236,99 +1236,132 @@ void exibir_lista_turma(Turma *aux) {
 	}
     getchar();
 }
+//feito com a ajuda do chat gpt
 void exibir_lista_disciplina(Disciplina *aux) {
+    FILE *fd;
+    FILE *fp;
+    Disciplina *dic;
+    Professor *prof;
+    dic = (Disciplina *)malloc(sizeof(Disciplina));
+    prof = (Professor *)malloc(sizeof(Professor));
+    if (dic == NULL || prof == NULL) {
+        printf("\nErro na alocação de memória!\n");
+        return;
+    }
+    fd = fopen("Disciplina.dat", "rb");
+    fp = fopen("Professor.dat", "rb");
+    if (fd == NULL || fp == NULL) {
+        printf("\nNenhuma Disciplina ou matriculada cadastrada!\n");
+        return;
+    }
     while (aux != NULL) {
-        FILE *fd;
-        FILE *fp;
-        Disciplina *dic;
-        Professor *prof;
-        dic = (Disciplina*)malloc(sizeof(Disciplina));
-        prof = (Professor*)malloc(sizeof(Professor));
-        fd = fopen("Disciplina.dat", "rb");
-        fp = fopen("Professor.dat", "rb");
-        if ((fd == NULL) || (fp == NULL)) {
-            printf("\nNenhuma Disciplina ou matriculada cadastrada!\n");
-            return;
-        }
-        while (fread(dic, sizeof(Disciplina), 1, fd)) {
-            if ((dic->status != 'I')) {
-                rewind(fp);
-                while (fread(prof, sizeof(Professor), 1, fp)) {
-                    if ((strcmp(dic->cpf, prof->cpf) == 0)) {
-                        printf("| %-5s - %-39s   |   \n", aux->disciplina, prof->nome);
-                        aux = aux->prox;
+        Disciplina *tempAux = aux;  // Ponteiro temporário para percorrer a lista sem modificar 'aux'
+        fseek(fd, 0, SEEK_SET);
+        while (fread(dic, sizeof(Disciplina), 1, fd) == 1) {
+            if (dic != NULL && tempAux != NULL && strcmp(dic->cpf, tempAux->cpf) == 0 && dic->status != 'I') {
+                fseek(fp, 0, SEEK_SET);
+                while (fread(prof, sizeof(Professor), 1, fp) == 1) {
+                    if (prof != NULL && strcmp(dic->cpf, prof->cpf) == 0) {
+                        printf("| %-5s - %-39s   |", tempAux->disciplina, prof->nome);
+                        printf("\n");
+                        break;
                     }
                 }
+                break;
             }
         }
-        fclose(fd);
-        free(dic);
-        fclose(fp);
-        free(prof);
-        getchar();
+        aux = aux->prox;
     }
+    fclose(fd);
+    fclose(fp);
+    free(dic);
+    free(prof);
+    getchar();
 }
+
+
+
+//feito com a ajuda do chat gpt
 void exibir_lista_matricula(Matricula *aux) {
+    FILE *fm;
+    FILE *fa;
+    Matricula *matri;
+    Aluno *std;
+    matri = (Matricula *)malloc(sizeof(Matricula));
+    std = (Aluno *)malloc(sizeof(Aluno));
+    if (matri == NULL || std == NULL) {
+        printf("\nErro na alocação de memória!\n");
+        return;
+    }
+    fm = fopen("Matricula.dat", "rb");
+    fa = fopen("Alunos.dat", "rb");
+    if (fm == NULL || fa == NULL) {
+        printf("\nNenhuma Matricula ou aluno cadastrado!\n");
+        return;
+    }
     while (aux != NULL) {
-        FILE *fm;
-        FILE *fa;
-        Matricula *matri;
-        Aluno *std;
-        matri = (Matricula*)malloc(sizeof(Matricula));
-        std = (Aluno*)malloc(sizeof(Aluno));
-        fm = fopen("Matricula.dat", "rb");
-        fa = fopen("Alunos.dat", "rb");
-        if ((fm == NULL) || (fa == NULL)) {
-            printf("\nNenhuma Matricula ou aluno cadastrado!\n");
-            return;
-        }
-        while (fread(matri, sizeof(Matricula), 1, fm)) {
-            if ((matri->status != 'I')) {
-                rewind(fa);
-                while (fread(std, sizeof(Aluno), 1, fa)) {
-                    if ((strcmp(matri->cpf, std->cpf) == 0)) {
-                        printf("| %-5s - %-39s   |   \n", aux->cod, std->nome);
-                        aux = aux->prox;
+        fseek(fm, 0, SEEK_SET); // Reiniciar o arquivo de matrículas para o início
+        while (fread(matri, sizeof(Matricula), 1, fm) == 1) {
+            if (matri != NULL && aux != NULL && strcmp(matri->cpf, aux->cpf) == 0 && matri->status != 'I') {
+                fseek(fa, 0, SEEK_SET); // Reiniciar o arquivo de alunos para o início
+                while (fread(std, sizeof(Aluno), 1, fa) == 1) {
+                    if (std != NULL && strcmp(matri->cpf, std->cpf) == 0) {
+                        printf("| %-5s - %-39s   |  ", aux->cod, std->nome);
+                        printf("\n");
+                        break; // Encerra o loop de alunos, pois já encontrou a correspondência
                     }
                 }
+                break; // Encerra o loop de matrículas, pois já encontrou a correspondência
             }
         }
-        fclose(fm);
-        free(matri);
-        fclose(fa);
-        free(std);
-        getchar();
+        aux = aux->prox; // Mover para o próximo nó na lista
     }
+    fclose(fm);
+    fclose(fa);
+    free(matri);
+    free(std);
+    getchar();
 }
+
 void exibir_lista_h(Horario *aux) {
+    FILE *fh;
+    FILE *fp;
+    Horario *h;
+    Professor *prof;
+    h = (Horario *)malloc(sizeof(Horario));
+    prof = (Professor *)malloc(sizeof(Professor));
+    fh = fopen("Horario.dat", "rb");
+    fp = fopen("Professor.dat", "rb");
+    if (prof == NULL || h == NULL) {
+        printf("\nErro na alocação de memória!\n");
+        return;
+    }
+    if (fh == NULL || fp == NULL) {
+        printf("\nNenhuma Horario ou professor cadastrado!\n");
+        free(h);
+        free(prof);
+        return;
+    }
     while (aux != NULL) {
-        FILE *fd;
-        FILE *fp;
-        Horario *h;
-        Professor *prof;
-        h = (Horario*)malloc(sizeof(Horario));
-        prof = (Professor*)malloc(sizeof(Professor));
-        fd = fopen("Horario.dat", "rb");
-        fp = fopen("Professor.dat", "rb");
-        if ((fd == NULL) || (fp == NULL)) {
-            printf("\nNenhuma Horario ou matriculada cadastrada!\n");
-            return;
-        }
-        while (fread(h, sizeof(Horario), 1, fd)) {
-            if ((h->status != 'I')) {
-                rewind(fp);
-                while (fread(prof, sizeof(Professor), 1, fp)) {
-                    if ((strcmp(h->cpf, prof->cpf) == 0)) {
-                        printf("| %-5s - %-39s - %-6s - %-13s - %-12s |   \n", aux->disciplina, prof->nome,aux->turno,aux->periodo,aux->turma);
-                        aux = aux->prox;
+        fseek(fp, 0, SEEK_SET);
+        while (fread(prof, sizeof(Professor), 1, fp) == 1) {
+            if (prof != NULL && aux != NULL && strcmp(prof->cpf, aux->cpf) == 0 && prof->status != 'I') {
+                fseek(fh, 0, SEEK_SET);
+                while (fread(h, sizeof(Horario), 1, fh) == 1) {
+                    if (h != NULL && strcmp(prof->cpf, h->cpf) == 0) {
+                        printf("| %-5s - %-39s - %-6s - %-13s - %-12s |  ", aux->disciplina, prof->nome, aux->turno, aux->periodo, aux->turma);
+                        printf("\n");
+                        break; // Encerra o loop de horários, pois já encontrou a correspondência
                     }
                 }
+                break; // Encerra o loop de professores, pois já encontrou a correspondência
             }
         }
-        fclose(fd);
-        free(h);
-        fclose(fp);
-        free(prof);
-        getchar();
+        aux = aux->prox; // Mover para o próximo nó na lista
     }
+    fclose(fh);
+    free(h);
+    fclose(fp);
+    free(prof);
+    getchar();
 }
