@@ -86,6 +86,8 @@ Professor *cadastrar_professor(void){
         }
     } while (1);
     ler_nome(nome);
+    //deixar todo o nome com letras minúsculas
+    str_to_lower(nome);
     //utilzado essa função par na hora que armazenar o arquivo não inserir lixo de memória
     //com os caracteres que não foram usados será colocado \0 no lugar
     strncpy(prof->nome,nome,sizeof(prof->nome));
@@ -139,6 +141,8 @@ void atualizar_professor(void){
 void excluir_professor(void){
     system("clear||cls");
     char cpf[15];
+    int esc=1;
+    char id=0;
     printf("========================================================\n");
     printf("    *************** Excluir Professor *************     \n\n");
     printf("                                                        \n");
@@ -146,6 +150,8 @@ void excluir_professor(void){
     procura_professor(cpf);
     if(decidir_excluir()){
         remover_Professor(cpf);
+        //função modificada para funcionar tanto em disciplinas quanto em professores
+        remover_disciplinas(id,cpf,esc);
     }
     else{
         return;

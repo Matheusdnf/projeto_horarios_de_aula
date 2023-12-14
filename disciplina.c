@@ -151,6 +151,8 @@ void atualizar_disciplinas(void){
 void excluir_disciplinas(void){
     system("clear||cls");
     int id = 0;
+    char cpf[12];
+    int esc=2;
     printf("========================================================\n");
     printf("    *************** Excluir Disciplina *************     \n\n");
     printf("                                                        \n");
@@ -159,7 +161,8 @@ void excluir_disciplinas(void){
     limpar_buffer();
     procura_disciplinas(id);
     if (decidir_excluir()){
-        remover_disciplinas(id);
+        //função modificada para funcionar tanto em disciplinas quanto em professores
+        remover_disciplinas(id,cpf,esc);
     }
     else{
         return;
@@ -402,33 +405,49 @@ void procura_disciplinas(int id){
     fclose(fp);
 }
 
-// feito com a ajuda de marlison silva chat gpt e adapatada por matheus diniz
-void remover_disciplinas(int id){
+//função modificada para funcionar no módulo de professores e disciplinas
+void remover_disciplinas(int id, char cpf[], char esc) {
     FILE *fd;
     Disciplina *dic;
     dic = (Disciplina *)malloc(sizeof(Disciplina));
     fd = fopen("Disciplina.dat", "r+b");
-    int cont=0;
-    if (fd == NULL){
+    int cont = 0;
+    if (fd == NULL) {
         printf("\nNenhuma Disciplina cadastrada!\n");
         return;
     }
-    while (fread(dic, sizeof(Disciplina), 1, fd)){
-        if ((dic->id == id) && (dic->status == 'A')){
-            cont++;
-            dic->status = 'I';
-            fseek(fd, -1 * (long)sizeof(Disciplina), SEEK_CUR);
-            fwrite(dic, sizeof(Disciplina), 1, fd);
-            printf("\nDisciplina excluída!\n");
-            break;
+    //nessa situação é para quando excluir um professor excluir a disciplina
+    if (esc == 1) {
+        while (fread(dic, sizeof(Disciplina), 1, fd)) {
+            if (strcmp(dic->cpf, cpf) == 0 && dic->status == 'A') {
+                cont++;
+                dic->status = 'I';
+                fseek(fd, -1 * (long)sizeof(Disciplina), SEEK_CUR);
+                fwrite(dic, sizeof(Disciplina), 1, fd);
+                printf("\nDisciplina excluída!\n");
+                break;
+            }
+        }
+    //excluir apenas a disciplina não excluindo o cadastro do professor
+    } else if (esc == 2) {
+        while (fread(dic, sizeof(Disciplina), 1, fd)) {
+            if (dic->id == id && dic->status == 'A') {
+                cont++;
+                dic->status = 'I';
+                fseek(fd, -1 * (long)sizeof(Disciplina), SEEK_CUR);
+                fwrite(dic, sizeof(Disciplina), 1, fd);
+                printf("\nDisciplina excluída!\n");
+                break;
+            }
         }
     }
-    if (!cont){
+    if (!cont) {
         printf("\nDisciplina não encontrada!\n");
     }
     fclose(fd);
     free(dic);
 }
+
 void att_disciplinas(int id){
     FILE *fd;
     FILE *fp;

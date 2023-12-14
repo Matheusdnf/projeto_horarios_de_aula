@@ -1,6 +1,5 @@
-#include "aluno.h"
 #include "valida.h"
-#include "checagem.h"
+#include "relatorio.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -89,6 +88,8 @@ Aluno *cadastrar_aluno(void){
         //retornar um tela,no caso ao menu 
     } while (1);
     ler_nome(nome);
+    //função para deixar todo o nome minúsculo
+    str_to_lower(nome);
     //utilzado essa função par na hora que armazenar o arquivo não inserir lixo de memória
     //com os caracteres que não foram usados será colocado \0 no lugar
     strncpy(std->nome,nome,sizeof(std->nome));
@@ -151,6 +152,8 @@ void excluir_aluno(){
     procura_aluno(cpf);
     if(decidir_excluir()){
         remover_aluno(cpf);
+        //quando o aluno for excluido a sua matrícula também será cancelada
+        remover_matricula(cpf);
     }
     else{
         return;

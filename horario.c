@@ -173,7 +173,6 @@ void buscar_horario(void){
     procura_h(id);
     printf("                                                        \n");
     printf("========================================================\n");
-    getchar();
     printf("Digite enter para continuar...");
     getchar();
 }
@@ -192,7 +191,6 @@ void atualizar_horario(void){
     printf("                                                        \n");
     printf("========================================================\n");
     printf("\n");
-    getchar();
     printf("Digite enter para continuar...");
     getchar();
 }

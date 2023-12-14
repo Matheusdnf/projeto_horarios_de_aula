@@ -28,6 +28,6 @@ void gravardisciplinas(Disciplina* dic);
 void exibir_disciplinas(Disciplina* dic,Professor* prof);
 void listar_todas_disciplinas(void);
 void procura_disciplinas(int id);
-void remover_disciplinas(int id);
+void remover_disciplinas(int id, char cpf[], char esc);
 void att_disciplinas(int id);
 #endif

@@ -92,6 +92,8 @@ Turma *cadastrar_turma(void){
     }while (1);
     printf("Escreva o nome da turma (Só escreva letras)\n");
     ler_nome(nome);
+    //deixar todo o nome com letras minúsculas
+    str_to_lower(nome);
     //utilzado essa função par na hora que armazenar o arquivo não inserir lixo de memória
     //com os caracteres que não foram usados será colocado \0 no lugar
     strncpy(t->nome,nome,sizeof(t->nome));
