@@ -53,7 +53,7 @@ int verifica_aluno_matriculado(char cpf[]){
         return 1;
     }
     while (fread(matri, sizeof(Matricula), 1, fm)){
-        if ((strcmp(matri->cpf, cpf) == 0)){
+        if ( matri->status!='I' && (strcmp(matri->cpf, cpf) == 0)){
             return 0;
         }
     }
@@ -71,7 +71,7 @@ int verifica_professor_com_disciplina(char cpf[]){
         return 1;
     }
     while (fread(dic, sizeof(Disciplina), 1, fd)){
-        if ((strcmp(dic->cpf, cpf) == 0)){
+        if (dic->status=='I' && (strcmp(dic->cpf, cpf) == 0)){
             return 0;
         }
     }
