@@ -14,6 +14,7 @@ void ler_cpf(char cpf[]);
 void ler_email(char email[]);
 int validate_email(char email[]);
 char* str_to_lower(char* str);
+int has_one_at_sign(char* str); 
 int has_space(char* str);
 //limpar o buffer de entrada para quando for utilizado o scanf
 void limpar_buffer();

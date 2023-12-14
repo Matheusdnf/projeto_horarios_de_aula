@@ -212,12 +212,15 @@ void ler_email(char email[]) {
         }
     }while(e!=1);
 }
-
+//função pega de MarlisonSilva
 int validate_email(char email[]) {
-    //função pega de marlison silva @MarlisonSilva
-    //modifiquei o retorno
     email = str_to_lower(email);
     char aux [255];
+    if (!has_one_at_sign(email))
+    {
+        return 0;
+    }
+    
     if (strlen(email) >= 7 && !has_space(email)) {
         aux[0] = '\0';
         // prefixo
@@ -294,6 +297,26 @@ int validate_email(char email[]) {
     }
     return 0;
 }
+//função pega de MarlisonSilva
+int has_one_at_sign(char* str) {
+    int i = 0;
+    int found = 0;
+    do
+    {
+        if (str[i] == '@')
+        {
+            found++;
+        }
+        i++;
+    } while (str[i] != '\0');
+    
+    if (found == 1)
+    {
+        return true;
+    }
+    return false;
+}
+
 //auxiliares
 int has_space(char* str) {
     //função pega de marlison silva @MarlisonSilva
