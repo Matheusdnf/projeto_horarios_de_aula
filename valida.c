@@ -96,8 +96,14 @@ int valida_nome(char *nome) {
     if ((tam<3) && (tam>100)){
         return 0;
     }
+    if (tam<1){
+        return 0;
+    }
     // Verificar se o usuário não digitou um espaço em branco,tanto no ínicio como no final
     if ((isspace(nome[0])) || (isspace(nome[tam - 2]))) {
+        return 0;
+    }
+    if ((isalnum(nome[0])) || (isalnum(nome[tam-2]))){
         return 0;
     }
     //esse loop serve para procurar a questão de números
