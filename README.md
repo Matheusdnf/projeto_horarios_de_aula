@@ -9,6 +9,16 @@ BSI - Bacharelado em Sistemas de Informação.\
 DCT1106 - Programação - Flavius Gorgônio.\
 Desenvolvido por @matheusdnf
 
+### Nescessidades
+- Para rodar o projeto, você irá precisar do compilador para linguagem C instalado em sua máquina.
+
+- Com isso sendo feito, irá criar alguma pasta pelo terminal e clonar o repositório abaixo:
+
+```shell
+https://github.com/Matheusdnf/projeto_horarios_de_aula.git
+```
+- Após isso você irá poder rodar o projeto!
+  
 ### Como utilizar
 O sistema é dividido em 6 módulos:
 * **Aluno**
