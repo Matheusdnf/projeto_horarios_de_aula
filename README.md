@@ -7,8 +7,12 @@ UFRN - Universidade Federal do Rio Grande do Norte.\
 CERES - Centro de Ensino Superior do Seridó.\
 BSI - Bacharelado em Sistemas de Informação.\
 DCT1106 - Programação - Flavius Gorgônio.\
-Desenvolvido por @matheusdnf
-  
+Desenvolvido por @matheusdnf\
+
+**SE POSSÍVEL TESTE EM LINUX OU NO REPLIT**\
+o projeto contem algumas validações que em sua maioria funciona apenas no linux ou que pode dar algum erro no Windows,podendo ocorrer do projeto ser encerrado,mas é só tentar novamente que ele será exectuado
+   
+
 ### Como utilizar
 O sistema é dividido em 6 módulos:
 * **Aluno**

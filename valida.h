@@ -10,6 +10,7 @@ int valida_nome(char *nome);
 void removerCaracteresNaoNumericos(char cpf[]);
 int validarCPF(char cpf[]);
 void ler_cpf(char cpf[]);
+bool eh_caractere_especial(char c);
 //funções referente a validação de email
 void ler_email(char email[]);
 int validate_email(char email[]);

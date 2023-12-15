@@ -82,7 +82,7 @@ Disciplina *cadastrar_disciplinas(void){
      do{
         //leitura do cpf
         ler_cpf(dic->cpf);
-        if(verifica_existe_prof(dic->cpf) || !verifica_professor_com_disciplina(dic->cpf)){
+        if(verifica_existe_prof(dic->cpf) && verifica_professor_com_disciplina(dic->cpf)){
             printf("Esse professor não foi cadastrado no sistema ou já tem alguma disciplina atrelada!\n");
             //caso já o usuário vai ter a chance de tentar novamente
             char resposta=obter_resposta();
@@ -198,7 +198,7 @@ void disciplinas(void){
     printf("H-História\n");
     printf("G-Geografia\n");
     printf("L-Literatura\n");
-    printf("L-Filosofia\n");
+    printf("O-Filosofia\n");
     printf("S-Sociologia\n");
     printf("M-Matemática\n");
     printf("B-Biologia\n");
@@ -218,6 +218,7 @@ void ler_disciplinas(char *disciplina){
         t = valida_disciplinas(disciplina);
         if (t == 0) {
             printf("Disciplina Invalida!\n");
+            getchar();
         }
   } while (t != 1);
 }
@@ -227,7 +228,7 @@ int valida_disciplinas(char *disciplina){
     int tam = strlen(disciplina);
     // Só é permitidos 1 ou 2 matérias por vez
     // string que contem todas as iniciais referentes as disciplinas
-    if ((tam != 2) && (tam != 1)){
+    if ((tam != 3) && (tam != 1)){
         return 0;
     }
     // não permitir que o usuário digite duas letras iguais
