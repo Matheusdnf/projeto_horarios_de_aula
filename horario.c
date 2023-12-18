@@ -46,8 +46,10 @@ void menu_horario(void){
             case 0:
                 break;
             default:
-                printf("Opção Inválida!\n");
+                printf("\nOpção Inválida!\n");
                 printf("Digite enter para continuar...");
+                getchar();
+                getchar();
                 getchar();
                 break;
         }
@@ -246,7 +248,7 @@ void ler_periodo(char *periodo){
         //liberar lixo de memória
         fflush(stdin);
         printf("Digite em que horários serão [1,2...6] horário\n");
-        printf("Digite o turno (só números):");
+        printf("Digite o periodo (só números):");
         fgets(periodo,7,stdin);
         periodo[strlen(periodo)-1]=0;
         t = valida_periodo(periodo);
@@ -287,8 +289,8 @@ void ler_dia(char *dia){
     }while(t!=1);
 }
 
-int valida_periodo(char *turno){
-    int tam = strlen(turno);
+int valida_periodo(char *periodo){
+    int tam = strlen(periodo);
     int cont = 0;
     if (!(tam >= 1 && tam <= 6)){
         return 0;
@@ -296,12 +298,12 @@ int valida_periodo(char *turno){
     // evitar que o usuário digite dias que não estejam entre 1 e 6
     for (int i = 0; i < tam; i++){
         // feito com a ajuda do gpt
-        if (turno[i] < '1' || turno[i] > '6'){
+        if (periodo[i] < '1' || periodo[i] > '6'){
             return 0;
         }
         // impedir que o usuário digite números repetidos
         for (int i = 0; i < tam; i++){
-            if (turno[i] == turno[i + 1]){
+            if (periodo[i] == periodo[i + 1]){
                 cont++;
             }
             if (cont >= 1){

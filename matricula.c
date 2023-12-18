@@ -46,8 +46,10 @@ void menu_matricula(void){
             case 0:
                 break;
             default:
-                printf("Opção Inválida!\n");
+                printf("\nOpção Inválida!\n");
                 printf("Digite enter para continuar...");
+                getchar();
+                getchar();
                 getchar();
                 break;
         }

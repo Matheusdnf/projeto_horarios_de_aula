@@ -373,7 +373,7 @@ void letra_maiuscula(char* algo) {
 // não esquecer  scanf(" %[^\n]", palavra);
 
 void ler_turma(char *turma){
-    fflush(stdin);
+    limpar_buffer();
     int t;
     do{
         printf("Digite sua turma:");

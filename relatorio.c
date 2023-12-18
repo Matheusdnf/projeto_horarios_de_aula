@@ -473,7 +473,7 @@ void relatorio_tabela_h(char situ){
     }
     printf("|%-39s", "\x1B[34mNome\x1B[0m");
     printf("|%-20s", "\x1B[34mCPF\x1B[0m");
-    printf("|%-15s", "\x1B[34mturno\x1B[0m");
+    printf("|%-15s", "\x1B[34mperiodo\x1B[0m");
     printf("|%-15s", "\x1B[34mDisciplina\x1B[0m");
     printf("|%-15s", "\x1B[34mDia da semana\x1B[0m");
     printf("|%-1s|", "\x1B[34mTurno(M,T,D)\x1B[0m");
@@ -693,8 +693,9 @@ void listar_h_pelo_diasemana(char *dia){
 
 void filtro_alunos_turma(void){
     char turma[7];
-    printf("teste:");
+    printf("Digite a turma:");
     scanf("%s",turma);
+    letra_maiuscula(turma);
     limpar_buffer();
     relatorio_tabela_aluno_por_turma(turma);
     printf("Digite enter para continuar...");
@@ -773,10 +774,10 @@ void listar_h_turma(char *turma) {
         return;
     }
     printf("|%-39s", "\x1B[34mNome\x1B[0m");
-    printf("|%-12s", "\x1B[34mTurno\x1B[0m");
-    printf("|%-15s", "\x1B[34mDisciplina\x1B[0m");
+    printf("|%-12s", "\x1B[34mDisciplina\x1B[0m");
     printf("|%-15s", "\x1B[34mDia da semana\x1B[0m");
-    printf("|%-1s|", "\x1B[34mTurno(M,T,D)\x1B[0m");
+    printf("|%-15s", "\x1B[34mTurno(M,T,D)\x1B[0m");
+    printf("|%-1s|", "\x1B[34mperiodo\x1B[0m");
     printf("\n");
     while (fread(h, sizeof(Horario), 1, fh)){
         if ((strcmp (h->turma,turma)==0) && (h->status != 'I')) {
@@ -909,10 +910,10 @@ void listar_h_professor(char cpf[]){
         printf("Nenhum horário cadastrado ou professor!\n");
         return;
     }
-    printf("|%-15s", "\x1B[34mturno\x1B[0m");
     printf("|%-15s", "\x1B[34mDisciplina\x1B[0m");
     printf("|%-15s", "\x1B[34mDia da semana\x1B[0m");
-    printf("|%-1s|", "\x1B[34mTurno(M,T,D)\x1B[0m");
+    printf("|%-15s", "\x1B[34mTurno(M,T,D)\x1B[0m");
+    printf("|%-1s|", "\x1B[34mperiodo\x1B[0m");
     printf("\n");
     while (fread(h, sizeof(Horario), 1, fh)){
         if ((strcmp (h->cpf,cpf)==0) && (h->status != 'I')) {

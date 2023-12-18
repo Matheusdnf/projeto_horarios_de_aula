@@ -50,8 +50,10 @@ void menu_disciplinas(void){
             case 0:
                 break;
             default:
-                printf("Opção Inválida!\n");
+                printf("\nOpção Inválida!\n");
                 printf("Digite enter para continuar...");
+                getchar();
+                getchar();
                 getchar();
                 break;
         }
@@ -82,7 +84,7 @@ Disciplina *cadastrar_disciplinas(void){
      do{
         //leitura do cpf
         ler_cpf(dic->cpf);
-        if(verifica_existe_prof(dic->cpf) && verifica_professor_com_disciplina(dic->cpf)){
+        if((verifica_existe_prof(dic->cpf)) || (verifica_professor_com_disciplina(dic->cpf))){
             printf("Esse professor não foi cadastrado no sistema ou já tem alguma disciplina atrelada!\n");
             //caso já o usuário vai ter a chance de tentar novamente
             char resposta=obter_resposta();
@@ -218,7 +220,6 @@ void ler_disciplinas(char *disciplina){
         t = valida_disciplinas(disciplina);
         if (t == 0) {
             printf("Disciplina Invalida!\n");
-            getchar();
         }
   } while (t != 1);
 }
